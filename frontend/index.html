@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SwiftMart | Professional Services & Quality Products</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --brand-primary: #2563eb;
+            --brand-secondary: #1e40af;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-color); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; width: 100%; }
+        
+        nav { background: white; padding: 16px 0; border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 100; }
+        .nav-content { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-weight: 800; font-size: 1.5rem; color: var(--brand-primary); display: flex; align-items: center; gap: 8px; text-decoration: none;}
+        
+        .hero { background: linear-gradient(135deg, #1e40af 0%, #2563eb 100%); color: white; padding: 80px 20px; text-align: center; margin-bottom: 60px; }
+        .hero h1 { font-size: 2.5rem; font-weight: 800; margin-bottom: 16px; }
+        .hero p { font-size: 1.2rem; opacity: 0.9; max-width: 600px; margin: 0 auto; }
+
+        .trust-badges { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; margin-bottom: 60px; text-align: center; }
+        .badge { background: white; padding: 24px; border-radius: 12px; border: 1px solid var(--border-color); }
+        .badge-icon { font-size: 2rem; margin-bottom: 12px; }
+        .badge h3 { font-size: 1rem; margin-bottom: 8px; color: var(--text-main); }
+        .badge p { font-size: 0.875rem; color: var(--text-muted); }
+
+        .section-header { text-align: center; margin-bottom: 40px; }
+        .section-header h2 { font-size: 2rem; font-weight: 800; color: var(--text-main); margin-bottom: 12px; }
+        .section-header p { color: var(--text-muted); font-size: 1.1rem; }
+        .section-divider { width: 60px; height: 4px; background: var(--brand-primary); margin: 0 auto 20px; border-radius: 2px; }
+
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; margin-bottom: 80px; }
+        .card { background: var(--card-bg); border-radius: 16px; overflow: hidden; border: 1px solid var(--border-color); text-align: center; transition: transform 0.2s, box-shadow 0.2s; display: flex; flex-direction: column; }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(37, 99, 235, 0.15); border-color: var(--brand-primary); }
+        .card-image { width: 100%; height: 220px; object-fit: cover; background: #f1f5f9; display: block; }
+        .card-body { padding: 20px; flex-grow: 1; display: flex; flex-direction: column; }
+        .card-name { font-size: 1rem; font-weight: 700; margin-bottom: 8px; color: var(--text-main); }
+        .card-description { font-size: 0.825rem; color: var(--text-muted); margin-bottom: 12px; flex-grow: 1; }
+        .card-price { font-size: 1.35rem; font-weight: 800; color: var(--brand-primary); margin-bottom: 12px; }
+        .action-btn { width: 100%; background: var(--brand-primary); color: white; border: none; padding: 10px; border-radius: 8px; font-weight: 600; cursor: pointer; transition: background 0.2s; }
+        .action-btn:hover { background: var(--brand-secondary); }
+
+        .checkout-section { background: var(--card-bg); border-radius: 16px; padding: 40px; border: 1px solid var(--border-color); max-width: 500px; margin: 0 auto 80px; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05); }
+        .checkout-section h2 { font-size: 1.5rem; margin-bottom: 24px; text-align: center; }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; font-size: 0.875rem; font-weight: 600; margin-bottom: 8px; }
+        .form-group input { width: 100%; padding: 12px 16px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 1rem; outline: none; transition: all 0.2s; }
+        .form-group input:focus { border-color: var(--brand-primary); box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); }
+        
+        .pay-btn { width: 100%; color: white; border: none; padding: 16px; border-radius: 8px; font-size: 1rem; font-weight: 700; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 8px; transition: opacity 0.2s; }
+        .pay-btn:hover { opacity: 0.9; }
+        .pay-btn:disabled { background: #94a3b8 !important; cursor: not-allowed; }
+        
+        .spinner { width: 20px; height: 20px; border: 2px solid rgba(255,255,255,0.3); border-radius: 50%; border-top-color: white; animation: spin 1s linear infinite; display: none; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        
+        .message { margin-top: 16px; padding: 12px; border-radius: 8px; font-size: 0.875rem; text-align: center; display: none; }
+        .message.success { background: #ecfdf5; color: #065f46; border: 1px solid #a7f3d0; display: block; }
+        .message.error { background: #fef2f2; color: #991b1b; border: 1px solid #fecaca; display: block; }
+
+        footer { background: #0f172a; color: white; padding: 40px 20px; text-align: center; margin-top: auto; }
+        footer p { color: #94a3b8; font-size: 0.875rem; margin-top: 16px; }
+        .footer-links { display: flex; justify-content: center; gap: 24px; margin-bottom: 16px; }
+        .footer-links a { color: white; text-decoration: none; font-weight: 500; }
+        .footer-links a:hover { color: var(--brand-primary); }
+
+        .auth-section { display: flex; gap: 12px; align-items: center; }
+        .auth-section a, .auth-section button { font-size: 0.875rem; }
+
+        /* Cart Styles */
+        .cart-icon { position: relative; cursor: pointer; font-size: 1.5rem; margin-right: 16px; }
+        .cart-badge { position: absolute; top: -8px; right: -8px; background: #ef4444; color: white; font-size: 0.7rem; font-weight: 700; width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+        .cart-sidebar { position: fixed; top: 0; right: -400px; width: 380px; height: 100vh; background: white; box-shadow: -5px 0 25px rgba(0,0,0,0.1); z-index: 200; transition: right 0.3s ease; display: flex; flex-direction: column; padding: 24px; }
+        .cart-sidebar.open { right: 0; }
+        .cart-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; border-bottom: 1px solid var(--border-color); padding-bottom: 16px; }
+        .cart-header h2 { font-size: 1.25rem; }
+        .close-cart { background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--text-muted); }
+        .cart-items { flex-grow: 1; overflow-y: auto; }
+        .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--border-color); }
+        .cart-item-info h4 { font-size: 0.9rem; margin-bottom: 4px; }
+        .cart-item-info p { font-size: 0.8rem; color: var(--text-muted); }
+        .cart-item-actions { display: flex; align-items: center; gap: 8px; }
+        .qty-btn { width: 28px; height: 28px; border: 1px solid var(--border-color); background: white; border-radius: 4px; cursor: pointer; font-weight: bold; }
+        .remove-btn { color: #ef4444; background: none; border: none; cursor: pointer; font-size: 0.8rem; margin-left: 8px; }
+        .cart-footer { margin-top: 24px; border-top: 1px solid var(--border-color); padding-top: 16px; }
+        .cart-total { display: flex; justify-content: space-between; font-size: 1.1rem; font-weight: 700; margin-bottom: 16px; }
+        .checkout-btn { width: 100%; background: var(--brand-primary); color: white; border: none; padding: 14px; border-radius: 8px; font-weight: 700; cursor: pointer; }
+        .checkout-btn:disabled { background: #94a3b8; cursor: not-allowed; }
+        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 150; display: none; }
+        .overlay.active { display: block; }
+
+        /* Search & Filter Styles */
+        .search-filter-container {
+            background: white; padding: 24px; border-radius: 12px; border: 1px solid var(--border-color);
+            margin-bottom: 40px; display: flex; gap: 16px; flex-wrap: wrap; box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+        }
+        .search-box { flex-grow: 1; min-width: 250px; position: relative; }
+        .search-box input { width: 100%; padding: 12px 16px 12px 40px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 1rem; outline: none; }
+        .search-box input:focus { border-color: var(--brand-primary); }
+        .search-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--text-muted); }
+        .filter-box select { padding: 12px 16px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 1rem; outline: none; min-width: 200px; cursor: pointer; }
+        .filter-box select:focus { border-color: var(--brand-primary); }
+        .no-results { text-align: center; padding: 40px; color: var(--text-muted); font-size: 1.1rem; display: none; }
+    </style>
+</head>
+<body>
+    <div class="overlay" id="overlay" onclick="toggleCart()"></div>
+    
+    <!-- Cart Sidebar -->
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h2>🛒 Your Cart</h2>
+            <button class="close-cart" onclick="toggleCart()">×</button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <p style="text-align: center; color: var(--text-muted); margin-top: 40px;">Your cart is empty.</p>
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total:</span>
+                <span id="cartTotal">KES 0</span>
+            </div>
+            <button class="checkout-btn" id="proceedToCheckoutBtn" onclick="proceedToCheckout()" disabled>Proceed to Checkout</button>
+        </div>
+    </div>
+
+    <nav>
+        <div class="container nav-content">
+            <a href="/" class="logo">🛍️ SwiftMart</a>
+            <div class="auth-section" id="authSection">
+                <div class="cart-icon" onclick="toggleCart()">
+                    🛒 <span class="cart-badge" id="cartBadge">0</span>
+                </div>
+                <a href="/dashboard" id="dashboardLink" style="display: none; color: var(--text-main); text-decoration: none; font-weight: 600;">My Orders</a>
+                <a href="/admin" id="adminLink" style="display: none; color: #dc2626; text-decoration: none; font-weight: 600;">⚙️ Admin</a>
+                <span id="userEmail" style="color: var(--text-muted); font-size: 0.875rem;"></span>
+                <button id="logoutBtn" onclick="logout()" style="display: none; background: var(--text-muted); color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer;">Logout</button>
+                <a href="/login" id="loginBtn" style="background: var(--brand-primary); color: white; padding: 8px 16px; border-radius: 6px; text-decoration: none; font-weight: 600;">Login</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="hero">
+        <div class="container">
+            <h1>Quality Products & Professional Services</h1>
+            <p>Welcome to SwiftMart. We provide top-tier digital services and premium products.</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="trust-badges">
+            <div class="badge"><div class="badge-icon">🔒</div><h3>Secure Payments</h3><p>M-Pesa & Global Gateways</p></div>
+            <div class="badge"><div class="badge-icon">⚡</div><h3>Fast Delivery</h3><p>Quick shipping & booking</p></div>
+            <div class="badge"><div class="badge-icon">💬</div><h3>24/7 Support</h3><p>We're here to help</p></div>
+        </div>
+
+        <!-- SEARCH & FILTER BAR -->
+        <div class="search-filter-container">
+            <div class="search-box">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="searchInput" placeholder="Search for products or services..." onkeyup="filterProducts()">
+            </div>
+            <div class="filter-box">
+                <select id="categoryFilter" onchange="filterProducts()">
+                    <option value="all">All Categories</option>
+                    <option value="services">Professional Services</option>
+                    <option value="webdev">Web Development & Hosting</option>
+                    <option value="socialmedia">Social Media Services</option>
+                    <option value="smartphones">Smartphones & Tablets</option>
+                    <option value="laptops">Laptops & Computers</option>
+                    <option value="audio">Audio & Headphones</option>
+                    <option value="accessories">Computer Accessories</option>
+                    <option value="fashion">Fashion & Watches</option>
+                    <option value="home">Home & Kitchen</option>
+                    <option value="beauty">Beauty & Health</option>
+                </select>
+            </div>
+        </div>
+        <div id="noResults" class="no-results">No products found matching your search.</div>
+
+        <!-- SERVICES -->
+        <div class="section-header" data-section="services"><div class="section-divider"></div><h2>Professional Services</h2><p>Expert solutions for your business</p></div>
+        <div class="grid" id="grid-services">
+            <div class="card" data-category="services">
+                <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=400&h=300&q=80" alt="Web Design" class="card-image">
+                <div class="card-body"><div class="card-name">Professional Web Design</div><div class="card-description">Custom responsive websites with modern design and SEO.</div><div class="card-price">KES 15,000</div><button class="action-btn" onclick="addToCart('Professional Web Design', 15000)">Add to Cart</button></div>
+            </div>
+            <div class="card" data-category="services">
+                <img src="https://images.unsplash.com/photo-1626785774573-4b799315345d?auto=format&fit=crop&w=400&h=300&q=80" alt="Graphic Design" class="card-image">
+                <div class="card-body"><div class="card-name">Logo & Graphic Design</div><div class="card-description">Professional branding, logos, and marketing materials.</div><div class="card-price">KES 5,000</div><button class="action-btn" onclick="addToCart('Logo & Graphic Design', 5000)">Add to Cart</button></div>
+            </div>
+            <div class="card" data-category="services">
+                <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=400&h=300&q=80" alt="Consulting" class="card-image">
+                <div class="card-body"><div class="card-name">Business Consultation</div><div class="card-description">1-hour expert consultation on business strategy.</div><div class="card-price">KES 3,000</div><button class="action-btn" onclick="addToCart('Business Consultation', 3000)">Add to Cart</button></div>
+            </div>
+            <div class="card" data-category="services">
+                <img src="https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?auto=format&fit=crop&w=400&h=300&q=80" alt="SEO" class="card-image">
+                <div class="card-body"><div class="card-name">SEO & Digital Marketing</div><div class="card-description">Boost your online presence with SEO and marketing.</div><div class="card-price">KES 8,000</div><button class="action-btn" onclick="addToCart('SEO & Digital Marketing', 8000)">Add to Cart</button></div>
+            </div>
+        </div>
+
+        <!-- WEB DEVELOPMENT & HOSTING -->
+        <div class="section-header" data-section="webdev"><div class="section-divider"></div><h2>Web Development & Hosting</h2><p>Build and maintain your online presence</p></div>
+        <div class="grid" id="grid-webdev">
+            <div class="card" data-category="webdev">
+                <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=400&h=300&q=80" alt="E-commerce" class="card-image">
+                <div class="card-body"><div class="card-name">E-commerce Store Setup</div><div class="card-description">Complete online store setup with M-Pesa & Paystack integration.</div><div class="card-price">KES 25,000</div><button class="action-btn" onclick="addToCart('E-commerce Store Setup', 25000)">Add to Cart</button></div>
+            </div>
+            <div class="card" data-category="webdev">
+                <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=400&h=300&q=80" alt="Maintenance" class="card-image">
+                <div class="card-body"><div class="card-name">Website Maintenance & Support</div><div class="card-description">Monthly updates, security patches, and technical support.</div><div class="card-price">KES 3,000 / mo</div><button class="action-btn" onclick="addToCart('Website Maintenance & Support', 3000)">Add to Cart</button></div>
+            </div>
+            <div class="card" data-category="webdev">
+                <img src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=400&h=300&q=80" alt="Hosting" class="card-image">
+                <div class="card-body"><div class="card-name">Domain & Hosting Setup</div><div class="card-description">Professional domain registration and secure server hosting.</div><div class="card-price">KES 2,500</div><button class="action-btn" onclick="addToCart('Domain & Hosting Setup', 2500)">Add to Cart</button></div>
+            </div>
+        </div>
+
+        <!-- NEW: SOCIAL MEDIA SERVICES -->
+        <div class="section-header" data-section="socialmedia"><div class="section-divider"></div><h2>Social Media Services</h2><p>Grow your brand's online audience</p></div>
+        <div class="grid" id="grid-socialmedia">
+            <div class="card" data-category="socialmedia">
+                <img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=400&h=300&q=80" alt="Social Setup" class="card-image">
+                <div class="card-body"><div class="card-name">Social Media Page Setup</div><div class="card-description">Professional setup of Facebook, Instagram & LinkedIn business pages.</div><div class="card-price">KES 6,000</div><button class="action-btn" onclick="addToCart('Social Media Page Setup', 6000)">Add to Cart</button></div>
+            </div>
+            <div class="card" data-category="socialmedia">
+                <img src="https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?auto=format&fit=crop&w=400&h=300&q=80" alt="Monthly Management" class="card-image">
+                <div class="card-body"><div class="card-name">Monthly Social Media Management</div><div class="card-description">8-12 custom posts per month, scheduling, and basic engagement.</div><div class="card-price">KES 12,000 / mo</div><button class="action-btn" onclick="addToCart('Monthly Social Media Management', 12000)">Add to Cart</button></div>
+            </div>
+            <div class="card" data-category="socialmedia">
+                <img src="https://images.unsplash.com/photo-1626785774573-4b799315345d?auto=format&fit=crop&w=400&h=300&q=80" alt="Graphics" class="card-image">
+                <div class="card-body"><div class="card-name">Custom Social Media Graphics (10 Posts)</div><div class="card-description">Eye-catching, branded graphics ready for your social channels.</div><div class="card-price">KES 8,000</div><button class="action-btn" onclick="addToCart('Custom Social Media Graphics (10 Posts)', 8000)">Add to Cart</button></div>
+            </div>
+        </div>
+
+        <!-- SMARTPHONES -->
+        <div class="section-header" data-section="smartphones"><div class="section-divider"></div><h2>Smartphones & Tablets</h2><p>Latest mobile devices</p></div>
+        <div class="grid" id="grid-smartphones">
+            <div class="card" data-category="smartphones">
+                <img src="https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?auto=format&fit=crop&w=400&h=300&q=80" alt="iPhone" class="card-image">
+                <div class="card-body"><div class="card-name">iPhone 13 Pro</div><div class="card-description">128GB, 5G, A15 Bionic chip, Pro camera system.</div><div class="card-price">KES 95,000</div><button class="action-btn" onclick="addToCart('iPhone 13 Pro', 95000)">Add to Cart</button></div>
+            </div>
+            <div class="card" data-category="smartphones">
+                <img src="https://images.unsplash.com/photo-1585060544812-6b45742d762f?auto=format&fit=crop&w=400&h=300&q=80" alt="Samsung Phone" class="card-image">
+                <div class="card-body"><div class="card-name">Samsung Galaxy S22</div><div class="card-description">256GB, 5G, 108MP camera, 120Hz display.</div><div class="card-price">KES 78,000</div><button class="action-btn" onclick="addToCart('Samsung Galaxy S22', 78000)">Add to Cart</button></div>
+            </div>
+            <div class="card" data-category="smartphones">
+                <img src="https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?auto=format&fit=crop&w=400&h=300&q=80" alt="iPad" class="card-image">
+                <div class="card-body"><div class="card-name">iPad Air 5th Gen</div><div class="card-description">64GB WiFi, M1 chip, 10.9-inch display.</div><div class="card-price">KES 65,000</div><button class="action-btn" onclick="addToCart('iPad Air', 65000)">Add to Cart</button></div>
+            </div>
+        </div>
+
+        <!-- LAPTOPS -->
+        <div class="section-header" data-section="laptops"><div class="section-divider"></div><h2>Laptops & Computers</h2><p>Powerful computing devices</p></div>
+        <div class="grid" id="grid-laptops">
+            <div class="card" data-category="laptops">
+                <img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=400&h=300&q=80" alt="MacBook" class="card-image">
+                <div class="card-body"><div class="card-name">MacBook Air M2</div><div class="card-description">13.6-inch, M2 chip, 8GB RAM, 256GB SSD.</div><div class="card-price">KES 115,000</div><button class="action-btn" onclick="addToCart('MacBook Air M2', 115000)">Add to Cart</button></div>
+            </div>
+            <div class="card" data-category="laptops">
+                <img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=400&h=300&q=80" alt="Dell Laptop" class="card-image">
+                <div class="card-body"><div class="card-name">Dell XPS 13</div><div class="card-description">Intel i7, 16GB RAM, 512GB SSD.</div><div class="card-price">KES 98,000</div><button class="action-btn" onclick="addToCart('Dell XPS 13', 98000)">Add to Cart</button></div>
+            </div>
+            <div class="card" data-category="laptops">
+                <img src="https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?auto=format&fit=crop&w=400&h=300&q=80" alt="HP Laptop" class="card-image">
+                <div class="card-body"><div class="card-name">HP Pavilion 15</div><div class="card-description">AMD Ryzen 5, 8GB RAM, 512GB SSD.</div><div class="card-price">KES 52,000</div><button class="action-btn" onclick="addToCart('HP Pavilion 15', 52000)">Add to Cart</button></div>
+            </div>
+        </div>
+
+        <!-- AUDIO -->
+        <div class="section-header" data-section="audio"><div class="section-divider"></div><h2>Audio & Headphones</h2><p>Premium sound quality</p></div>
+        <div class="grid" id="grid-audio">
+            <div class="card" data-category="audio">
+                <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=400&h=300&q=80" alt="Headphones" class="card-image">
+                <div class="card-body"><div class="card-name">Sony WH-1000XM5</div><div class="card-description">Noise cancellation, 30hr battery, premium sound.</div><div class="card-price">KES 32,000</div><button class="action-btn" onclick="addToCart('Sony WH-1000XM5', 32000)">Add to Cart</button></div>
+            </div>
+            <div class="card" data-category="audio">
+                <img src="https://images.unsplash.com/photo-1606220588913-b3aacb4d2f46?auto=format&fit=crop&w=400&h=300&q=80" alt="AirPods" class="card-image">
+                <div class="card-body"><div class="card-name">Apple AirPods Pro 2</div><div class="card-description">Active noise cancellation, spatial audio.</div><div class="card-price">KES 24,000</div><button class="action-btn" onclick="addToCart('AirPods Pro 2', 24000)">Add to Cart</button></div>
+            </div>
+            <div class="card" data-category="audio">
+                <img src="https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?auto=format&fit=crop&w=400&h=300&q=80" alt="Speaker" class="card-image">
+                <div class="card-body"><div class="card-name">JBL Flip 6 Speaker</div><div class="card-description">Portable, waterproof, 12hr playtime.</div><div class="card-price">KES 12,000</div><button class="action-btn" onclick="addToCart('JBL Flip 6', 12000)">Add to Cart</button></div>
+            </div>
+        </div>
+
+        <!-- ACCESSORIES -->
+        <div class="section-header" data-section="accessories"><div class="section-divider"></div><h2>Computer Accessories</h2><p>Essential accessories</p></div>
+        <div class="grid" id="grid-accessories">
+            <div class="card" data-category="accessories">
+                <img src="https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?auto=format&fit=crop&w=400&h=300&q=80" alt="Mouse" class="card-image">
+                <div class="card-body"><div class="card-name">Logitech MX Master 3</div><div class="card-description">Wireless, ergonomic, customizable buttons.</div><div class="card-price">KES 8,500</div><button class="action-btn" onclick="addToCart('Logitech MX Master 3', 8500)">Add to Cart</button></div>
+            </div>
+            <div class="card" data-category="accessories">
+                <img src="https://images.unsplash.com/photo-1587829741301-dc798b83add3?auto=format&fit=crop&w=400&h=300&q=80" alt="Keyboard" class="card-image">
+                <div class="card-body"><div class="card-name">Mechanical Keyboard RGB</div><div class="card-description">Cherry MX switches, RGB backlight.</div><div class="card-price">KES 7,200</div><button class="action-btn" onclick="addToCart('Mechanical Keyboard', 7200)">Add to Cart</button></div>
+            </div>
+            <div class="card" data-category="accessories">
+                <img src="https://images.unsplash.com/photo-1586953208448-b95a79798f07?auto=format&fit=crop&w=400&h=300&q=80" alt="Webcam" class="card-image">
+                <div class="card-body"><div class="card-name">Logitech C920 Webcam</div><div class="card-description">1080p HD, stereo audio, auto-focus.</div><div class="card-price">KES 9,500</div><button class="action-btn" onclick="addToCart('Logitech C920', 9500)">Add to Cart</button></div>
+            </div>
+            <div class="card" data-category="accessories">
+                <img src="https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?auto=format&fit=crop&w=400&h=300&q=80" alt="Monitor" class="card-image">
+                <div class="card-body"><div class="card-name">27-inch 4K Monitor</div><div class="card-description">IPS panel, HDR, USB-C connectivity.</div><div class="card-price">KES 35,000</div><button class="action-btn" onclick="addToCart('27-inch 4K Monitor', 35000)">Add to Cart</button></div>
+            </div>
+        </div>
+
+        <!-- FASHION -->
+        <div class="section-header" data-section="fashion"><div class="section-divider"></div><h2>Fashion & Watches</h2><p>Style and comfort</p></div>
+        <div class="grid" id="grid-fashion">
+            <div class="card" data-category="fashion">
+                <img src="https://images.unsplash.com/photo-1524592094714-0f0654e20314?auto=format&fit=crop&w=400&h=300&q=80" alt="Watch" class="card-image">
+                <div class="card-body"><div class="card-name">Classic Leather Watch</div><div class="card-description">Genuine leather strap, quartz movement.</div><div class="card-price">KES 3,500</div><button class="action-btn" onclick="addToCart('Classic Leather Watch', 3500)">Add to Cart</button></div>
+            </div>
+            <div class="card" data-category="fashion">
+                <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=400&h=300&q=80" alt="Sneakers" class="card-image">
+                <div class="card-body"><div class="card-name">Nike Air Max Sneakers</div><div class="card-description">Comfortable, stylish, various sizes.</div><div class="card-price">KES 8,500</div><button class="action-btn" onclick="addToCart('Nike Air Max', 8500)">Add to Cart</button></div>
+            </div>
+            <div class="card" data-category="fashion">
+                <img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=400&h=300&q=80" alt="Backpack" class="card-image">
+                <div class="card-body"><div class="card-name">Premium Leather Backpack</div><div class="card-description">Spacious, laptop compartment, durable.</div><div class="card-price">KES 4,500</div><button class="action-btn" onclick="addToCart('Leather Backpack', 4500)">Add to Cart</button></div>
+            </div>
+            <div class="card" data-category="fashion">
+                <img src="https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=400&h=300&q=80" alt="Sunglasses" class="card-image">
+                <div class="card-body"><div class="card-name">Polarized Sunglasses</div><div class="card-description">UV400 protection, stylish frames.</div><div class="card-price">KES 1,800</div><button class="action-btn" onclick="addToCart('Polarized Sunglasses', 1800)">Add to Cart</button></div>
+            </div>
+        </div>
+
+        <!-- HOME & KITCHEN -->
+        <div class="section-header" data-section="home"><div class="section-divider"></div><h2>Home & Kitchen</h2><p>Enhance your living space</p></div>
+        <div class="grid" id="grid-home">
+            <div class="card" data-category="home">
+                <img src="https://images.unsplash.com/photo-1570222094114-d054a817e56b?auto=format&fit=crop&w=400&h=300&q=80" alt="Blender" class="card-image">
+                <div class="card-body"><div class="card-name">Electric Blender 1000W</div><div class="card-description">Powerful, multiple speeds, easy to clean.</div><div class="card-price">KES 4,200</div><button class="action-btn" onclick="addToCart('Electric Blender', 4200)">Add to Cart</button></div>
+            </div>
+            <div class="card" data-category="home">
+                <img src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=400&h=300&q=80" alt="Coffee Maker" class="card-image">
+                <div class="card-body"><div class="card-name">Automatic Coffee Maker</div><div class="card-description">Programmable, 12-cup capacity.</div><div class="card-price">KES 6,500</div><button class="action-btn" onclick="addToCart('Coffee Maker', 6500)">Add to Cart</button></div>
+            </div>
+            <div class="card" data-category="home">
+                <img src="https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=400&h=300&q=80" alt="Desk Lamp" class="card-image">
+                <div class="card-body"><div class="card-name">LED Desk Lamp</div><div class="card-description">Adjustable brightness, USB charging.</div><div class="card-price">KES 2,200</div><button class="action-btn" onclick="addToCart('LED Desk Lamp', 2200)">Add to Cart</button></div>
+            </div>
+        </div>
+
+        <!-- BEAUTY & HEALTH -->
+        <div class="section-header" data-section="beauty"><div class="section-divider"></div><h2>Beauty & Health</h2><p>Look and feel your best</p></div>
+        <div class="grid" id="grid-beauty">
+            <div class="card" data-category="beauty">
+                <img src="https://images.unsplash.com/photo-1522338242992-e1a54906a8da?auto=format&fit=crop&w=400&h=300&q=80" alt="Hair Dryer" class="card-image">
+                <div class="card-body"><div class="card-name">Professional Hair Dryer</div><div class="card-description">Ionic technology, 2000W, multiple settings.</div><div class="card-price">KES 3,800</div><button class="action-btn" onclick="addToCart('Hair Dryer', 3800)">Add to Cart</button></div>
+            </div>
+            <div class="card" data-category="beauty">
+                <img src="https://images.unsplash.com/photo-1607613009820-a29f7bb81c04?auto=format&fit=crop&w=400&h=300&q=80" alt="Electric Toothbrush" class="card-image">
+                <div class="card-body"><div class="card-name">Electric Toothbrush</div><div class="card-description">Sonic cleaning, 5 modes, USB charging.</div><div class="card-price">KES 2,900</div><button class="action-btn" onclick="addToCart('Electric Toothbrush', 2900)">Add to Cart</button></div>
+            </div>
+            <div class="card" data-category="beauty">
+                <img src="https://images.unsplash.com/photo-1575311373937-040b8e1fd5b6?auto=format&fit=crop&w=400&h=300&q=80" alt="Fitness Band" class="card-image">
+                <div class="card-body"><div class="card-name">Fitness Tracker Band</div><div class="card-description">Heart rate, sleep monitoring, waterproof.</div><div class="card-price">KES 3,200</div><button class="action-btn" onclick="addToCart('Fitness Tracker', 3200)">Add to Cart</button></div>
+            </div>
+        </div>
+
+        <!-- Checkout Section -->
+        <div class="checkout-section" id="checkout" style="display: none;">
+            <h2>Secure Checkout</h2>
+            <div id="checkoutSummary" style="background: #f8fafc; padding: 16px; border-radius: 8px; margin-bottom: 24px; border: 1px solid var(--border-color);"></div>
+            <form id="paymentForm">
+                <div class="form-group">
+                    <label for="email">Email Address (Required for Receipt & M-Pesa Prompt)</label>
+                    <input type="email" id="email" placeholder="customer@example.com" required>
+                </div>
+                
+                <button type="button" class="pay-btn" id="globalPayBtn" style="background: #2563eb; margin-bottom: 16px;" onclick="payWithPaystack()">
+                    💳 Pay Now (Card, PayPal, or M-Pesa)
+                </button>
+            </form>
+            <div id="messageBox" class="message"></div>
+        </div>
+
+        <!-- CUSTOMER REVIEWS -->
+        <div class="section-header">
+            <div class="section-divider"></div>
+            <h2>Customer Reviews</h2>
+            <p>See what our customers are saying</p>
+        </div>
+        <div style="max-width: 900px; margin: 0 auto 60px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
+            <!-- Review Form -->
+            <div style="background: white; padding: 24px; border-radius: 12px; border: 1px solid var(--border-color);">
+                <h3 style="margin-bottom: 16px;">Leave a Review</h3>
+                <form id="reviewForm">
+                    <div class="form-group">
+                        <label>Product Name</label>
+                        <input type="text" id="reviewProduct" placeholder="e.g., Web Design" required style="width: 100%; padding: 12px; border: 1px solid var(--border-color); border-radius: 8px;">
+                    </div>
+                    <div class="form-group">
+                        <label>Your Name</label>
+                        <input type="text" id="reviewAuthor" placeholder="John Doe" required style="width: 100%; padding: 12px; border: 1px solid var(--border-color); border-radius: 8px;">
+                    </div>
+                    <div class="form-group">
+                        <label>Rating</label>
+                        <select id="reviewRating" required style="width: 100%; padding: 12px; border: 1px solid var(--border-color); border-radius: 8px;">
+                            <option value="5">⭐⭐⭐⭐⭐ (5 Stars)</option>
+                            <option value="4">⭐⭐⭐⭐ (4 Stars)</option>
+                            <option value="3">⭐⭐⭐ (3 Stars)</option>
+                            <option value="2">⭐⭐ (2 Stars)</option>
+                            <option value="1">⭐ (1 Star)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Comment</label>
+                        <textarea id="reviewComment" rows="3" placeholder="Share your experience..." required style="width: 100%; padding: 12px; border: 1px solid var(--border-color); border-radius: 8px; font-family: inherit; resize: vertical;"></textarea>
+                    </div>
+                    <button type="submit" class="action-btn">Submit Review</button>
+                    <p id="reviewMessage" style="margin-top: 12px; font-size: 0.875rem; text-align: center;"></p>
+                </form>
+            </div>
+
+            <!-- Recent Reviews Display -->
+            <div style="background: white; padding: 24px; border-radius: 12px; border: 1px solid var(--border-color); max-height: 450px; overflow-y: auto;">
+                <h3 style="margin-bottom: 16px;">Recent Approved Reviews</h3>
+                <div id="reviewsList">
+                    <p style="color: var(--text-muted); text-align: center; padding: 20px;">Loading reviews...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="/">Home</a>
+                <a href="/dashboard">My Orders</a>
+                <a href="/login">Login</a>
+            </div>
+            <p>&copy; 2026 SwiftMart. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // --- SEARCH & FILTER LOGIC ---
+        function filterProducts() {
+            const searchText = document.getElementById('searchInput').value.toLowerCase();
+            const selectedCategory = document.getElementById('categoryFilter').value;
+            const cards = document.querySelectorAll('.card');
+            const sectionHeaders = document.querySelectorAll('.section-header');
+            let visibleCount = 0;
+
+            cards.forEach(card => {
+                const cardCategory = card.getAttribute('data-category');
+                const cardName = card.querySelector('.card-name').textContent.toLowerCase();
+                const cardDesc = card.querySelector('.card-description').textContent.toLowerCase();
+                
+                const matchesSearch = cardName.includes(searchText) || cardDesc.includes(searchText);
+                const matchesCategory = selectedCategory === 'all' || cardCategory === selectedCategory;
+
+                if (matchesSearch && matchesCategory) {
+                    card.style.display = 'flex';
+                    visibleCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            sectionHeaders.forEach(header => {
+                const sectionId = header.getAttribute('data-section');
+                const grid = document.getElementById('grid-' + sectionId);
+                if (grid) {
+                    let hasVisible = false;
+                    grid.querySelectorAll('.card').forEach(c => {
+                        if (c.style.display !== 'none') hasVisible = true;
+                    });
+                    header.style.display = hasVisible ? 'block' : 'none';
+                    grid.style.display = hasVisible ? 'grid' : 'none';
+                }
+            });
+
+            document.getElementById('noResults').style.display = visibleCount === 0 ? 'block' : 'none';
+        }
+
+        // --- SHOPPING CART LOGIC ---
+        let cart = JSON.parse(localStorage.getItem('swiftmart_cart')) || [];
+
+        function saveCart() {
+            localStorage.setItem('swiftmart_cart', JSON.stringify(cart));
+            updateCartUI();
+        }
+
+        function addToCart(name, price) {
+            const existingItem = cart.find(item => item.name === name);
+            if (existingItem) {
+                existingItem.qty += 1;
+            } else {
+                cart.push({ name, price, qty: 1 });
+            }
+            saveCart();
+            toggleCart(true);
+        }
+
+        function updateQty(name, change) {
+            const item = cart.find(item => item.name === name);
+            if (item) {
+                item.qty += change;
+                if (item.qty <= 0) cart = cart.filter(i => i.name !== name);
+                saveCart();
+            }
+        }
+
+        function removeItem(name) {
+            cart = cart.filter(item => item.name !== name);
+            saveCart();
+        }
+
+        function updateCartUI() {
+            const cartItemsDiv = document.getElementById('cartItems');
+            const cartBadge = document.getElementById('cartBadge');
+            const cartTotal = document.getElementById('cartTotal');
+            const checkoutBtn = document.getElementById('proceedToCheckoutBtn');
+
+            const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
+            const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+
+            cartBadge.textContent = totalQty;
+            cartTotal.textContent = `KES ${totalPrice.toLocaleString()}`;
+            checkoutBtn.disabled = totalQty === 0;
+
+            if (cart.length === 0) {
+                cartItemsDiv.innerHTML = '<p style="text-align: center; color: var(--text-muted); margin-top: 40px;">Your cart is empty.</p>';
+            } else {
+                cartItemsDiv.innerHTML = cart.map(item => `
+                    <div class="cart-item">
+                        <div class="cart-item-info">
+                            <h4>${item.name}</h4>
+                            <p>KES ${item.price.toLocaleString()} x ${item.qty}</p>
+                        </div>
+                        <div class="cart-item-actions">
+                            <button class="qty-btn" onclick="updateQty('${item.name}', -1)">-</button>
+                            <span>${item.qty}</span>
+                            <button class="qty-btn" onclick="updateQty('${item.name}', 1)">+</button>
+                            <button class="remove-btn" onclick="removeItem('${item.name}')">Remove</button>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function toggleCart(forceOpen = false) {
+            const sidebar = document.getElementById('cartSidebar');
+            const overlay = document.getElementById('overlay');
+            if (forceOpen || !sidebar.classList.contains('open')) {
+                sidebar.classList.add('open');
+                overlay.classList.add('active');
+            } else {
+                sidebar.classList.remove('open');
+                overlay.classList.remove('active');
+            }
+        }
+
+        function proceedToCheckout() {
+            toggleCart(false);
+            const checkoutSection = document.getElementById('checkout');
+            const checkoutSummary = document.getElementById('checkoutSummary');
+            const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+            const productList = cart.map(item => `${item.name} (x${item.qty})`).join(', ');
+
+            checkoutSummary.innerHTML = `
+                <p style="font-weight: 600; margin-bottom: 8px;">Items:</p>
+                <p style="color: var(--text-muted); margin-bottom: 16px; font-size: 0.9rem;">${productList}</p>
+                <p style="font-weight: 700; font-size: 1.1rem; color: var(--brand-primary);">Total: KES ${totalPrice.toLocaleString()}</p>
+            `;
+            checkoutSection.style.display = 'block';
+            checkoutSection.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // --- PAYMENT LOGIC (Paystack Only) ---
+        async function payWithPaystack() {
+            if (cart.length === 0) return;
+            const email = document.getElementById('email').value;
+            const amount = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+            const product = cart.map(item => `${item.name} (x${item.qty})`).join(', ');
+            const messageBox = document.getElementById('messageBox');
+
+            if (!email) {
+                messageBox.textContent = '❌ Please enter your email address.';
+                messageBox.className = 'message error';
+                messageBox.style.display = 'block';
+                return;
+            }
+
+            messageBox.style.display = 'none';
+            const btn = document.getElementById('globalPayBtn');
+            const originalText = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = '<div class="spinner" style="display: block;"></div> Processing...';
+
+            try {
+                const response = await fetch('/api/paystack/initialize', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, amount, productName: product })
+                });
+                const data = await response.json();
+                if (data.authorization_url) {
+                    window.location.href = data.authorization_url;
+                } else {
+                    messageBox.textContent = '❌ Could not start payment.';
+                    messageBox.className = 'message error';
+                    messageBox.style.display = 'block';
+                    btn.disabled = false;
+                    btn.innerHTML = originalText;
+                }
+            } catch (error) {
+                console.error(error);
+                messageBox.textContent = '❌ Network error.';
+                messageBox.className = 'message error';
+                messageBox.style.display = 'block';
+                btn.disabled = false;
+                btn.innerHTML = originalText;
+            }
+        }
+
+        // --- AUTH LOGIC ---
+        async function checkAuth() {
+            try {
+                const res = await fetch('/api/auth/me');
+                const data = await res.json();
+                if (data.user) {
+                    document.getElementById('loginBtn').style.display = 'none';
+                    document.getElementById('dashboardLink').style.display = 'block';
+                    document.getElementById('logoutBtn').style.display = 'block';
+                    document.getElementById('userEmail').textContent = data.user.email;
+                    if (data.user.email === 'neutralizernoahkipkoech@gmail.com') {
+                        document.getElementById('adminLink').style.display = 'block';
+                    }
+                }
+            } catch (error) { console.error('Auth check error:', error); }
+        }
+
+        async function logout() {
+            await fetch('/api/auth/logout', { method: 'POST' });
+            window.location.reload();
+        }
+
+        // Initialize
+        updateCartUI();
+        checkAuth();
+        checkStockLevels();
+
+        // Fetch stock levels and disable out-of-stock items
+        async function checkStockLevels() {
+            try {
+                const res = await fetch('/api/products');
+                const data = await res.json();
+                if (data.products) {
+                    data.products.forEach(dbProduct => {
+                        const buttons = document.querySelectorAll('.action-btn');
+                        buttons.forEach(btn => {
+                            if (btn.getAttribute('onclick').includes(`'${dbProduct.name}'`)) {
+                                if (dbProduct.stock <= 0) {
+                                    btn.textContent = 'Out of Stock';
+                                    btn.disabled = true;
+                                    btn.style.background = '#94a3b8';
+                                    btn.style.cursor = 'not-allowed';
+                                } else {
+                                    btn.textContent = `Add to Cart (${dbProduct.stock} left)`;
+                                }
+                            }
+                        });
+                    });
+                }
+            } catch (error) { 
+                console.error('Stock check error:', error); 
+            }
+        }
+
+        // --- REVIEW LOGIC ---
+        loadReviews(); // Load reviews on page load
+
+        async function loadReviews() {
+            const list = document.getElementById('reviewsList');
+            try {
+                const res = await fetch('/api/reviews');
+                const data = await res.json();
+                if (data.reviews && data.reviews.length > 0) {
+                    list.innerHTML = data.reviews.map(r => `
+                        <div style="border-bottom: 1px solid var(--border-color); padding: 12px 0;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+                                <strong>${r.productName}</strong>
+                                <span style="color: #f59e0b;">${'⭐'.repeat(r.rating)}</span>
+                            </div>
+                            <p style="font-size: 0.875rem; color: var(--text-main); margin-bottom: 4px; font-style: italic;">"${r.comment}"</p>
+                            <small style="color: var(--text-muted);">- ${r.author}</small>
+                        </div>
+                    `).join('');
+                } else {
+                    list.innerHTML = '<p style="color: var(--text-muted); text-align: center; padding: 20px;">No approved reviews yet. Be the first!</p>';
+                }
+            } catch (error) {
+                list.innerHTML = '<p style="color: red; text-align: center; padding: 20px;">Failed to load reviews.</p>';
+            }
+        }
+
+        document.getElementById('reviewForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const msg = document.getElementById('reviewMessage');
+            msg.textContent = 'Submitting...';
+            msg.style.color = 'var(--text-muted)';
+            
+            try {
+                const res = await fetch('/api/reviews', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        productName: document.getElementById('reviewProduct').value,
+                        author: document.getElementById('reviewAuthor').value,
+                        rating: parseInt(document.getElementById('reviewRating').value),
+                        comment: document.getElementById('reviewComment').value
+                    })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    msg.textContent = '✅ ' + data.message;
+                    msg.style.color = '#065f46'; // Green
+                    document.getElementById('reviewForm').reset();
+                } else {
+                    msg.textContent = '❌ Failed to submit.';
+                    msg.style.color = '#991b1b'; // Red
+                }
+            } catch (error) {
+                msg.textContent = '❌ Network error.';
+                msg.style.color = '#991b1b';
+            }
+        });
+    </script>
+</body>
+</html>

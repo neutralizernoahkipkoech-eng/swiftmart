@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Receipt | M-Pesa</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --mpesa-green: #43B02A;
+            --bg-color: #f3f4f6;
+            --card-bg: #ffffff;
+            --text-main: #1f2937;
+            --text-muted: #6b7280;
+            --border-color: #e5e7eb;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .receipt-card {
+            background: var(--card-bg);
+            width: 100%;
+            max-width: 400px;
+            border-radius: 16px;
+            padding: 32px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            border: 1px solid var(--border-color);
+        }
+        .success-icon {
+            width: 64px;
+            height: 64px;
+            background: #ecfdf5;
+            color: var(--mpesa-green);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 2rem;
+        }
+        h1 { font-size: 1.5rem; color: var(--text-main); margin-bottom: 8px; }
+        .subtitle { color: var(--text-muted); font-size: 0.875rem; margin-bottom: 24px; }
+        
+        .receipt-details {
+            background: #f9fafb;
+            border-radius: 8px;
+            padding: 16px;
+            text-align: left;
+            margin-bottom: 24px;
+        }
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            font-size: 0.875rem;
+        }
+        .detail-row:last-child { margin-bottom: 0; }
+        .detail-label { color: var(--text-muted); }
+        .detail-value { font-weight: 600; color: var(--text-main); }
+        .total-row {
+            border-top: 1px dashed var(--border-color);
+            padding-top: 12px;
+            margin-top: 12px;
+        }
+        .total-value { font-size: 1.25rem; color: var(--mpesa-green); }
+
+        .home-btn {
+            display: inline-block;
+            width: 100%;
+            background: var(--mpesa-green);
+            color: white;
+            text-decoration: none;
+            padding: 14px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+        .home-btn:hover { background: #2E8B1D; }
+        
+        .loading { color: var(--text-muted); font-size: 0.875rem; }
+    </style>
+</head>
+<body>
+    <div class="receipt-card" id="receiptCard" style="display: none;">
+        <div class="success-icon">✓</div>
+        <h1>Payment Successful!</h1>
+        <p class="subtitle">Your transaction has been confirmed.</p>
+        
+        <div class="receipt-details">
+            <div class="detail-row">
+                <span class="detail-label">Product</span>
+                <span class="detail-value" id="r-product">-</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Phone</span>
+                <span class="detail-value" id="r-phone">-</span>
+            </div>
+            <div class="detail-row total-row">
+                <span class="detail-label">Total Paid</span>
+                <span class="detail-value total-value" id="r-amount">-</span>
+            </div>
+        </div>
+
+        <a href="/" class="home-btn">Continue Shopping</a>
+    </div>
+
+    <div class="receipt-card" id="loadingCard">
+        <div class="loading">Verifying payment status...</div>
+    </div>
+
+    <script>
+        // Get transaction ID from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const txId = urlParams.get('id');
+
+        if (txId) {
+            fetch(`/api/status/${txId}`)
+                .then(res => res.json())
+                .then(tx => {
+                    if (tx.status === 'success') {
+                        document.getElementById('r-product').textContent = tx.product;
+                        document.getElementById('r-phone').textContent = tx.phone;
+                        document.getElementById('r-amount').textContent = 'KES ' + tx.amount;
+                        
+                        document.getElementById('loadingCard').style.display = 'none';
+                        document.getElementById('receiptCard').style.display = 'block';
+                    } else {
+                        document.getElementById('loadingCard').innerHTML = '<h1 style="color: #991b1b;">Payment Failed</h1><p class="subtitle">Please try again.</p><a href="/" class="home-btn" style="background: #991b1b;">Go Back</a>';
+                    }
+                })
+                .catch(() => {
+                    document.getElementById('loadingCard').innerHTML = '<h1 style="color: #991b1b;">Error</h1><p class="subtitle">Could not verify transaction.</p><a href="/" class="home-btn" style="background: #991b1b;">Go Back</a>';
+                });
+        } else {
+            window.location.href = '/';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | SwiftMart</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --brand-primary: #2563eb; --bg-color: #f8fafc; --text-main: #0f172a; --border-color: #e2e8f0; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-color); color: var(--text-main); min-height: 100vh; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        
+        nav { background: white; padding: 16px 0; border-bottom: 1px solid var(--border-color); margin-bottom: 30px; }
+        .nav-content { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .logo { font-weight: 800; font-size: 1.5rem; color: var(--brand-primary); text-decoration: none; }
+        .back-btn { background: var(--brand-primary); color: white; padding: 8px 16px; border-radius: 6px; text-decoration: none; font-weight: 600; }
+
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+        .header h1 { font-size: 1.8rem; }
+
+        .table-container { background: white; border-radius: 12px; border: 1px solid var(--border-color); overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; min-width: 800px; }
+        th, td { padding: 16px; text-align: left; border-bottom: 1px solid var(--border-color); }
+        th { background: #f1f5f9; font-weight: 600; font-size: 0.875rem; color: #64748b; text-transform: uppercase; }
+        tr:last-child td { border-bottom: none; }
+        
+        .status { padding: 4px 12px; border-radius: 999px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
+        .status.success { background: #dcfce7; color: #166534; }
+        .status.pending { background: #fef9c3; color: #854d0e; }
+        .status.failed { background: #fee2e2; color: #991b1b; }
+
+        .method { font-weight: 600; }
+        .method.mpesa { color: #43B02A; }
+        .method.paystack { color: #0f172a; }
+        
+        .empty-state { text-align: center; padding: 60px 20px; color: #64748b; }
+        
+        .btn-approve { background: #10b981; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-weight: 600; margin-right: 8px; }
+        .btn-delete { background: #ef4444; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-weight: 600; }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-content">
+            <a href="/" class="logo">🛍️ SwiftMart Admin</a>
+            <a href="/" class="back-btn">← Back to Store</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Tabs -->
+        <div style="display: flex; gap: 16px; margin-bottom: 24px; border-bottom: 1px solid var(--border-color);">
+            <button onclick="showTab('orders')" id="tab-orders" style="padding: 12px 24px; background: var(--brand-primary); color: white; border: none; border-radius: 8px 8px 0 0; cursor: pointer; font-weight: 600;">📦 Orders</button>
+            <button onclick="showTab('inventory')" id="tab-inventory" style="padding: 12px 24px; background: #f1f5f9; color: var(--text-muted); border: none; border-radius: 8px 8px 0 0; cursor: pointer; font-weight: 600;">📊 Inventory</button>
+            <button onclick="showTab('reviews')" id="tab-reviews" style="padding: 12px 24px; background: #f1f5f9; color: var(--text-muted); border: none; border-radius: 8px 8px 0 0; cursor: pointer; font-weight: 600;">⭐ Reviews</button>
+        </div>
+
+        <!-- Orders Section -->
+        <div id="orders-section">
+            <div class="header">
+                <h1>Order Management</h1>
+                <button onclick="loadOrders()" style="padding: 8px 16px; background: #e2e8f0; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">🔄 Refresh</button>
+            </div>
+            <div class="table-container">
+                <table id="ordersTable">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Product</th>
+                            <th>Amount (KES)</th>
+                            <th>Customer Contact</th>
+                            <th>Payment Method</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ordersBody">
+                        <tr><td colspan="6" class="empty-state">Loading orders...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Inventory Section -->
+        <div id="inventory-section" style="display: none;">
+            <div class="header">
+                <h1>Inventory Management</h1>
+                <button onclick="loadInventory()" style="padding: 8px 16px; background: #e2e8f0; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">🔄 Refresh</button>
+            </div>
+            <div class="table-container">
+                <table id="inventoryTable">
+                    <thead>
+                        <tr>
+                            <th>Product Name</th>
+                            <th>Category</th>
+                            <th>Price (KES)</th>
+                            <th>Current Stock</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="inventoryBody">
+                        <tr><td colspan="5" class="empty-state">Loading inventory...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- NEW: Reviews Section -->
+        <div id="reviews-section" style="display: none;">
+            <div class="header">
+                <h1>Review Management</h1>
+                <button onclick="loadReviews()" style="padding: 8px 16px; background: #e2e8f0; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">🔄 Refresh</button>
+            </div>
+            <div class="table-container">
+                <table id="reviewsTable">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Product</th>
+                            <th>Author</th>
+                            <th>Rating</th>
+                            <th>Comment</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="reviewsBody">
+                        <tr><td colspan="7" class="empty-state">Loading reviews...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Tab Switching Logic
+        function showTab(tabName) {
+            document.getElementById('orders-section').style.display = tabName === 'orders' ? 'block' : 'none';
+            document.getElementById('inventory-section').style.display = tabName === 'inventory' ? 'block' : 'none';
+            document.getElementById('reviews-section').style.display = tabName === 'reviews' ? 'block' : 'none';
+            
+            document.getElementById('tab-orders').style.background = tabName === 'orders' ? 'var(--brand-primary)' : '#f1f5f9';
+            document.getElementById('tab-orders').style.color = tabName === 'orders' ? 'white' : 'var(--text-muted)';
+            document.getElementById('tab-inventory').style.background = tabName === 'inventory' ? 'var(--brand-primary)' : '#f1f5f9';
+            document.getElementById('tab-inventory').style.color = tabName === 'inventory' ? 'white' : 'var(--text-muted)';
+            document.getElementById('tab-reviews').style.background = tabName === 'reviews' ? 'var(--brand-primary)' : '#f1f5f9';
+            document.getElementById('tab-reviews').style.color = tabName === 'reviews' ? 'white' : 'var(--text-muted)';
+
+            if (tabName === 'inventory') loadInventory();
+            if (tabName === 'reviews') loadReviews();
+        }
+
+        // Order Loading Logic
+        async function loadOrders() {
+            const tbody = document.getElementById('ordersBody');
+            tbody.innerHTML = '<tr><td colspan="6" class="empty-state">Loading orders...</td></tr>';
+            try {
+                const res = await fetch('/api/admin/orders');
+                const data = await res.json();
+                if (res.status === 401) { window.location.href = '/login'; return; }
+                if (res.status === 403) { tbody.innerHTML = '<tr><td colspan="6" class="empty-state">❌ Access Denied.</td></tr>'; return; }
+
+                if (data.orders && data.orders.length > 0) {
+                    tbody.innerHTML = data.orders.map(order => {
+                        const date = new Date(order.createdAt).toLocaleDateString('en-KE', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+                        const contact = order.phone !== 'N/A' ? order.phone : (order.email || 'N/A');
+                        const method = order.paymentMethod || (order.phone !== 'N/A' ? 'M-Pesa' : 'Paystack');
+                        const methodClass = method.includes('M-Pesa') ? 'mpesa' : 'paystack';
+                        return `<tr>
+                            <td>${date}</td>
+                            <td><strong>${order.product}</strong></td>
+                            <td>KES ${order.amount.toLocaleString()}</td>
+                            <td>${contact}</td>
+                            <td><span class="method ${methodClass}">${method}</span></td>
+                            <td><span class="status ${order.status}">${order.status}</span></td>
+                        </tr>`;
+                    }).join('');
+                } else {
+                    tbody.innerHTML = '<tr><td colspan="6" class="empty-state">No orders found yet.</td></tr>';
+                }
+            } catch (error) { tbody.innerHTML = '<tr><td colspan="6" class="empty-state">❌ Failed to load orders.</td></tr>'; }
+        }
+
+        // Inventory Loading Logic
+        async function loadInventory() {
+            const tbody = document.getElementById('inventoryBody');
+            tbody.innerHTML = '<tr><td colspan="5" class="empty-state">Loading inventory...</td></tr>';
+            try {
+                const res = await fetch('/api/products');
+                const data = await res.json();
+                if (data.products && data.products.length > 0) {
+                    tbody.innerHTML = data.products.map(p => `
+                        <tr>
+                            <td><strong>${p.name}</strong></td>
+                            <td>${p.category}</td>
+                            <td>KES ${p.price.toLocaleString()}</td>
+                            <td><input type="number" id="stock-${p._id}" value="${p.stock}" min="0" style="width: 70px; padding: 6px; border: 1px solid #e2e8f0; border-radius: 4px;"></td>
+                            <td><button onclick="updateStock('${p._id}')" style="background: #10b981; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-weight: 600;">Update</button></td>
+                        </tr>
+                    `).join('');
+                } else {
+                    tbody.innerHTML = '<tr><td colspan="5" class="empty-state">No products in database.</td></tr>';
+                }
+            } catch (error) { tbody.innerHTML = '<tr><td colspan="5" class="empty-state">❌ Failed to load inventory.</td></tr>'; }
+        }
+
+        async function updateStock(productId) {
+            const newStock = document.getElementById(`stock-${productId}`).value;
+            try {
+                const res = await fetch(`/api/admin/products/${productId}/stock`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ stock: parseInt(newStock) })
+                });
+                if (res.ok) { alert('✅ Stock updated!'); loadInventory(); } 
+                else { alert('❌ Failed to update stock.'); }
+            } catch (error) { alert('❌ Network error.'); }
+        }
+
+        // NEW: Review Loading Logic
+        async function loadReviews() {
+            const tbody = document.getElementById('reviewsBody');
+            tbody.innerHTML = '<tr><td colspan="7" class="empty-state">Loading reviews...</td></tr>';
+            try {
+                const res = await fetch('/api/admin/reviews');
+                const data = await res.json();
+                if (res.status === 401) { window.location.href = '/login'; return; }
+                if (res.status === 403) { tbody.innerHTML = '<tr><td colspan="7" class="empty-state">❌ Access Denied.</td></tr>'; return; }
+
+                if (data.reviews && data.reviews.length > 0) {
+                    tbody.innerHTML = data.reviews.map(r => {
+                        const date = new Date(r.createdAt).toLocaleDateString('en-KE', { day: 'numeric', month: 'short' });
+                        const statusClass = r.approved ? 'success' : 'pending';
+                        const statusText = r.approved ? 'Approved' : 'Pending';
+                        return `
+                        <tr>
+                            <td>${date}</td>
+                            <td><strong>${r.productName}</strong></td>
+                            <td>${r.author}</td>
+                            <td>${'⭐'.repeat(r.rating)}</td>
+                            <td style="max-width: 250px; font-style: italic;">"${r.comment}"</td>
+                            <td><span class="status ${statusClass}">${statusText}</span></td>
+                            <td>
+                                ${!r.approved ? `<button class="btn-approve" onclick="approveReview('${r._id}')">Approve</button>` : ''}
+                                <button class="btn-delete" onclick="deleteReview('${r._id}')">Delete</button>
+                            </td>
+                        </tr>`;
+                    }).join('');
+                } else {
+                    tbody.innerHTML = '<tr><td colspan="7" class="empty-state">No reviews found yet.</td></tr>';
+                }
+            } catch (error) { tbody.innerHTML = '<tr><td colspan="7" class="empty-state">❌ Failed to load reviews.</td></tr>'; }
+        }
+
+        async function approveReview(reviewId) {
+            if (!confirm('Approve this review? It will become visible on the homepage.')) return;
+            try {
+                const res = await fetch(`/api/admin/reviews/${reviewId}/approve`, { method: 'PUT' });
+                if (res.ok) { alert('✅ Review approved!'); loadReviews(); }
+                else { alert('❌ Failed to approve.'); }
+            } catch (error) { alert('❌ Network error.'); }
+        }
+
+        async function deleteReview(reviewId) {
+            if (!confirm('Delete this review permanently?')) return;
+            try {
+                const res = await fetch(`/api/admin/reviews/${reviewId}`, { method: 'DELETE' });
+                if (res.ok) { alert('✅ Review deleted!'); loadReviews(); }
+                else { alert('❌ Failed to delete.'); }
+            } catch (error) { alert('❌ Network error.'); }
+        }
+
+        // Load orders on page load
+        loadOrders();
+    </script>
+</body>
+</html>

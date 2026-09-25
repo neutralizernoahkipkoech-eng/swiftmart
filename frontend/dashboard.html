@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Orders | SwiftMart</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --brand-primary: #2563eb;
+            --brand-secondary: #1e40af;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --success: #10b981;
+            --failed: #ef4444;
+            --pending: #f59e0b;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container { max-width: 900px; margin: 0 auto; }
+        
+        .header {
+            background: var(--card-bg);
+            padding: 24px 32px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            border: 1px solid var(--border-color);
+        }
+        .header h1 { font-size: 1.5rem; color: var(--brand-primary); display: flex; align-items: center; gap: 8px; }
+        .user-info { text-align: right; display: flex; flex-direction: column; gap: 8px; align-items: flex-end;}
+        .user-name { font-weight: 600; color: var(--text-main); }
+        .logout-btn {
+            background: var(--text-muted);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.875rem;
+            transition: background 0.2s;
+        }
+        .logout-btn:hover { background: #475569; }
+        
+        .orders-list { display: flex; flex-direction: column; gap: 16px; }
+        .order-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            border: 1px solid var(--border-color);
+        }
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .order-id { font-size: 0.875rem; color: var(--text-muted); }
+        .order-status {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .status-success { background: #d1fae5; color: var(--success); }
+        .status-failed { background: #fee2e2; color: var(--failed); }
+        .status-pending { background: #fef3c7; color: var(--pending); }
+        
+        .order-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 16px;
+        }
+        .detail-item label { display: block; font-size: 0.75rem; color: var(--text-muted); margin-bottom: 4px; font-weight: 500; }
+        .detail-item value { font-size: 0.9rem; font-weight: 600; color: var(--text-main); }
+        
+        .empty-state {
+            text-align: center;
+            padding: 64px 24px;
+            background: var(--card-bg);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+        .empty-state h2 { color: var(--text-main); margin-bottom: 16px; }
+        .shop-btn {
+            display: inline-block;
+            background: var(--brand-primary);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 16px;
+        }
+        .shop-btn:hover { background: var(--brand-secondary); }
+        
+        .loading { text-align: center; padding: 32px; color: var(--text-muted); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🛍️ My Orders</h1>
+            <div class="user-info">
+                <div class="user-name" id="userName">Loading...</div>
+                <button class="logout-btn" onclick="logout()">Logout</button>
+            </div>
+        </div>
+        
+        <div id="ordersContainer">
+            <div class="loading">Loading your orders...</div>
+        </div>
+    </div>
+
+    <script>
+        async function loadDashboard() {
+            try {
+                const userRes = await fetch('/api/auth/me');
+                const userData = await userRes.json();
+                
+                if (!userData.user) {
+                    window.location.href = '/login';
+                    return;
+                }
+                
+                document.getElementById('userName').textContent = userData.user.name;
+                
+                const ordersRes = await fetch('/api/orders');
+                const ordersData = await ordersRes.json();
+                
+                displayOrders(ordersData.orders);
+            } catch (error) {
+                console.error('Dashboard error:', error);
+                window.location.href = '/login';
+            }
+        }
+
+        function displayOrders(orders) {
+            const container = document.getElementById('ordersContainer');
+            
+            if (!orders || orders.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <h2>No orders yet</h2>
+                        <p style="color: var(--text-muted); margin-bottom: 16px;">Start shopping to see your orders here</p>
+                        <a href="/" class="shop-btn">Start Shopping</a>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = `
+                <div class="orders-list">
+                    ${orders.map(order => `
+                        <div class="order-card">
+                            <div class="order-header">
+                                <div>
+                                    <div class="order-id">Order #${order.checkoutRequestId.slice(-8).toUpperCase()}</div>
+                                    <div style="font-weight: 700; margin-top: 4px; font-size: 1.1rem;">${order.product}</div>
+                                </div>
+                                <span class="order-status status-${order.status}">${order.status}</span>
+                            </div>
+                            <div class="order-details">
+                                <div class="detail-item">
+                                    <label>Amount</label>
+                                    <value>KES ${order.amount.toLocaleString()}</value>
+                                </div>
+                                <div class="detail-item">
+                                    <label>Phone</label>
+                                    <value>${order.phone}</value>
+                                </div>
+                                <div class="detail-item">
+                                    <label>Date</label>
+                                    <value>${new Date(order.createdAt).toLocaleDateString()}</value>
+                                </div>
+                                ${order.mpesaReceiptNumber ? `
+                                <div class="detail-item">
+                                    <label>M-Pesa Receipt</label>
+                                    <value>${order.mpesaReceiptNumber}</value>
+                                </div>
+                                ` : ''}
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        async function logout() {
+            await fetch('/api/auth/logout', { method: 'POST' });
+            window.location.href = '/login';
+        }
+
+        loadDashboard();
+    </script>
+</body>
+</html>
