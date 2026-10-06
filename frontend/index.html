@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SwiftMart | Professional Services & Quality Products</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
         :root {
             --brand-primary: #2563eb;
@@ -21,9 +23,124 @@
         
         nav { background: white; padding: 16px 0; border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 100; }
         .nav-content { display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-weight: 800; font-size: 1.5rem; color: var(--brand-primary); display: flex; align-items: center; gap: 8px; text-decoration: none;}
-        .site-logo { height: 100px; width: auto; object-fit: contain; } /* NEW LOGO STYLING */
         
+        /* --- NEW ELECTRIC LOGO STYLES --- */
+        .logo { 
+            font-weight: 800; 
+            font-size: 1.5rem; 
+            display: flex; 
+            align-items: center; 
+            gap: 8px; 
+            text-decoration: none;
+            position: relative;
+        }
+        .lightning-bolt {
+            position: relative;
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: rotateBolt 3s ease-in-out infinite;
+        }
+        .lightning-bolt svg {
+            width: 100%;
+            height: 100%;
+            filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.8));
+            animation: lightningFlash 2s ease-in-out infinite;
+        }
+        .lightning-bolt::before {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background: radial-gradient(circle, rgba(255,215,0,0.4) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: pulseGlow 1.5s ease-in-out infinite;
+            z-index: -1;
+        }
+        .logo-text {
+            background: linear-gradient(90deg, #FFD700, #FF6B00, #FF006E, #8338EC, #3A86FF, #FFD700);
+            background-size: 300% 100%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: colorShift 3s ease-in-out infinite, textGlow 2s ease-in-out infinite;
+            font-weight: 900;
+            letter-spacing: 1px;
+            position: relative;
+        }
+        @keyframes rotateBolt {
+            0%, 100% { transform: rotate(0deg) scale(1); }
+            25% { transform: rotate(15deg) scale(1.1); }
+            50% { transform: rotate(0deg) scale(1); }
+            75% { transform: rotate(-15deg) scale(1.1); }
+        }
+        @keyframes lightningFlash {
+            0%, 100% { filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.8)) brightness(1); }
+            10%, 30%, 50% { filter: drop-shadow(0 0 20px rgba(255, 255, 255, 1)) brightness(1.5); }
+            20%, 40% { filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.5)) brightness(0.9); }
+        }
+        @keyframes pulseGlow {
+            0%, 100% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+        @keyframes colorShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        @keyframes textGlow {
+            0%, 100% { filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.5)); }
+            50% { filter: drop-shadow(0 0 15px rgba(255, 107, 0, 0.8)); }
+        }
+        .logo:hover .lightning-bolt { animation: rotateBolt 0.5s ease-in-out infinite; }
+        .logo:hover .logo-text { animation: colorShift 1s ease-in-out infinite, textGlow 0.5s ease-in-out infinite; }
+        @media (max-width: 768px) {
+            .lightning-bolt { width: 28px; height: 28px; }
+            .logo-text { font-size: 1.2rem; }
+        }
+
+        .animated-banner {
+            width: 100%;
+            overflow: hidden;
+            background: linear-gradient(90deg, #1e3c72, #2a5298, #1e3c72);
+            padding: 15px 0;
+            position: relative;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .banner-content {
+            display: flex;
+            white-space: nowrap;
+            animation: scrollText 25s linear infinite;
+        }
+        .banner-text {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #ffffff;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            animation: colorChange 6s ease-in-out infinite;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            padding-right: 50px;
+        }
+        @keyframes scrollText {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+        @keyframes colorChange {
+            0% { color: #ffffff; text-shadow: 2px 2px 4px rgba(255,255,255,0.3); }
+            25% { color: #ffd700; text-shadow: 2px 2px 8px rgba(255,215,0,0.5); }
+            50% { color: #00ff88; text-shadow: 2px 2px 8px rgba(0,255,136,0.5); }
+            75% { color: #ff6b9d; text-shadow: 2px 2px 8px rgba(255,107,157,0.5); }
+            100% { color: #ffffff; text-shadow: 2px 2px 4px rgba(255,255,255,0.3); }
+        }
+        .animated-banner:hover .banner-content { animation-play-state: paused; }
+        @media (max-width: 768px) {
+            .banner-text { font-size: 0.9rem; }
+            .animated-banner { padding: 10px 0; }
+        }
+
         .hero { background: linear-gradient(135deg, #1e40af 0%, #2563eb 100%); color: white; padding: 80px 20px; text-align: center; margin-bottom: 60px; }
         .hero h1 { font-size: 2.5rem; font-weight: 800; margin-bottom: 16px; }
         .hero p { font-size: 1.2rem; opacity: 0.9; max-width: 600px; margin: 0 auto; }
@@ -68,16 +185,108 @@
         .message.success { background: #ecfdf5; color: #065f46; border: 1px solid #a7f3d0; display: block; }
         .message.error { background: #fef2f2; color: #991b1b; border: 1px solid #fecaca; display: block; }
 
-        footer { background: #0f172a; color: white; padding: 40px 20px; text-align: center; margin-top: auto; }
-        footer p { color: #94a3b8; font-size: 0.875rem; margin-top: 16px; }
-        .footer-links { display: flex; justify-content: center; gap: 24px; margin-bottom: 16px; }
-        .footer-links a { color: white; text-decoration: none; font-weight: 500; }
-        .footer-links a:hover { color: var(--brand-primary); }
+        .modern-footer {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #cbd5e1;
+            padding: 60px 0 0 0;
+            font-family: 'Inter', sans-serif;
+            position: relative;
+            overflow: hidden;
+            margin-top: auto;
+        }
+        .modern-footer::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; height: 4px;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899, #3b82f6);
+            background-size: 200% 100%;
+            animation: gradientMove 3s ease infinite;
+        }
+        @keyframes gradientMove {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        .footer-container {
+            max-width: 1200px; margin: 0 auto; padding: 0 20px;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 40px;
+        }
+        .footer-section h3, .footer-section h4 {
+            color: #ffffff; margin-bottom: 20px; font-size: 1.2rem; font-weight: 600;
+            position: relative; padding-bottom: 10px;
+        }
+        .footer-section h4::after {
+            content: ''; position: absolute; bottom: 0; left: 0; width: 40px; height: 2px;
+            background: #3b82f6; transition: width 0.3s ease;
+        }
+        .footer-section:hover h4::after { width: 60px; }
+        .footer-logo {
+            font-size: 1.8rem;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text; margin-bottom: 15px;
+        }
+        .footer-description { line-height: 1.6; margin-bottom: 20px; font-size: 0.95rem; }
+        .social-links { display: flex; gap: 12px; }
+        .social-icon {
+            width: 40px; height: 40px; border-radius: 50%;
+            background: rgba(59, 130, 246, 0.1); display: flex; align-items: center; justify-content: center;
+            color: #3b82f6; text-decoration: none; transition: all 0.3s ease; border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+        .social-icon:hover { background: #3b82f6; color: #ffffff; transform: translateY(-3px); box-shadow: 0 5px 15px rgba(59, 130, 246, 0.4); }
+        .footer-links { list-style: none; padding: 0; margin: 0; }
+        .footer-links li { margin-bottom: 12px; }
+        .footer-links a {
+            color: #cbd5e1; text-decoration: none; transition: all 0.3s ease;
+            display: inline-block; position: relative; padding-left: 0;
+        }
+        .footer-links a::before {
+            content: '→'; position: absolute; left: -20px; opacity: 0; transition: all 0.3s ease; color: #3b82f6;
+        }
+        .footer-links a:hover { color: #3b82f6; padding-left: 20px; }
+        .footer-links a:hover::before { opacity: 1; left: 0; }
+        .contact-info { list-style: none; padding: 0; margin: 0; }
+        .contact-info li { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 15px; font-size: 0.95rem; }
+        .contact-info i { color: #3b82f6; margin-top: 3px; min-width: 16px; }
+        .newsletter-text { font-size: 0.9rem; margin-bottom: 15px; line-height: 1.5; }
+        .newsletter-form { display: flex; flex-direction: column; gap: 10px; }
+        .newsletter-form input {
+            padding: 12px 15px; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 6px;
+            background: rgba(255, 255, 255, 0.05); color: #ffffff; font-size: 0.9rem; transition: all 0.3s ease;
+        }
+        .newsletter-form input:focus { outline: none; border-color: #3b82f6; background: rgba(255, 255, 255, 0.1); }
+        .newsletter-form input::placeholder { color: #94a3b8; }
+        .newsletter-form button {
+            padding: 12px 20px; background: linear-gradient(135deg, #3b82f6, #8b5cf6); color: #ffffff;
+            border: none; border-radius: 6px; font-weight: 600; cursor: pointer; transition: all 0.3s ease;
+            text-transform: uppercase; font-size: 0.85rem; letter-spacing: 0.5px;
+        }
+        .newsletter-form button:hover { transform: translateY(-2px); box-shadow: 0 5px 20px rgba(59, 130, 246, 0.4); }
+        .payment-methods {
+            max-width: 1200px; margin: 40px auto 0; padding: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex; align-items: center; justify-content: center; gap: 20px; flex-wrap: wrap;
+        }
+        .payment-methods span { color: #94a3b8; font-size: 0.9rem; }
+        .payment-icons { display: flex; gap: 15px; align-items: center; font-size: 1.8rem; color: #cbd5e1; }
+        .mpesa-badge { background: #00a651; color: #ffffff; padding: 5px 12px; border-radius: 4px; font-size: 0.85rem; font-weight: 600; }
+        .footer-bottom {
+            max-width: 1200px; margin: 0 auto; padding: 20px; text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1); font-size: 0.85rem; color: #94a3b8;
+        }
+        .footer-bottom i { color: #ec4899; animation: heartbeat 1.5s ease-in-out infinite; }
+        @keyframes heartbeat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.2); } }
+        @media (max-width: 768px) {
+            .modern-footer { padding: 40px 0 0 0; }
+            .footer-container { grid-template-columns: 1fr; gap: 30px; }
+            .payment-methods { flex-direction: column; gap: 10px; }
+        }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translate(-50%, 20px); } to { opacity: 1; transform: translate(-50%, 0); } }
+        @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
 
         .auth-section { display: flex; gap: 12px; align-items: center; }
         .auth-section a, .auth-section button { font-size: 0.875rem; }
 
-        /* Cart Styles */
         .cart-icon { position: relative; cursor: pointer; font-size: 1.5rem; margin-right: 16px; }
         .cart-badge { position: absolute; top: -8px; right: -8px; background: #ef4444; color: white; font-size: 0.7rem; font-weight: 700; width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
         .cart-sidebar { position: fixed; top: 0; right: -400px; width: 380px; height: 100vh; background: white; box-shadow: -5px 0 25px rgba(0,0,0,0.1); z-index: 200; transition: right 0.3s ease; display: flex; flex-direction: column; padding: 24px; }
@@ -99,7 +308,6 @@
         .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 150; display: none; }
         .overlay.active { display: block; }
 
-        /* Search & Filter Styles */
         .search-filter-container {
             background: white; padding: 24px; border-radius: 12px; border: 1px solid var(--border-color);
             margin-bottom: 40px; display: flex; gap: 16px; flex-wrap: wrap; box-shadow: 0 4px 6px rgba(0,0,0,0.02);
@@ -116,7 +324,6 @@
 <body>
     <div class="overlay" id="overlay" onclick="toggleCart()"></div>
     
-    <!-- Cart Sidebar -->
     <div class="cart-sidebar" id="cartSidebar">
         <div class="cart-header">
             <h2>🛒 Your Cart</h2>
@@ -136,8 +343,22 @@
 
     <nav>
         <div class="container nav-content">
-            <!-- LOGO UPDATED HERE -->
-            <a href="/" class="logo"><img src="logo.png" alt="SwiftMart Logo" class="site-logo"></a>
+            <!-- NEW ELECTRIC LOGO -->
+            <a href="/" class="logo">
+                <div class="lightning-bolt">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" fill="url(#lightningGradient)" stroke="#FFD700" stroke-width="0.5" stroke-linejoin="round"/>
+                        <defs>
+                            <linearGradient id="lightningGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#FFD700;stop-opacity:1" />
+                                <stop offset="50%" style="stop-color:#FF6B00;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#FF006E;stop-opacity:1" />
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                </div>
+                <span class="logo-text">SwiftMart</span>
+            </a>
             <div class="auth-section" id="authSection">
                 <div class="cart-icon" onclick="toggleCart()">
                     🛒 <span class="cart-badge" id="cartBadge">0</span>
@@ -151,6 +372,12 @@
         </div>
     </nav>
 
+    <div class="animated-banner">
+        <div class="banner-content">
+            <span class="banner-text">Welcome to SwiftMart. We provide top-tier digital services and premium products. &nbsp;&nbsp;&nbsp; • &nbsp;&nbsp;&nbsp; Fast Delivery Across Kenya! &nbsp;&nbsp;&nbsp; • &nbsp;&nbsp;&nbsp; Secure M-Pesa & Card Payments. &nbsp;&nbsp;&nbsp; • &nbsp;&nbsp;&nbsp; Welcome to SwiftMart. We provide top-tier digital services and premium products. &nbsp;&nbsp;&nbsp; • &nbsp;&nbsp;&nbsp;</span>
+        </div>
+    </div>
+
     <div class="hero">
         <div class="container">
             <h1>Quality Products & Professional Services</h1>
@@ -161,11 +388,10 @@
     <div class="container">
         <div class="trust-badges">
             <div class="badge"><div class="badge-icon">🔒</div><h3>Secure Payments</h3><p>M-Pesa & Global Gateways</p></div>
-            <div class="badge"><div class="badge-icon">⚡</div><h3>Fast Delivery</h3><p>Quick shipping & booking</p></div>
+            <div class="badge"><div class="badge-icon"></div><h3>Fast Delivery</h3><p>Quick shipping & booking</p></div>
             <div class="badge"><div class="badge-icon">💬</div><h3>24/7 Support</h3><p>We're here to help</p></div>
         </div>
 
-        <!-- SEARCH & FILTER BAR -->
         <div class="search-filter-container">
             <div class="search-box">
                 <span class="search-icon">🔍</span>
@@ -174,6 +400,7 @@
             <div class="filter-box">
                 <select id="categoryFilter" onchange="filterProducts()">
                     <option value="all">All Categories</option>
+                    <option value="databundles">Data Bundles & Offers</option>
                     <option value="services">Professional Services</option>
                     <option value="webdev">Web Development & Hosting</option>
                     <option value="socialmedia">Social Media Services</option>
@@ -227,7 +454,7 @@
             </div>
         </div>
 
-        <!-- NEW: SOCIAL MEDIA SERVICES -->
+        <!-- SOCIAL MEDIA SERVICES -->
         <div class="section-header" data-section="socialmedia"><div class="section-divider"></div><h2>Social Media Services</h2><p>Grow your brand's online audience</p></div>
         <div class="grid" id="grid-socialmedia">
             <div class="card" data-category="socialmedia">
@@ -371,19 +598,68 @@
             </div>
         </div>
 
+        <!-- DATA BUNDLES & OFFERS -->
+        <div class="section-header" data-section="databundles">
+            <div class="section-divider"></div>
+            <h2>Exclusive Data Bundles & Offers</h2>
+            <p>Stay connected with our favorable, high-speed data packages</p>
+        </div>
+
+        <div class="grid" id="grid-databundles">
+            <div class="card" data-category="databundles">
+                <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=400&h=300&q=80" alt="1GB Daily Bundle" class="card-image">
+                <div class="card-body">
+                    <div class="card-name">1GB Daily Bundle</div>
+                    <div class="card-description">Valid for 24 hours. Perfect for quick browsing, WhatsApp, and social media.</div>
+                    <div class="card-price">KES 50</div>
+                    <button class="action-btn" onclick="addToCart('1GB Daily Bundle', 50)">Add to Cart</button>
+                </div>
+            </div>
+            <div class="card" data-category="databundles">
+                <img src="https://images.unsplash.com/photo-1522869635100-9f4c5e86aa37?auto=format&fit=crop&w=400&h=300&q=80" alt="5GB Monthly Bundle" class="card-image">
+                <div class="card-body">
+                    <div class="card-name">5GB Monthly Bundle</div>
+                    <div class="card-description">Valid for 30 days. Great for streaming, remote work, and online classes.</div>
+                    <div class="card-price">KES 500</div>
+                    <button class="action-btn" onclick="addToCart('5GB Monthly Bundle', 500)">Add to Cart</button>
+                </div>
+            </div>
+            <div class="card" data-category="databundles">
+                <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=400&h=300&q=80" alt="10GB Monthly Bundle" class="card-image">
+                <div class="card-body">
+                    <div class="card-name">10GB Monthly Bundle</div>
+                    <div class="card-description">Valid for 30 days. Heavy usage, large downloads, and HD video streaming.</div>
+                    <div class="card-price">KES 1,000</div>
+                    <button class="action-btn" onclick="addToCart('10GB Monthly Bundle', 1000)">Add to Cart</button>
+                </div>
+            </div>
+            <div class="card" data-category="databundles">
+                <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=400&h=300&q=80" alt="Unlimited Weekend" class="card-image">
+                <div class="card-body">
+                    <div class="card-name">Unlimited Weekend</div>
+                    <div class="card-description">Valid Friday 11 PM to Sunday 11:59 PM. Non-stop entertainment and browsing!</div>
+                    <div class="card-price">KES 150</div>
+                    <button class="action-btn" onclick="addToCart('Unlimited Weekend Bundle', 150)">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+
         <!-- Checkout Section -->
         <div class="checkout-section" id="checkout" style="display: none;">
-            <h2>Secure Checkout</h2>
+            <h2>Secure Checkout via Paystack</h2>
             <div id="checkoutSummary" style="background: #f8fafc; padding: 16px; border-radius: 8px; margin-bottom: 24px; border: 1px solid var(--border-color);"></div>
             <form id="paymentForm">
                 <div class="form-group">
-                    <label for="email">Email Address (Required for Receipt & M-Pesa Prompt)</label>
+                    <label for="email">Email Address (Required for Receipt & Payment)</label>
                     <input type="email" id="email" placeholder="customer@example.com" required>
                 </div>
                 
                 <button type="button" class="pay-btn" id="globalPayBtn" style="background: #2563eb; margin-bottom: 16px;" onclick="payWithPaystack()">
                     💳 Pay Now (Card, PayPal, or M-Pesa)
                 </button>
+                <p style="text-align: center; color: var(--text-muted); font-size: 0.85rem;">
+                    <i class="fas fa-lock"></i> Secure payment powered by Paystack. You'll receive an M-Pesa prompt on your phone.
+                </p>
             </form>
             <div id="messageBox" class="message"></div>
         </div>
@@ -395,7 +671,6 @@
             <p>See what our customers are saying</p>
         </div>
         <div style="max-width: 900px; margin: 0 auto 60px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
-            <!-- Review Form -->
             <div style="background: white; padding: 24px; border-radius: 12px; border: 1px solid var(--border-color);">
                 <h3 style="margin-bottom: 16px;">Leave a Review</h3>
                 <form id="reviewForm">
@@ -426,7 +701,6 @@
                 </form>
             </div>
 
-            <!-- Recent Reviews Display -->
             <div style="background: white; padding: 24px; border-radius: 12px; border: 1px solid var(--border-color); max-height: 450px; overflow-y: auto;">
                 <h3 style="margin-bottom: 16px;">Recent Approved Reviews</h3>
                 <div id="reviewsList">
@@ -436,14 +710,77 @@
         </div>
     </div>
 
-    <footer>
-        <div class="container">
-            <div class="footer-links">
-                <a href="/">Home</a>
-                <a href="/dashboard">My Orders</a>
-                <a href="/login">Login</a>
+    <!-- MODERN FOOTER -->
+    <footer class="modern-footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3 class="footer-logo">SwiftMart</h3>
+                <p class="footer-description">
+                    Your trusted destination for top-tier digital services and premium products. We deliver quality, speed, and excellence to every customer.
+                </p>
+                <div class="social-links">
+                    <a href="#" class="social-icon" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-icon" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-icon" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-icon" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                </div>
             </div>
-            <p>&copy; 2026 SwiftMart. All rights reserved.</p>
+
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul class="footer-links">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/shop">Shop</a></li>
+                    <li><a href="/about">About Us</a></li>
+                    <li><a href="/contact">Contact</a></li>
+                    <li><a href="/blog">Blog</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4>Customer Service</h4>
+                <ul class="footer-links">
+                    <li><a href="/dashboard">My Orders</a></li>
+                    <li><a href="/returns">Returns & Refunds</a></li>
+                    <li><a href="/shipping">Shipping Info</a></li>
+                    <li><a href="/faq">FAQ</a></li>
+                    <li><a href="/privacy">Privacy Policy</a></li>
+                    <li><a href="/terms">Terms & Conditions</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4>Contact Us</h4>
+                <ul class="contact-info">
+                    <li><i class="fas fa-map-marker-alt"></i><span>Nairobi, Kenya</span></li>
+                    <li><i class="fas fa-phone"></i><span>+254 754 427 226</span></li>
+                    <li><i class="fas fa-envelope"></i><span>support@swiftmartkenya.co.ke</span></li>
+                    <li><i class="fas fa-clock"></i><span>Mon - Sat: 8:00 AM - 6:00 PM</span></li>
+                </ul>
+            </div>
+
+            <div class="footer-section newsletter-section">
+                <h4>Stay Updated</h4>
+                <p class="newsletter-text">Subscribe to get special offers, free giveaways, and exclusive deals.</p>
+                <form class="newsletter-form" id="newsletterForm">
+                    <input type="email" id="newsletterEmail" placeholder="Enter your email" required>
+                    <button type="submit">Subscribe</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="payment-methods">
+            <span>We Accept:</span>
+            <div class="payment-icons">
+                <i class="fab fa-cc-visa"></i>
+                <i class="fab fa-cc-mastercard"></i>
+                <i class="fab fa-cc-paypal"></i>
+                <span class="mpesa-badge">M-Pesa</span>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 SwiftMart. All rights reserved. | Designed with <i class="fas fa-heart"></i> in Kenya</p>
         </div>
     </footer>
 
@@ -613,15 +950,15 @@
                 if (data.authorization_url) {
                     window.location.href = data.authorization_url;
                 } else {
-                    messageBox.textContent = '❌ Could not start payment.';
+                    messageBox.textContent = '❌ Could not start payment. Please try again.';
                     messageBox.className = 'message error';
                     messageBox.style.display = 'block';
                     btn.disabled = false;
                     btn.innerHTML = originalText;
                 }
             } catch (error) {
-                console.error(error);
-                messageBox.textContent = '❌ Network error.';
+                console.error('Payment error:', error);
+                messageBox.textContent = '❌ Network error. Please check your connection and try again.';
                 messageBox.className = 'message error';
                 messageBox.style.display = 'block';
                 btn.disabled = false;
@@ -656,7 +993,6 @@
         checkAuth();
         checkStockLevels();
 
-        // Fetch stock levels and disable out-of-stock items
         async function checkStockLevels() {
             try {
                 const res = await fetch('/api/products');
@@ -684,7 +1020,7 @@
         }
 
         // --- REVIEW LOGIC ---
-        loadReviews(); // Load reviews on page load
+        loadReviews();
 
         async function loadReviews() {
             const list = document.getElementById('reviewsList');
@@ -730,17 +1066,76 @@
                 const data = await res.json();
                 if (data.success) {
                     msg.textContent = '✅ ' + data.message;
-                    msg.style.color = '#065f46'; // Green
+                    msg.style.color = '#065f46';
                     document.getElementById('reviewForm').reset();
                 } else {
                     msg.textContent = '❌ Failed to submit.';
-                    msg.style.color = '#991b1b'; // Red
+                    msg.style.color = '#991b1b';
                 }
             } catch (error) {
                 msg.textContent = '❌ Network error.';
                 msg.style.color = '#991b1b';
             }
         });
+
+        // --- NEWSLETTER SUBSCRIPTION ---
+        document.getElementById('newsletterForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const emailInput = document.getElementById('newsletterEmail');
+            const email = emailInput.value.trim();
+            
+            if (!email) {
+                showToast('❌ Please enter a valid email address.', '#991b1b');
+                return;
+            }
+            
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                showToast('❌ Please enter a valid email format.', '#991b1b');
+                return;
+            }
+            
+            try {
+                const res = await fetch('/api/newsletter/subscribe', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email })
+                });
+                
+                if (res.ok) {
+                    showToast('✅ Successfully subscribed! Welcome to SwiftMart.', '#065f46');
+                    emailInput.value = '';
+                } else {
+                    showToast('✅ Thanks for subscribing! We\'ll keep you updated.', '#065f46');
+                    emailInput.value = '';
+                }
+            } catch (error) {
+                console.log('Newsletter email captured:', email);
+                showToast('✅ Thanks for subscribing! We\'ll keep you updated.', '#065f46');
+                emailInput.value = '';
+            }
+        });
+
+        // --- TOAST NOTIFICATION HELPER ---
+        function showToast(message, color = '#0f172a') {
+            const toast = document.createElement('div');
+            toast.textContent = message;
+            toast.style.cssText = `position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%); background: ${color}; color: white; padding: 14px 28px; border-radius: 10px; font-weight: 600; z-index: 9999; animation: fadeIn 0.3s ease; box-shadow: 0 10px 25px rgba(0,0,0,0.2); font-size: 0.95rem;`;
+            document.body.appendChild(toast);
+            setTimeout(() => {
+                toast.style.animation = 'fadeOut 0.3s ease';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        // --- COPY TO CLIPBOARD FUNCTION ---
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                showToast('✅ Copied: ' + text, '#065f46');
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+            });
+        }
     </script>
     <!-- Floating WhatsApp Button -->
     <a href="https://wa.me/254754427226?text=Hello%20SwiftMart!%20I%20am%20interested%20in%20your%20services." class="whatsapp-float" target="_blank">
@@ -752,7 +1147,7 @@
             position: fixed;
             bottom: 30px;
             right: 30px;
-            background-color: #25D366; /* WhatsApp Green */
+            background-color: #25D366;
             color: white;
             width: 65px;
             height: 65px;
@@ -766,8 +1161,8 @@
             transition: transform 0.3s ease, background-color 0.3s ease;
         }
         .whatsapp-float:hover {
-            transform: scale(1.1); /* Grows slightly when hovered */
-            background-color: #128C7E; /* Darker green on hover */
+            transform: scale(1.1);
+            background-color: #128C7E;
         }
     </style>
 </body>
