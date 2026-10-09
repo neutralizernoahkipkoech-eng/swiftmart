@@ -9,7 +9,11 @@ const axios = require('axios');
 const path = require('path');
 const mongoose = require('mongoose');
 const session = require('express-session');
+const cookieParser = require('cookie-parser');
 const nodemailer = require('nodemailer');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const crypto = require('crypto');
 
 // 2. NOW initialize Paystack
 const paystack = require('paystack')(process.env.PAYSTACK_SECRET_KEY);
@@ -22,6 +26,9 @@ const Review = require('./models/Review');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+// JWT Secret
+const JWT_SECRET = process.env.JWT_SECRET || 'your-super-secret-jwt-key-change-this-in-production';
 
 // --- EMAIL TRANSPORTER SETUP ---
 const transporter = nodemailer.createTransport({
@@ -87,12 +94,17 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/mpesa-eco
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
+// Reliable Session Configuration
 app.use(session({
-    secret: 'super-secret-key-change-this-later',
+    secret: process.env.SESSION_SECRET || 'super-secret-key-change-this-later',
     resave: false,
     saveUninitialized: false,
-    cookie: { maxAge: 1000 * 60 * 60 * 24 }
+    cookie: {
+        secure: process.env.NODE_ENV === 'production',
+        maxAge: 24 * 60 * 60 * 1000 // 24 hours
+    }
 }));
 
 app.use(express.static(path.join(__dirname, 'public')));
@@ -128,28 +140,70 @@ const requireAuth = (req, res, next) => {
 };
 
 // ================= AUTH ROUTES =================
+
+// REGISTER
 app.post('/api/auth/register', async (req, res) => {
     try {
         const { name, email, phone, password } = req.body;
+        if (!name || !email || !phone || !password) {
+            return res.status(400).json({ error: 'All fields are required' });
+        }
+
         const existingUser = await User.findOne({ email });
         if (existingUser) return res.status(400).json({ error: 'Email already registered' });
-        const user = new User({ name, email, phone, password });
+        
+        const verificationToken = crypto.randomBytes(32).toString('hex');
+        
+        const user = new User({ 
+            name, email, phone, password, 
+            emailVerificationToken: verificationToken,
+            emailVerified: false
+        });
         await user.save();
-        req.session.userId = user._id;
-        res.json({ success: true, user: { name: user.name, email: user.email } });
+        
+        const verificationUrl = `${process.env.BASE_URL || 'https://swiftmartkenya.co.ke'}/api/auth/verify-email?token=${verificationToken}`;
+        try {
+            await transporter.sendMail({
+                from: `"SwiftMart" <${process.env.EMAIL_USER}>`,
+                to: email,
+                subject: 'Verify Your SwiftMart Account',
+                html: `<h2>Welcome to SwiftMart! 👋</h2><p>Please click below to verify your email:</p><a href="${verificationUrl}" style="display:inline-block; padding:12px 24px; background:#2563eb; color:white; text-decoration:none; border-radius:6px;">Verify Email</a><p>Link expires in 24 hours.</p>`
+            });
+        } catch (emailError) {
+            console.error('Email send error:', emailError);
+        }
+        
+        res.status(201).json({ success: true, message: 'Registration successful! Please check your email to verify.', user: { name: user.name, email: user.email } });
     } catch (error) {
         console.error('Register error:', error);
         res.status(500).json({ error: 'Registration failed' });
     }
 });
 
+// LOGIN
 app.post('/api/auth/login', async (req, res) => {
     try {
-        const { email, password } = req.body;
+        const { email, password, rememberMe } = req.body;
+        if (!email || !password) return res.status(400).json({ error: 'Email and password are required' });
+
         const user = await User.findOne({ email });
         if (!user) return res.status(401).json({ error: 'Invalid email or password' });
-        const isMatch = await user.comparePassword(password);
+        
+        const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) return res.status(401).json({ error: 'Invalid email or password' });
+        
+        if (!user.emailVerified) {
+            return res.status(403).json({ error: 'Please verify your email before logging in. Check your inbox.' });
+        }
+        
+        const token = jwt.sign({ userId: user._id, email: user.email }, JWT_SECRET, { expiresIn: rememberMe ? '30d' : '1d' });
+        
+        res.cookie('token', token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            maxAge: rememberMe ? 30 * 24 * 60 * 60 * 1000 : 24 * 60 * 60 * 1000
+        });
+        
         req.session.userId = user._id;
         res.json({ success: true, user: { name: user.name, email: user.email } });
     } catch (error) {
@@ -158,20 +212,151 @@ app.post('/api/auth/login', async (req, res) => {
     }
 });
 
+// FORGOT PASSWORD
+app.post('/api/auth/forgot-password', async (req, res) => {
+    try {
+        const { email } = req.body;
+        const user = await User.findOne({ email });
+        if (!user) return res.json({ message: 'If an account exists, a reset link has been sent.' });
+        
+        const resetToken = crypto.randomBytes(32).toString('hex');
+        user.resetToken = resetToken;
+        user.resetTokenExpiry = Date.now() + 3600000;
+        await user.save();
+        
+        const resetUrl = `${process.env.BASE_URL || 'https://swiftmartkenya.co.ke'}/reset-password?token=${resetToken}`;
+        try {
+            await transporter.sendMail({
+                from: `"SwiftMart" <${process.env.EMAIL_USER}>`,
+                to: email,
+                subject: 'Reset Your SwiftMart Password',
+                html: `<h2>Password Reset Request 🔐</h2><p>Click below to reset your password:</p><a href="${resetUrl}" style="display:inline-block; padding:12px 24px; background:#2563eb; color:white; text-decoration:none; border-radius:6px;">Reset Password</a><p>Link expires in 1 hour.</p>`
+            });
+            res.json({ message: 'Password reset link sent to your email' });
+        } catch (emailError) {
+            res.status(500).json({ message: 'Failed to send email.' });
+        }
+    } catch (error) {
+        res.status(500).json({ message: 'Server error' });
+    }
+});
+
+// RESET PASSWORD
+app.post('/api/auth/reset-password', async (req, res) => {
+    try {
+        const { token, newPassword } = req.body;
+        const user = await User.findOne({ resetToken: token, resetTokenExpiry: { $gt: Date.now() } });
+        if (!user) return res.status(400).json({ message: 'Invalid or expired reset token' });
+        
+        user.password = newPassword;
+        user.resetToken = undefined;
+        user.resetTokenExpiry = undefined;
+        await user.save();
+        res.json({ message: 'Password reset successful! Please login.' });
+    } catch (error) {
+        res.status(500).json({ message: 'Server error' });
+    }
+});
+
+// VERIFY EMAIL
+app.get('/api/auth/verify-email', async (req, res) => {
+    try {
+        const { token } = req.query;
+        const user = await User.findOne({ emailVerificationToken: token });
+        if (!user) return res.status(400).json({ message: 'Invalid verification token' });
+        
+        user.emailVerified = true;
+        user.emailVerificationToken = undefined;
+        await user.save();
+        res.json({ message: 'Email verified successfully! You can now login.' });
+    } catch (error) {
+        res.status(500).json({ message: 'Server error' });
+    }
+});
+
+// LOGOUT
 app.post('/api/auth/logout', (req, res) => {
+    res.clearCookie('token');
     req.session.destroy();
     res.json({ success: true });
 });
 
+// GET CURRENT USER
 app.get('/api/auth/me', async (req, res) => {
-    if (!req.session.userId) return res.json({ user: null });
-    const user = await User.findById(req.session.userId).select('-password');
+    let userId = req.session.userId;
+    if (!userId && req.cookies.token) {
+        try {
+            const decoded = jwt.verify(req.cookies.token, JWT_SECRET);
+            userId = decoded.userId;
+            req.session.userId = userId;
+        } catch (err) { /* Invalid token */ }
+    }
+    if (!userId) return res.json({ user: null });
+    const user = await User.findById(userId).select('-password');
     res.json({ user });
+});
+
+// ================= GOOGLE OAUTH ROUTES (NEW) =================
+
+app.get('/api/auth/google', (req, res) => {
+    const redirectUri = process.env.NODE_ENV === 'production' 
+        ? 'https://swiftmartkenya.co.ke/api/auth/google/callback' 
+        : 'http://localhost:3000/api/auth/google/callback';
+        
+    const url = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${process.env.GOOGLE_CLIENT_ID}&redirect_uri=${redirectUri}&response_type=code&scope=profile email`;
+    res.redirect(url);
+});
+
+app.get('/api/auth/google/callback', async (req, res) => {
+    try {
+        const { code } = req.query;
+        const redirectUri = process.env.NODE_ENV === 'production' 
+            ? 'https://swiftmartkenya.co.ke/api/auth/google/callback' 
+            : 'http://localhost:3000/api/auth/google/callback';
+
+        // 1. Exchange code for tokens
+        const tokenRes = await axios.post('https://oauth2.googleapis.com/token', {
+            code,
+            client_id: process.env.GOOGLE_CLIENT_ID,
+            client_secret: process.env.GOOGLE_CLIENT_SECRET,
+            redirect_uri: redirectUri,
+            grant_type: 'authorization_code'
+        });
+
+        // 2. Get user info from Google
+        const userRes = await axios.get('https://www.googleapis.com/oauth2/v2/userinfo', {
+            headers: { Authorization: `Bearer ${tokenRes.data.access_token}` }
+        });
+        const googleUser = userRes.data;
+
+        // 3. Find or create user in database
+        let user = await User.findOne({ email: googleUser.email });
+        if (!user) {
+            user = new User({
+                name: googleUser.name,
+                email: googleUser.email,
+                phone: 'N/A',
+                password: await bcrypt.hash(Math.random().toString(36).slice(-8), 10),
+                emailVerified: true
+            });
+            await user.save();
+        }
+
+        // 4. Log the user in
+        const token = jwt.sign({ userId: user._id, email: user.email }, JWT_SECRET, { expiresIn: '30d' });
+        res.cookie('token', token, { httpOnly: true, secure: process.env.NODE_ENV === 'production', maxAge: 30 * 24 * 60 * 60 * 1000 });
+        req.session.userId = user._id;
+        
+        res.redirect('/dashboard');
+    } catch (error) {
+        console.error('Google Auth Error:', error);
+        res.redirect('/login?error=google_failed');
+    }
 });
 
 // ================= M-PESA & ORDER ROUTES =================
 
-// STK Push - 100% FOOLPROOF VERSION
+// STK Push
 app.post('/api/stkpush', requireAuth, async (req, res) => {
     try {
         const { phoneNumber, amount, productName } = req.body;
@@ -180,7 +365,6 @@ app.post('/api/stkpush', requireAuth, async (req, res) => {
 
         const timestamp = new Date().toISOString().replace(/[^0-9]/g, '').slice(0, -3);
         const password = Buffer.from(`${SHORTCODE}${PASSKEY}${timestamp}`).toString('base64');
-
         const safeReference = "SWIFTMART"; 
 
         const stkPushData = {
@@ -331,8 +515,6 @@ app.get('/api/admin/orders', requireAuth, async (req, res) => {
 });
 
 // ================= INVENTORY MANAGEMENT ROUTES =================
-
-// Get all products (for frontend)
 app.get('/api/products', async (req, res) => {
     try {
         const products = await Product.find();
@@ -342,7 +524,6 @@ app.get('/api/products', async (req, res) => {
     }
 });
 
-// Update product stock (Admin only)
 app.put('/api/admin/products/:id/stock', requireAuth, async (req, res) => {
     try {
         const user = await User.findById(req.session.userId);
@@ -361,27 +542,19 @@ app.put('/api/admin/products/:id/stock', requireAuth, async (req, res) => {
     }
 });
 
-// Seed initial products (Run this once to populate database)
 app.get('/api/seed-products', async (req, res) => {
     try {
         const initialProducts = [
-            // --- WEB DEVELOPMENT SERVICES ---
             { name: 'E-commerce Store Setup', category: 'webdev', price: 25000, stock: 99 },
             { name: 'Website Maintenance & Support', category: 'webdev', price: 3000, stock: 99 },
             { name: 'Domain & Hosting Setup', category: 'webdev', price: 2500, stock: 99 },
-            
-            // --- PROFESSIONAL SERVICES ---
             { name: 'Professional Web Design', category: 'services', price: 15000, stock: 99 },
             { name: 'Logo & Graphic Design', category: 'services', price: 5000, stock: 99 },
             { name: 'Business Consultation', category: 'services', price: 3000, stock: 99 },
             { name: 'SEO & Digital Marketing', category: 'services', price: 8000, stock: 99 },
-            
-            // --- NEW: SOCIAL MEDIA SERVICES ---
             { name: 'Social Media Page Setup', category: 'socialmedia', price: 6000, stock: 99 },
             { name: 'Monthly Social Media Management', category: 'socialmedia', price: 12000, stock: 99 },
             { name: 'Custom Social Media Graphics (10 Posts)', category: 'socialmedia', price: 8000, stock: 99 },
-            
-            // --- PHYSICAL ITEMS (For Future Affiliate Links) ---
             { name: 'iPhone 13 Pro', category: 'smartphones', price: 95000, stock: 5 },
             { name: 'Samsung Galaxy S22', category: 'smartphones', price: 78000, stock: 8 },
             { name: 'iPad Air', category: 'smartphones', price: 65000, stock: 12 },
