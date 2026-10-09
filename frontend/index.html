@@ -16,6 +16,8 @@
             --text-main: #0f172a;
             --text-muted: #64748b;
             --border-color: #e2e8f0;
+            --success-color: #059669;
+            --chat-bg: #f1f5f9;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: 'Inter', sans-serif; background-color: var(--bg-color); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; }
@@ -24,269 +26,255 @@
         nav { background: white; padding: 16px 0; border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 100; }
         .nav-content { display: flex; justify-content: space-between; align-items: center; }
         
-        /* --- NEW ELECTRIC LOGO STYLES --- */
-        .logo { 
-            font-weight: 800; 
-            font-size: 1.5rem; 
-            display: flex; 
-            align-items: center; 
-            gap: 8px; 
-            text-decoration: none;
-            position: relative;
-        }
-        .lightning-bolt {
-            position: relative;
-            width: 35px;
-            height: 35px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            animation: rotateBolt 3s ease-in-out infinite;
-        }
-        .lightning-bolt svg {
-            width: 100%;
-            height: 100%;
-            filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.8));
-            animation: lightningFlash 2s ease-in-out infinite;
-        }
-        .lightning-bolt::before {
-            content: '';
-            position: absolute;
-            width: 40px;
-            height: 40px;
-            background: radial-gradient(circle, rgba(255,215,0,0.4) 0%, transparent 70%);
-            border-radius: 50%;
-            animation: pulseGlow 1.5s ease-in-out infinite;
-            z-index: -1;
-        }
-        .logo-text {
-            background: linear-gradient(90deg, #FFD700, #FF6B00, #FF006E, #8338EC, #3A86FF, #FFD700);
-            background-size: 300% 100%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: colorShift 3s ease-in-out infinite, textGlow 2s ease-in-out infinite;
-            font-weight: 900;
-            letter-spacing: 1px;
-            position: relative;
-        }
-        @keyframes rotateBolt {
-            0%, 100% { transform: rotate(0deg) scale(1); }
-            25% { transform: rotate(15deg) scale(1.1); }
-            50% { transform: rotate(0deg) scale(1); }
-            75% { transform: rotate(-15deg) scale(1.1); }
-        }
-        @keyframes lightningFlash {
-            0%, 100% { filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.8)) brightness(1); }
-            10%, 30%, 50% { filter: drop-shadow(0 0 20px rgba(255, 255, 255, 1)) brightness(1.5); }
-            20%, 40% { filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.5)) brightness(0.9); }
-        }
-        @keyframes pulseGlow {
-            0%, 100% { opacity: 0.5; transform: scale(1); }
-            50% { opacity: 1; transform: scale(1.2); }
-        }
-        @keyframes colorShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-        @keyframes textGlow {
-            0%, 100% { filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.5)); }
-            50% { filter: drop-shadow(0 0 15px rgba(255, 107, 0, 0.8)); }
-        }
+        /* --- ELECTRIC LOGO STYLES --- */
+        .logo { font-weight: 800; font-size: 1.5rem; display: flex; align-items: center; gap: 8px; text-decoration: none; position: relative; }
+        .lightning-bolt { position: relative; width: 35px; height: 35px; display: flex; align-items: center; justify-content: center; animation: rotateBolt 3s ease-in-out infinite; }
+        .lightning-bolt svg { width: 100%; height: 100%; filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.8)); animation: lightningFlash 2s ease-in-out infinite; }
+        .lightning-bolt::before { content: ''; position: absolute; width: 40px; height: 40px; background: radial-gradient(circle, rgba(255,215,0,0.4) 0%, transparent 70%); border-radius: 50%; animation: pulseGlow 1.5s ease-in-out infinite; z-index: -1; }
+        .logo-text { background: linear-gradient(90deg, #FFD700, #FF6B00, #FF006E, #8338EC, #3A86FF, #FFD700); background-size: 300% 100%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; animation: colorShift 3s ease-in-out infinite, textGlow 2s ease-in-out infinite; font-weight: 900; letter-spacing: 1px; position: relative; }
+        @keyframes rotateBolt { 0%, 100% { transform: rotate(0deg) scale(1); } 25% { transform: rotate(15deg) scale(1.1); } 50% { transform: rotate(0deg) scale(1); } 75% { transform: rotate(-15deg) scale(1.1); } }
+        @keyframes lightningFlash { 0%, 100% { filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.8)) brightness(1); } 10%, 30%, 50% { filter: drop-shadow(0 0 20px rgba(255, 255, 255, 1)) brightness(1.5); } 20%, 40% { filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.5)) brightness(0.9); } }
+        @keyframes pulseGlow { 0%, 100% { opacity: 0.5; transform: scale(1); } 50% { opacity: 1; transform: scale(1.2); } }
+        @keyframes colorShift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        @keyframes textGlow { 0%, 100% { filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.5)); } 50% { filter: drop-shadow(0 0 15px rgba(255, 107, 0, 0.8)); } }
         .logo:hover .lightning-bolt { animation: rotateBolt 0.5s ease-in-out infinite; }
         .logo:hover .logo-text { animation: colorShift 1s ease-in-out infinite, textGlow 0.5s ease-in-out infinite; }
-        @media (max-width: 768px) {
-            .lightning-bolt { width: 28px; height: 28px; }
-            .logo-text { font-size: 1.2rem; }
-        }
+        @media (max-width: 768px) { .lightning-bolt { width: 28px; height: 28px; } .logo-text { font-size: 1.2rem; } }
 
-        .animated-banner {
-            width: 100%;
-            overflow: hidden;
-            background: linear-gradient(90deg, #1e3c72, #2a5298, #1e3c72);
-            padding: 15px 0;
-            position: relative;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        .banner-content {
-            display: flex;
-            white-space: nowrap;
-            animation: scrollText 25s linear infinite;
-        }
-        .banner-text {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: #ffffff;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            animation: colorChange 6s ease-in-out infinite;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-            padding-right: 50px;
-        }
-        @keyframes scrollText {
-            0% { transform: translateX(100%); }
-            100% { transform: translateX(-100%); }
-        }
-        @keyframes colorChange {
-            0% { color: #ffffff; text-shadow: 2px 2px 4px rgba(255,255,255,0.3); }
-            25% { color: #ffd700; text-shadow: 2px 2px 8px rgba(255,215,0,0.5); }
-            50% { color: #00ff88; text-shadow: 2px 2px 8px rgba(0,255,136,0.5); }
-            75% { color: #ff6b9d; text-shadow: 2px 2px 8px rgba(255,107,157,0.5); }
-            100% { color: #ffffff; text-shadow: 2px 2px 4px rgba(255,255,255,0.3); }
-        }
+        .animated-banner { width: 100%; overflow: hidden; background: linear-gradient(90deg, #1e3c72, #2a5298, #1e3c72); padding: 15px 0; position: relative; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .banner-content { display: flex; white-space: nowrap; animation: scrollText 25s linear infinite; }
+        .banner-text { font-size: 1.1rem; font-weight: 600; color: #ffffff; text-transform: uppercase; letter-spacing: 1px; animation: colorChange 6s ease-in-out infinite; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); padding-right: 50px; }
+        @keyframes scrollText { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+        @keyframes colorChange { 0% { color: #ffffff; text-shadow: 2px 2px 4px rgba(255,255,255,0.3); } 25% { color: #ffd700; text-shadow: 2px 2px 8px rgba(255,215,0,0.5); } 50% { color: #00ff88; text-shadow: 2px 2px 8px rgba(0,255,136,0.5); } 75% { color: #ff6b9d; text-shadow: 2px 2px 8px rgba(255,107,157,0.5); } 100% { color: #ffffff; text-shadow: 2px 2px 4px rgba(255,255,255,0.3); } }
         .animated-banner:hover .banner-content { animation-play-state: paused; }
-        @media (max-width: 768px) {
-            .banner-text { font-size: 0.9rem; }
-            .animated-banner { padding: 10px 0; }
-        }
+        @media (max-width: 768px) { .banner-text { font-size: 0.9rem; } .animated-banner { padding: 10px 0; } }
 
         .hero { background: linear-gradient(135deg, #1e40af 0%, #2563eb 100%); color: white; padding: 80px 20px; text-align: center; margin-bottom: 60px; }
         .hero h1 { font-size: 2.5rem; font-weight: 800; margin-bottom: 16px; }
         .hero p { font-size: 1.2rem; opacity: 0.9; max-width: 600px; margin: 0 auto; }
 
-        .trust-badges { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; margin-bottom: 60px; text-align: center; }
-        .badge { background: white; padding: 24px; border-radius: 12px; border: 1px solid var(--border-color); }
-        .badge-icon { font-size: 2rem; margin-bottom: 12px; }
-        .badge h3 { font-size: 1rem; margin-bottom: 8px; color: var(--text-main); }
-        .badge p { font-size: 0.875rem; color: var(--text-muted); }
+        /* --- LARGER BADGE IMAGES --- */
+        .trust-badges { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 32px; margin-bottom: 60px; text-align: center; }
+        .badge { background: white; padding: 36px 28px; border-radius: 20px; border: 1px solid var(--border-color); box-shadow: 0 4px 12px rgba(0,0,0,0.05); transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .badge:hover { transform: translateY(-6px); box-shadow: 0 12px 32px rgba(0,0,0,0.12); }
+        .badge-icon-img { 
+            width: 140px; 
+            height: 140px; 
+            object-fit: cover; 
+            border-radius: 24px; 
+            margin-bottom: 20px; 
+            box-shadow: 0 8px 24px rgba(37, 99, 235, 0.2); 
+            background: #f8fafc; 
+            border: 4px solid var(--brand-primary);
+            transition: transform 0.3s ease;
+        }
+        .badge:hover .badge-icon-img { transform: scale(1.05); }
+        .badge h3 { font-size: 1.2rem; margin-bottom: 12px; color: var(--text-main); font-weight: 700; }
+        .badge p { font-size: 0.95rem; color: var(--text-muted); line-height: 1.6; }
 
         .section-header { text-align: center; margin-bottom: 40px; }
         .section-header h2 { font-size: 2rem; font-weight: 800; color: var(--text-main); margin-bottom: 12px; }
         .section-header p { color: var(--text-muted); font-size: 1.1rem; }
         .section-divider { width: 60px; height: 4px; background: var(--brand-primary); margin: 0 auto 20px; border-radius: 2px; }
 
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; margin-bottom: 80px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 28px; margin-bottom: 80px; }
         .card { background: var(--card-bg); border-radius: 16px; overflow: hidden; border: 1px solid var(--border-color); text-align: center; transition: transform 0.2s, box-shadow 0.2s; display: flex; flex-direction: column; }
         .card:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(37, 99, 235, 0.15); border-color: var(--brand-primary); }
         .card-image { width: 100%; height: 220px; object-fit: cover; background: #f1f5f9; display: block; }
-        .card-body { padding: 20px; flex-grow: 1; display: flex; flex-direction: column; }
-        .card-name { font-size: 1rem; font-weight: 700; margin-bottom: 8px; color: var(--text-main); }
-        .card-description { font-size: 0.825rem; color: var(--text-muted); margin-bottom: 12px; flex-grow: 1; }
-        .card-price { font-size: 1.35rem; font-weight: 800; color: var(--brand-primary); margin-bottom: 12px; }
-        .action-btn { width: 100%; background: var(--brand-primary); color: white; border: none; padding: 10px; border-radius: 8px; font-weight: 600; cursor: pointer; transition: background 0.2s; }
+        .card-body { padding: 24px; flex-grow: 1; display: flex; flex-direction: column; }
+        .card-name { font-size: 1.1rem; font-weight: 700; margin-bottom: 10px; color: var(--text-main); }
+        .card-description { font-size: 0.875rem; color: var(--text-muted); margin-bottom: 14px; flex-grow: 1; line-height: 1.5; }
+        .card-price { font-size: 1.4rem; font-weight: 800; color: var(--brand-primary); margin-bottom: 14px; }
+        .action-btn { width: 100%; background: var(--brand-primary); color: white; border: none; padding: 12px; border-radius: 8px; font-weight: 600; cursor: pointer; transition: background 0.2s; font-size: 1rem; margin-bottom: 8px; }
         .action-btn:hover { background: var(--brand-secondary); }
+        .quick-buy-btn { width: 100%; background: linear-gradient(135deg, #059669, #10b981); color: white; border: none; padding: 12px; border-radius: 8px; font-weight: 600; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; font-size: 1rem; display: flex; align-items: center; justify-content: center; gap: 8px; }
+        .quick-buy-btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(5, 150, 105, 0.4); }
 
         .checkout-section { background: var(--card-bg); border-radius: 16px; padding: 40px; border: 1px solid var(--border-color); max-width: 500px; margin: 0 auto 80px; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05); }
         .checkout-section h2 { font-size: 1.5rem; margin-bottom: 24px; text-align: center; }
         .form-group { margin-bottom: 20px; }
         .form-group label { display: block; font-size: 0.875rem; font-weight: 600; margin-bottom: 8px; }
-        .form-group input { width: 100%; padding: 12px 16px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 1rem; outline: none; transition: all 0.2s; }
-        .form-group input:focus { border-color: var(--brand-primary); box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); }
-        
-        .pay-btn { width: 100%; color: white; border: none; padding: 16px; border-radius: 8px; font-size: 1rem; font-weight: 700; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 8px; transition: opacity 0.2s; }
+        .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 12px 16px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 1rem; outline: none; transition: all 0.2s; font-family: inherit; }
+        .form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color: var(--brand-primary); box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); }
+        .pay-btn { width: 100%; color: white; border: none; padding: 16px; border-radius: 8px; font-size: 1rem; font-weight: 700; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 8px; transition: opacity 0.2s; background: #2563eb; }
         .pay-btn:hover { opacity: 0.9; }
         .pay-btn:disabled { background: #94a3b8 !important; cursor: not-allowed; }
-        
         .spinner { width: 20px; height: 20px; border: 2px solid rgba(255,255,255,0.3); border-radius: 50%; border-top-color: white; animation: spin 1s linear infinite; display: none; }
         @keyframes spin { to { transform: rotate(360deg); } }
-        
         .message { margin-top: 16px; padding: 12px; border-radius: 8px; font-size: 0.875rem; text-align: center; display: none; }
         .message.success { background: #ecfdf5; color: #065f46; border: 1px solid #a7f3d0; display: block; }
         .message.error { background: #fef2f2; color: #991b1b; border: 1px solid #fecaca; display: block; }
 
-        .modern-footer {
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-            color: #cbd5e1;
-            padding: 60px 0 0 0;
-            font-family: 'Inter', sans-serif;
-            position: relative;
-            overflow: hidden;
-            margin-top: auto;
-        }
-        .modern-footer::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; height: 4px;
-            background: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899, #3b82f6);
-            background-size: 200% 100%;
-            animation: gradientMove 3s ease infinite;
-        }
-        @keyframes gradientMove {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-        }
-        .footer-container {
-            max-width: 1200px; margin: 0 auto; padding: 0 20px;
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 40px;
-        }
-        .footer-section h3, .footer-section h4 {
-            color: #ffffff; margin-bottom: 20px; font-size: 1.2rem; font-weight: 600;
-            position: relative; padding-bottom: 10px;
-        }
-        .footer-section h4::after {
-            content: ''; position: absolute; bottom: 0; left: 0; width: 40px; height: 2px;
-            background: #3b82f6; transition: width 0.3s ease;
-        }
+        /* --- MODERN FOOTER --- */
+        .modern-footer { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: #cbd5e1; padding: 60px 0 0 0; font-family: 'Inter', sans-serif; position: relative; overflow: hidden; margin-top: auto; }
+        .modern-footer::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899, #3b82f6); background-size: 200% 100%; animation: gradientMove 3s ease infinite; }
+        @keyframes gradientMove { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+        .footer-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 40px; }
+        .footer-section h3, .footer-section h4 { color: #ffffff; margin-bottom: 20px; font-size: 1.2rem; font-weight: 600; position: relative; padding-bottom: 10px; }
+        .footer-section h4::after { content: ''; position: absolute; bottom: 0; left: 0; width: 40px; height: 2px; background: #3b82f6; transition: width 0.3s ease; }
         .footer-section:hover h4::after { width: 60px; }
-        .footer-logo {
-            font-size: 1.8rem;
-            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            background-clip: text; margin-bottom: 15px;
-        }
+        .footer-logo { font-size: 1.8rem; background: linear-gradient(135deg, #3b82f6, #8b5cf6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 15px; }
         .footer-description { line-height: 1.6; margin-bottom: 20px; font-size: 0.95rem; }
         .social-links { display: flex; gap: 12px; }
-        .social-icon {
-            width: 40px; height: 40px; border-radius: 50%;
-            background: rgba(59, 130, 246, 0.1); display: flex; align-items: center; justify-content: center;
-            color: #3b82f6; text-decoration: none; transition: all 0.3s ease; border: 1px solid rgba(59, 130, 246, 0.3);
-        }
+        .social-icon { width: 40px; height: 40px; border-radius: 50%; background: rgba(59, 130, 246, 0.1); display: flex; align-items: center; justify-content: center; color: #3b82f6; text-decoration: none; transition: all 0.3s ease; border: 1px solid rgba(59, 130, 246, 0.3); }
         .social-icon:hover { background: #3b82f6; color: #ffffff; transform: translateY(-3px); box-shadow: 0 5px 15px rgba(59, 130, 246, 0.4); }
         .footer-links { list-style: none; padding: 0; margin: 0; }
         .footer-links li { margin-bottom: 12px; }
-        .footer-links a {
-            color: #cbd5e1; text-decoration: none; transition: all 0.3s ease;
-            display: inline-block; position: relative; padding-left: 0;
-        }
-        .footer-links a::before {
-            content: '→'; position: absolute; left: -20px; opacity: 0; transition: all 0.3s ease; color: #3b82f6;
-        }
+        .footer-links a { color: #cbd5e1; text-decoration: none; transition: all 0.3s ease; display: inline-block; position: relative; padding-left: 0; }
+        .footer-links a::before { content: '→'; position: absolute; left: -20px; opacity: 0; transition: all 0.3s ease; color: #3b82f6; }
         .footer-links a:hover { color: #3b82f6; padding-left: 20px; }
         .footer-links a:hover::before { opacity: 1; left: 0; }
         .contact-info { list-style: none; padding: 0; margin: 0; }
         .contact-info li { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 15px; font-size: 0.95rem; }
         .contact-info i { color: #3b82f6; margin-top: 3px; min-width: 16px; }
+        .contact-info a { color: #cbd5e1; text-decoration: none; transition: color 0.2s; }
+        .contact-info a:hover { color: #3b82f6; }
         .newsletter-text { font-size: 0.9rem; margin-bottom: 15px; line-height: 1.5; }
         .newsletter-form { display: flex; flex-direction: column; gap: 10px; }
-        .newsletter-form input {
-            padding: 12px 15px; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 6px;
-            background: rgba(255, 255, 255, 0.05); color: #ffffff; font-size: 0.9rem; transition: all 0.3s ease;
-        }
+        .newsletter-form input { padding: 12px 15px; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 6px; background: rgba(255, 255, 255, 0.05); color: #ffffff; font-size: 0.9rem; transition: all 0.3s ease; }
         .newsletter-form input:focus { outline: none; border-color: #3b82f6; background: rgba(255, 255, 255, 0.1); }
         .newsletter-form input::placeholder { color: #94a3b8; }
-        .newsletter-form button {
-            padding: 12px 20px; background: linear-gradient(135deg, #3b82f6, #8b5cf6); color: #ffffff;
-            border: none; border-radius: 6px; font-weight: 600; cursor: pointer; transition: all 0.3s ease;
-            text-transform: uppercase; font-size: 0.85rem; letter-spacing: 0.5px;
-        }
+        .newsletter-form button { padding: 12px 20px; background: linear-gradient(135deg, #3b82f6, #8b5cf6); color: #ffffff; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 0.5px; }
         .newsletter-form button:hover { transform: translateY(-2px); box-shadow: 0 5px 20px rgba(59, 130, 246, 0.4); }
-        .payment-methods {
-            max-width: 1200px; margin: 40px auto 0; padding: 20px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            display: flex; align-items: center; justify-content: center; gap: 20px; flex-wrap: wrap;
-        }
+        .payment-methods { max-width: 1200px; margin: 40px auto 0; padding: 20px; border-top: 1px solid rgba(255, 255, 255, 0.1); display: flex; align-items: center; justify-content: center; gap: 20px; flex-wrap: wrap; }
         .payment-methods span { color: #94a3b8; font-size: 0.9rem; }
         .payment-icons { display: flex; gap: 15px; align-items: center; font-size: 1.8rem; color: #cbd5e1; }
         .mpesa-badge { background: #00a651; color: #ffffff; padding: 5px 12px; border-radius: 4px; font-size: 0.85rem; font-weight: 600; }
-        .footer-bottom {
-            max-width: 1200px; margin: 0 auto; padding: 20px; text-align: center;
-            border-top: 1px solid rgba(255, 255, 255, 0.1); font-size: 0.85rem; color: #94a3b8;
-        }
+        .footer-bottom { max-width: 1200px; margin: 0 auto; padding: 20px; text-align: center; border-top: 1px solid rgba(255, 255, 255, 0.1); font-size: 0.85rem; color: #94a3b8; }
         .footer-bottom i { color: #ec4899; animation: heartbeat 1.5s ease-in-out infinite; }
         @keyframes heartbeat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.2); } }
-        @media (max-width: 768px) {
-            .modern-footer { padding: 40px 0 0 0; }
-            .footer-container { grid-template-columns: 1fr; gap: 30px; }
-            .payment-methods { flex-direction: column; gap: 10px; }
-        }
+        @media (max-width: 768px) { .modern-footer { padding: 40px 0 0 0; } .footer-container { grid-template-columns: 1fr; gap: 30px; } .payment-methods { flex-direction: column; gap: 10px; } .badge-icon-img { width: 110px; height: 110px; } }
 
         @keyframes fadeIn { from { opacity: 0; transform: translate(-50%, 20px); } to { opacity: 1; transform: translate(-50%, 0); } }
         @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
 
+        /* --- AI SUPPORT CHATBOT --- */
+        .support-float {
+            position: fixed; bottom: 30px; right: 30px; background: linear-gradient(135deg, #2563eb, #7c3aed);
+            color: white; width: 68px; height: 68px; border-radius: 50%; border: none;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 6px 24px rgba(37, 99, 235, 0.5); z-index: 1000; cursor: pointer;
+            transition: transform 0.3s ease; font-size: 1.8rem;
+            animation: pulseSupport 2s infinite;
+        }
+        .support-float:hover { transform: scale(1.1) rotate(10deg); }
+        @keyframes pulseSupport { 0% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.7); } 70% { box-shadow: 0 0 0 18px rgba(37, 99, 235, 0); } 100% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0); } }
+        .support-badge {
+            position: absolute; top: -4px; right: -4px; background: #ef4444; color: white;
+            font-size: 0.7rem; font-weight: 700; padding: 3px 7px; border-radius: 10px;
+            border: 2px solid white; animation: bounce 1.5s infinite;
+        }
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
+
+        /* Chat Window */
+        .chat-window {
+            position: fixed; bottom: 110px; right: 30px; width: 380px; max-width: calc(100vw - 40px);
+            height: 560px; max-height: calc(100vh - 140px);
+            background: white; border-radius: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+            z-index: 1001; display: none; flex-direction: column; overflow: hidden;
+            animation: slideUpChat 0.3s ease;
+        }
+        .chat-window.active { display: flex; }
+        @keyframes slideUpChat { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .chat-header {
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            color: white; padding: 18px 20px; display: flex; align-items: center; gap: 12px;
+        }
+        .chat-agent-avatar {
+            width: 44px; height: 44px; border-radius: 50%; background: rgba(255,255,255,0.2);
+            display: flex; align-items: center; justify-content: center; font-size: 1.3rem;
+            border: 2px solid rgba(255,255,255,0.4);
+        }
+        .chat-agent-info { flex-grow: 1; }
+        .chat-agent-name { font-weight: 700; font-size: 1rem; }
+        .chat-agent-status { font-size: 0.75rem; opacity: 0.9; display: flex; align-items: center; gap: 5px; }
+        .chat-agent-status::before { content: ''; width: 7px; height: 7px; background: #10b981; border-radius: 50%; }
+        .chat-close { background: rgba(255,255,255,0.2); border: none; color: white; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-size: 1rem; transition: background 0.2s; }
+        .chat-close:hover { background: rgba(255,255,255,0.3); }
+
+        .chat-messages {
+            flex-grow: 1; overflow-y: auto; padding: 20px; background: var(--chat-bg);
+            display: flex; flex-direction: column; gap: 12px;
+        }
+        .chat-message {
+            max-width: 85%; padding: 12px 16px; border-radius: 16px; font-size: 0.9rem;
+            line-height: 1.5; animation: msgFade 0.3s ease;
+        }
+        @keyframes msgFade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+        .chat-message.bot {
+            background: white; color: var(--text-main); align-self: flex-start;
+            border-bottom-left-radius: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+        .chat-message.user {
+            background: var(--brand-primary); color: white; align-self: flex-end;
+            border-bottom-right-radius: 4px;
+        }
+        .chat-message .msg-time { font-size: 0.7rem; opacity: 0.7; margin-top: 4px; display: block; }
+        .chat-message.bot .msg-sender { font-size: 0.75rem; color: var(--brand-primary); font-weight: 600; margin-bottom: 4px; display: block; }
+
+        .typing-indicator {
+            background: white; padding: 12px 16px; border-radius: 16px; border-bottom-left-radius: 4px;
+            align-self: flex-start; display: none; box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+        .typing-indicator.active { display: flex; gap: 4px; }
+        .typing-dot { width: 7px; height: 7px; background: var(--text-muted); border-radius: 50%; animation: typingBounce 1.4s infinite; }
+        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes typingBounce { 0%, 60%, 100% { transform: translateY(0); } 30% { transform: translateY(-6px); } }
+
+        .chat-quick-actions {
+            padding: 12px 20px; background: white; border-top: 1px solid var(--border-color);
+            display: flex; gap: 8px; overflow-x: auto; flex-shrink: 0;
+        }
+        .quick-action-btn {
+            background: #eff6ff; color: var(--brand-primary); border: 1px solid #bfdbfe;
+            padding: 8px 14px; border-radius: 20px; font-size: 0.8rem; font-weight: 500;
+            cursor: pointer; white-space: nowrap; transition: all 0.2s;
+        }
+        .quick-action-btn:hover { background: var(--brand-primary); color: white; }
+
+        .chat-input-area {
+            padding: 14px 20px; background: white; border-top: 1px solid var(--border-color);
+            display: flex; gap: 10px; align-items: center; flex-shrink: 0;
+        }
+        .chat-input {
+            flex-grow: 1; padding: 12px 16px; border: 1px solid var(--border-color);
+            border-radius: 24px; font-size: 0.9rem; outline: none; transition: border 0.2s;
+        }
+        .chat-input:focus { border-color: var(--brand-primary); }
+        .chat-send {
+            background: var(--brand-primary); color: white; border: none; width: 42px; height: 42px;
+            border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center;
+            transition: background 0.2s; font-size: 1rem;
+        }
+        .chat-send:hover { background: var(--brand-secondary); }
+
+        /* --- MODALS --- */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 998; display: none; justify-content: center; align-items: center; padding: 20px; backdrop-filter: blur(4px); }
+        .modal-overlay.active { display: flex; }
+        .modal-content { background: white; border-radius: 16px; max-width: 700px; width: 100%; max-height: 85vh; overflow-y: auto; padding: 40px; position: relative; animation: slideUp 0.3s ease; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        .modal-close { position: absolute; top: 16px; right: 20px; background: none; border: none; font-size: 1.8rem; cursor: pointer; color: var(--text-muted); transition: color 0.2s; }
+        .modal-close:hover { color: var(--text-main); }
+        .modal-content h2 { font-size: 1.8rem; margin-bottom: 20px; color: var(--brand-primary); padding-bottom: 12px; border-bottom: 3px solid var(--brand-primary); }
+        .modal-content h3 { font-size: 1.2rem; margin: 20px 0 10px; color: var(--text-main); }
+        .modal-content p, .modal-content li { color: var(--text-muted); line-height: 1.7; margin-bottom: 10px; }
+        .modal-content ul, .modal-content ol { padding-left: 20px; margin-bottom: 16px; }
+        .modal-content .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 20px; }
+        .modal-content .contact-item { background: #f8fafc; padding: 16px; border-radius: 10px; border-left: 4px solid var(--brand-primary); }
+        .modal-content .contact-item strong { display: block; color: var(--text-main); margin-bottom: 4px; }
+        @media (max-width: 768px) { .modal-content { padding: 24px; } .modal-content .contact-grid { grid-template-columns: 1fr; } }
+
+        .bundle-modal-content { max-width: 450px; text-align: center; }
+        .bundle-modal-content h2 { border: none; padding: 0; font-size: 1.5rem; margin-bottom: 10px; }
+        .bundle-modal-content .bundle-price-display { font-size: 2rem; font-weight: 800; color: var(--brand-primary); margin: 16px 0; }
+        .bundle-modal-content .bundle-desc { color: var(--text-muted); margin-bottom: 24px; font-size: 0.95rem; }
+        .bundle-modal-content .form-group { text-align: left; }
+        .bundle-modal-content .pay-btn { margin-top: 10px; }
+
         .auth-section { display: flex; gap: 12px; align-items: center; }
         .auth-section a, .auth-section button { font-size: 0.875rem; }
-
         .cart-icon { position: relative; cursor: pointer; font-size: 1.5rem; margin-right: 16px; }
         .cart-badge { position: absolute; top: -8px; right: -8px; background: #ef4444; color: white; font-size: 0.7rem; font-weight: 700; width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
         .cart-sidebar { position: fixed; top: 0; right: -400px; width: 380px; height: 100vh; background: white; box-shadow: -5px 0 25px rgba(0,0,0,0.1); z-index: 200; transition: right 0.3s ease; display: flex; flex-direction: column; padding: 24px; }
@@ -307,11 +295,7 @@
         .checkout-btn:disabled { background: #94a3b8; cursor: not-allowed; }
         .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 150; display: none; }
         .overlay.active { display: block; }
-
-        .search-filter-container {
-            background: white; padding: 24px; border-radius: 12px; border: 1px solid var(--border-color);
-            margin-bottom: 40px; display: flex; gap: 16px; flex-wrap: wrap; box-shadow: 0 4px 6px rgba(0,0,0,0.02);
-        }
+        .search-filter-container { background: white; padding: 24px; border-radius: 12px; border: 1px solid var(--border-color); margin-bottom: 40px; display: flex; gap: 16px; flex-wrap: wrap; box-shadow: 0 4px 6px rgba(0,0,0,0.02); }
         .search-box { flex-grow: 1; min-width: 250px; position: relative; }
         .search-box input { width: 100%; padding: 12px 16px 12px 40px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 1rem; outline: none; }
         .search-box input:focus { border-color: var(--brand-primary); }
@@ -326,7 +310,7 @@
     
     <div class="cart-sidebar" id="cartSidebar">
         <div class="cart-header">
-            <h2>🛒 Your Cart</h2>
+            <h2> Your Cart</h2>
             <button class="close-cart" onclick="toggleCart()">×</button>
         </div>
         <div class="cart-items" id="cartItems">
@@ -343,7 +327,6 @@
 
     <nav>
         <div class="container nav-content">
-            <!-- NEW ELECTRIC LOGO -->
             <a href="/" class="logo">
                 <div class="lightning-bolt">
                     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -364,7 +347,7 @@
                     🛒 <span class="cart-badge" id="cartBadge">0</span>
                 </div>
                 <a href="/dashboard" id="dashboardLink" style="display: none; color: var(--text-main); text-decoration: none; font-weight: 600;">My Orders</a>
-                <a href="/admin" id="adminLink" style="display: none; color: #dc2626; text-decoration: none; font-weight: 600;">⚙️ Admin</a>
+                <a href="/admin" id="adminLink" style="display: none; color: #dc2626; text-decoration: none; font-weight: 600;">️ Admin</a>
                 <span id="userEmail" style="color: var(--text-muted); font-size: 0.875rem;"></span>
                 <button id="logoutBtn" onclick="logout()" style="display: none; background: var(--text-muted); color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer;">Logout</button>
                 <a href="/login" id="loginBtn" style="background: var(--brand-primary); color: white; padding: 8px 16px; border-radius: 6px; text-decoration: none; font-weight: 600;">Login</a>
@@ -387,14 +370,26 @@
 
     <div class="container">
         <div class="trust-badges">
-            <div class="badge"><div class="badge-icon">🔒</div><h3>Secure Payments</h3><p>M-Pesa & Global Gateways</p></div>
-            <div class="badge"><div class="badge-icon"></div><h3>Fast Delivery</h3><p>Quick shipping & booking</p></div>
-            <div class="badge"><div class="badge-icon">💬</div><h3>24/7 Support</h3><p>We're here to help</p></div>
+            <div class="badge">
+                <img src="https://images.unsplash.com/photo-1563013544-824ae1b704d3?auto=format&fit=crop&w=300&h=300&q=80" alt="Secure Payments" class="badge-icon-img">
+                <h3>Secure Payments</h3>
+                <p>M-Pesa & Global Gateways</p>
+            </div>
+            <div class="badge">
+                <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=300&h=300&q=80" alt="Fast Delivery" class="badge-icon-img">
+                <h3>Fast Delivery</h3>
+                <p>Quick shipping & booking</p>
+            </div>
+            <div class="badge">
+                <img src="https://images.unsplash.com/photo-1553877522-43269d4ea984?auto=format&fit=crop&w=300&h=300&q=80" alt="24/7 Support" class="badge-icon-img">
+                <h3>24/7 Support</h3>
+                <p>We're here to help</p>
+            </div>
         </div>
 
         <div class="search-filter-container">
             <div class="search-box">
-                <span class="search-icon">🔍</span>
+                <span class="search-icon"></span>
                 <input type="text" id="searchInput" placeholder="Search for products or services..." onkeyup="filterProducts()">
             </div>
             <div class="filter-box">
@@ -602,44 +597,108 @@
         <div class="section-header" data-section="databundles">
             <div class="section-divider"></div>
             <h2>Exclusive Data Bundles & Offers</h2>
-            <p>Stay connected with our favorable, high-speed data packages</p>
+            <p>Stay connected with our favorable, high-speed data packages - Instant activation!</p>
         </div>
 
         <div class="grid" id="grid-databundles">
             <div class="card" data-category="databundles">
-                <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=400&h=300&q=80" alt="1GB Daily Bundle" class="card-image">
+                <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=400&h=300&q=80" alt="500MB Weekly" class="card-image">
+                <div class="card-body">
+                    <div class="card-name">500MB Weekly Bundle</div>
+                    <div class="card-description">Valid for 7 days. Perfect for light browsing and WhatsApp.</div>
+                    <div class="card-price">KES 30</div>
+                    <button class="action-btn" onclick="addToCart('500MB Weekly Bundle', 30)">Add to Cart</button>
+                    <button class="quick-buy-btn" onclick="quickBuyBundle('500MB Weekly Bundle', 30)"><i class="fas fa-bolt"></i> Quick Buy</button>
+                </div>
+            </div>
+            <div class="card" data-category="databundles">
+                <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=400&h=300&q=80" alt="1GB Daily" class="card-image">
                 <div class="card-body">
                     <div class="card-name">1GB Daily Bundle</div>
-                    <div class="card-description">Valid for 24 hours. Perfect for quick browsing, WhatsApp, and social media.</div>
+                    <div class="card-description">Valid for 24 hours. Perfect for quick browsing and social media.</div>
                     <div class="card-price">KES 50</div>
                     <button class="action-btn" onclick="addToCart('1GB Daily Bundle', 50)">Add to Cart</button>
+                    <button class="quick-buy-btn" onclick="quickBuyBundle('1GB Daily Bundle', 50)"><i class="fas fa-bolt"></i> Quick Buy</button>
                 </div>
             </div>
             <div class="card" data-category="databundles">
-                <img src="https://images.unsplash.com/photo-1522869635100-9f4c5e86aa37?auto=format&fit=crop&w=400&h=300&q=80" alt="5GB Monthly Bundle" class="card-image">
+                <img src="https://images.unsplash.com/photo-1522869635100-9f4c5e86aa37?auto=format&fit=crop&w=400&h=300&q=80" alt="2GB Monthly" class="card-image">
+                <div class="card-body">
+                    <div class="card-name">2GB Monthly Bundle</div>
+                    <div class="card-description">Valid for 30 days. Great for casual browsing and emails.</div>
+                    <div class="card-price">KES 250</div>
+                    <button class="action-btn" onclick="addToCart('2GB Monthly Bundle', 250)">Add to Cart</button>
+                    <button class="quick-buy-btn" onclick="quickBuyBundle('2GB Monthly Bundle', 250)"><i class="fas fa-bolt"></i> Quick Buy</button>
+                </div>
+            </div>
+            <div class="card" data-category="databundles">
+                <img src="https://images.unsplash.com/photo-1522869635100-9f4c5e86aa37?auto=format&fit=crop&w=400&h=300&q=80" alt="5GB Monthly" class="card-image">
                 <div class="card-body">
                     <div class="card-name">5GB Monthly Bundle</div>
-                    <div class="card-description">Valid for 30 days. Great for streaming, remote work, and online classes.</div>
+                    <div class="card-description">Valid for 30 days. Great for streaming and remote work.</div>
                     <div class="card-price">KES 500</div>
                     <button class="action-btn" onclick="addToCart('5GB Monthly Bundle', 500)">Add to Cart</button>
+                    <button class="quick-buy-btn" onclick="quickBuyBundle('5GB Monthly Bundle', 500)"><i class="fas fa-bolt"></i> Quick Buy</button>
                 </div>
             </div>
             <div class="card" data-category="databundles">
-                <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=400&h=300&q=80" alt="10GB Monthly Bundle" class="card-image">
+                <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=400&h=300&q=80" alt="10GB Monthly" class="card-image">
                 <div class="card-body">
                     <div class="card-name">10GB Monthly Bundle</div>
-                    <div class="card-description">Valid for 30 days. Heavy usage, large downloads, and HD video streaming.</div>
+                    <div class="card-description">Valid for 30 days. Heavy usage, downloads, and HD streaming.</div>
                     <div class="card-price">KES 1,000</div>
                     <button class="action-btn" onclick="addToCart('10GB Monthly Bundle', 1000)">Add to Cart</button>
+                    <button class="quick-buy-btn" onclick="quickBuyBundle('10GB Monthly Bundle', 1000)"><i class="fas fa-bolt"></i> Quick Buy</button>
+                </div>
+            </div>
+            <div class="card" data-category="databundles">
+                <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=400&h=300&q=80" alt="20GB Monthly" class="card-image">
+                <div class="card-body">
+                    <div class="card-name">20GB Monthly Bundle</div>
+                    <div class="card-description">Valid for 30 days. Power users, 4K streaming, large downloads.</div>
+                    <div class="card-price">KES 2,000</div>
+                    <button class="action-btn" onclick="addToCart('20GB Monthly Bundle', 2000)">Add to Cart</button>
+                    <button class="quick-buy-btn" onclick="quickBuyBundle('20GB Monthly Bundle', 2000)"><i class="fas fa-bolt"></i> Quick Buy</button>
                 </div>
             </div>
             <div class="card" data-category="databundles">
                 <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=400&h=300&q=80" alt="Unlimited Weekend" class="card-image">
                 <div class="card-body">
                     <div class="card-name">Unlimited Weekend</div>
-                    <div class="card-description">Valid Friday 11 PM to Sunday 11:59 PM. Non-stop entertainment and browsing!</div>
+                    <div class="card-description">Valid Friday 11 PM to Sunday 11:59 PM. Non-stop entertainment!</div>
                     <div class="card-price">KES 150</div>
                     <button class="action-btn" onclick="addToCart('Unlimited Weekend Bundle', 150)">Add to Cart</button>
+                    <button class="quick-buy-btn" onclick="quickBuyBundle('Unlimited Weekend Bundle', 150)"><i class="fas fa-bolt"></i> Quick Buy</button>
+                </div>
+            </div>
+            <div class="card" data-category="databundles">
+                <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=400&h=300&q=80" alt="Midnight Bundle" class="card-image">
+                <div class="card-body">
+                    <div class="card-name">Midnight Bundle (12AM-5AM)</div>
+                    <div class="card-description">5GB valid for 30 days, usable only between midnight and 5am.</div>
+                    <div class="card-price">KES 100</div>
+                    <button class="action-btn" onclick="addToCart('Midnight Bundle', 100)">Add to Cart</button>
+                    <button class="quick-buy-btn" onclick="quickBuyBundle('Midnight Bundle', 100)"><i class="fas fa-bolt"></i> Quick Buy</button>
+                </div>
+            </div>
+            <div class="card" data-category="databundles">
+                <img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=400&h=300&q=80" alt="Social Media Bundle" class="card-image">
+                <div class="card-body">
+                    <div class="card-name">Social Media Bundle</div>
+                    <div class="card-description">Unlimited WhatsApp, Facebook & Instagram for 30 days.</div>
+                    <div class="card-price">KES 200</div>
+                    <button class="action-btn" onclick="addToCart('Social Media Bundle', 200)">Add to Cart</button>
+                    <button class="quick-buy-btn" onclick="quickBuyBundle('Social Media Bundle', 200)"><i class="fas fa-bolt"></i> Quick Buy</button>
+                </div>
+            </div>
+            <div class="card" data-category="databundles">
+                <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=400&h=300&q=80" alt="Student Bundle" class="card-image">
+                <div class="card-body">
+                    <div class="card-name">Student Bundle</div>
+                    <div class="card-description">15GB for online classes, valid for 30 days. Student ID required.</div>
+                    <div class="card-price">KES 800</div>
+                    <button class="action-btn" onclick="addToCart('Student Bundle', 800)">Add to Cart</button>
+                    <button class="quick-buy-btn" onclick="quickBuyBundle('Student Bundle', 800)"><i class="fas fa-bolt"></i> Quick Buy</button>
                 </div>
             </div>
         </div>
@@ -653,12 +712,16 @@
                     <label for="email">Email Address (Required for Receipt & Payment)</label>
                     <input type="email" id="email" placeholder="customer@example.com" required>
                 </div>
-                
-                <button type="button" class="pay-btn" id="globalPayBtn" style="background: #2563eb; margin-bottom: 16px;" onclick="payWithPaystack()">
+                <div class="form-group">
+                    <label for="phone">M-Pesa Phone Number (Format: 2547XXXXXXXX)</label>
+                    <input type="tel" id="phone" placeholder="254712345678" pattern="[0-9]{12}" required>
+                    <small style="color: var(--text-muted); display: block; margin-top: 4px;">Enter your M-Pesa number for instant bundle activation</small>
+                </div>
+                <button type="button" class="pay-btn" id="globalPayBtn" onclick="payWithPaystack()">
                     💳 Pay Now (Card, PayPal, or M-Pesa)
                 </button>
-                <p style="text-align: center; color: var(--text-muted); font-size: 0.85rem;">
-                    <i class="fas fa-lock"></i> Secure payment powered by Paystack. You'll receive an M-Pesa prompt on your phone.
+                <p style="text-align: center; color: var(--text-muted); font-size: 0.85rem; margin-top: 12px;">
+                    <i class="fas fa-lock"></i> Secure payment powered by Paystack.
                 </p>
             </form>
             <div id="messageBox" class="message"></div>
@@ -729,11 +792,11 @@
             <div class="footer-section">
                 <h4>Quick Links</h4>
                 <ul class="footer-links">
-                    <li><a href="/">Home</a></li>
-                    <li><a href="/shop">Shop</a></li>
-                    <li><a href="/about">About Us</a></li>
-                    <li><a href="/contact">Contact</a></li>
-                    <li><a href="/blog">Blog</a></li>
+                    <li><a href="#" onclick="scrollToTop(); return false;">Home</a></li>
+                    <li><a href="#" onclick="scrollToProducts(); return false;">Shop</a></li>
+                    <li><a href="#" onclick="openModal('about'); return false;">About Us</a></li>
+                    <li><a href="#" onclick="openModal('contact'); return false;">Contact</a></li>
+                    <li><a href="#" onclick="openModal('blog'); return false;">Blog</a></li>
                 </ul>
             </div>
 
@@ -741,11 +804,11 @@
                 <h4>Customer Service</h4>
                 <ul class="footer-links">
                     <li><a href="/dashboard">My Orders</a></li>
-                    <li><a href="/returns">Returns & Refunds</a></li>
-                    <li><a href="/shipping">Shipping Info</a></li>
-                    <li><a href="/faq">FAQ</a></li>
-                    <li><a href="/privacy">Privacy Policy</a></li>
-                    <li><a href="/terms">Terms & Conditions</a></li>
+                    <li><a href="#" onclick="openModal('returns'); return false;">Returns & Refunds</a></li>
+                    <li><a href="#" onclick="openModal('shipping'); return false;">Shipping Info</a></li>
+                    <li><a href="#" onclick="openModal('faq'); return false;">FAQ</a></li>
+                    <li><a href="#" onclick="openModal('privacy'); return false;">Privacy Policy</a></li>
+                    <li><a href="#" onclick="openModal('terms'); return false;">Terms & Conditions</a></li>
                 </ul>
             </div>
 
@@ -753,8 +816,8 @@
                 <h4>Contact Us</h4>
                 <ul class="contact-info">
                     <li><i class="fas fa-map-marker-alt"></i><span>Nairobi, Kenya</span></li>
-                    <li><i class="fas fa-phone"></i><span>+254 754 427 226</span></li>
-                    <li><i class="fas fa-envelope"></i><span>support@swiftmartkenya.co.ke</span></li>
+                    <li><i class="fas fa-phone"></i><span><a href="tel:+254754427226">+254 754 427 226</a></span></li>
+                    <li><i class="fas fa-envelope"></i><span><a href="mailto:support@swiftmartkenya.co.ke">support@swiftmartkenya.co.ke</a></span></li>
                     <li><i class="fas fa-clock"></i><span>Mon - Sat: 8:00 AM - 6:00 PM</span></li>
                 </ul>
             </div>
@@ -783,6 +846,69 @@
             <p>&copy; 2026 SwiftMart. All rights reserved. | Designed with <i class="fas fa-heart"></i> in Kenya</p>
         </div>
     </footer>
+
+    <!-- Footer Modal -->
+    <div class="modal-overlay" id="footerModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">×</button>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+    <!-- Bundle Quick Buy Modal -->
+    <div class="modal-overlay" id="bundleModal">
+        <div class="modal-content bundle-modal-content">
+            <button class="modal-close" onclick="closeBundleModal()">×</button>
+            <h2 id="bundleModalTitle">Activate Bundle</h2>
+            <p class="bundle-desc" id="bundleModalDesc">Enter your Safaricom number for instant activation.</p>
+            <div class="bundle-price-display" id="bundleModalPrice">KES 0</div>
+            <form id="bundleForm" onsubmit="processBundlePayment(event)">
+                <div class="form-group">
+                    <label for="bundleEmail">Email Address</label>
+                    <input type="email" id="bundleEmail" placeholder="customer@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="bundlePhone">Safaricom Number (e.g., 0712345678)</label>
+                    <input type="tel" id="bundlePhone" placeholder="0712345678" pattern="07[0-9]{8}" required>
+                    <small style="color: var(--text-muted); display: block; margin-top: 4px;">The bundle will be sent to this number.</small>
+                </div>
+                <button type="submit" class="pay-btn" id="bundlePayBtn">
+                    <i class="fas fa-lock"></i> Pay Securely via Paystack
+                </button>
+            </form>
+            <div id="bundleMessageBox" class="message"></div>
+        </div>
+    </div>
+
+    <!-- NEW: AI Chatbot Window -->
+    <div class="chat-window" id="chatWindow">
+        <div class="chat-header">
+            <div class="chat-agent-avatar" id="chatAvatar">🤖</div>
+            <div class="chat-agent-info">
+                <div class="chat-agent-name" id="chatAgentName">SwiftMart AI</div>
+                <div class="chat-agent-status">Online • Ready to help</div>
+            </div>
+            <button class="chat-close" onclick="toggleChat()"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+            <!-- Messages will be injected here -->
+        </div>
+        <div class="typing-indicator" id="typingIndicator">
+            <div class="typing-dot"></div>
+            <div class="typing-dot"></div>
+            <div class="typing-dot"></div>
+        </div>
+        <div class="chat-quick-actions">
+            <button class="quick-action-btn" onclick="sendQuickMessage('Track my order')">📦 Track Order</button>
+            <button class="quick-action-btn" onclick="sendQuickMessage('Data bundle help')">📶 Bundles</button>
+            <button class="quick-action-btn" onclick="sendQuickMessage('Payment issue')"> Payment</button>
+            <button class="quick-action-btn" onclick="sendQuickMessage('Shipping info')">🚚 Shipping</button>
+        </div>
+        <div class="chat-input-area">
+            <input type="text" class="chat-input" id="chatInput" placeholder="Type your message..." onkeypress="handleChatKeyPress(event)">
+            <button class="chat-send" onclick="sendChatMessage()"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
 
     <script>
         // --- SEARCH & FILTER LOGIC ---
@@ -842,6 +968,7 @@
             }
             saveCart();
             toggleCart(true);
+            showToast('✅ Added to cart: ' + name, '#065f46');
         }
 
         function updateQty(name, change) {
@@ -923,12 +1050,20 @@
         async function payWithPaystack() {
             if (cart.length === 0) return;
             const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
             const amount = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
             const product = cart.map(item => `${item.name} (x${item.qty})`).join(', ');
             const messageBox = document.getElementById('messageBox');
 
             if (!email) {
                 messageBox.textContent = '❌ Please enter your email address.';
+                messageBox.className = 'message error';
+                messageBox.style.display = 'block';
+                return;
+            }
+
+            if (!phone || phone.length !== 12 || !phone.startsWith('254')) {
+                messageBox.textContent = '❌ Please enter a valid M-Pesa number (Format: 2547XXXXXXXX)';
                 messageBox.className = 'message error';
                 messageBox.style.display = 'block';
                 return;
@@ -944,7 +1079,7 @@
                 const response = await fetch('/api/paystack/initialize', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email, amount, productName: product })
+                    body: JSON.stringify({ email, amount, productName: product, phone })
                 });
                 const data = await response.json();
                 if (data.authorization_url) {
@@ -963,6 +1098,270 @@
                 messageBox.style.display = 'block';
                 btn.disabled = false;
                 btn.innerHTML = originalText;
+            }
+        }
+
+        // --- BUNDLE QUICK BUY LOGIC ---
+        let currentBundle = { name: '', price: 0 };
+
+        function quickBuyBundle(name, price) {
+            currentBundle = { name, price };
+            document.getElementById('bundleModalTitle').textContent = 'Activate: ' + name;
+            document.getElementById('bundleModalPrice').textContent = 'KES ' + price.toLocaleString();
+            document.getElementById('bundleMessageBox').style.display = 'none';
+            document.getElementById('bundleModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeBundleModal() {
+            document.getElementById('bundleModal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        async function processBundlePayment(e) {
+            e.preventDefault();
+            const email = document.getElementById('bundleEmail').value;
+            const phone = document.getElementById('bundlePhone').value;
+            const messageBox = document.getElementById('bundleMessageBox');
+            const btn = document.getElementById('bundlePayBtn');
+
+            let formattedPhone = phone;
+            if (phone.startsWith('0')) {
+                formattedPhone = '254' + phone.substring(1);
+            }
+
+            messageBox.style.display = 'none';
+            const originalText = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = '<div class="spinner" style="display: block;"></div> Processing...';
+
+            try {
+                const response = await fetch('/api/paystack/initialize', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        email, 
+                        amount: currentBundle.price, 
+                        productName: currentBundle.name, 
+                        phone: formattedPhone 
+                    })
+                });
+                const data = await response.json();
+                if (data.authorization_url) {
+                    window.location.href = data.authorization_url;
+                } else {
+                    messageBox.textContent = '❌ Could not start payment.';
+                    messageBox.className = 'message error';
+                    messageBox.style.display = 'block';
+                    btn.disabled = false;
+                    btn.innerHTML = originalText;
+                }
+            } catch (error) {
+                console.error('Payment error:', error);
+                messageBox.textContent = '❌ Network error.';
+                messageBox.className = 'message error';
+                messageBox.style.display = 'block';
+                btn.disabled = false;
+                btn.innerHTML = originalText;
+            }
+        }
+
+        // --- AI CHATBOT ASSISTANT ---
+        const aiAgents = [
+            { name: 'Noah', avatar: '👨‍', greeting: "Hi there! I'm Noah from SwiftMart. How can I assist you today?" },
+            { name: 'Ezra', avatar: '👨‍💻', greeting: "Hello! Ezra here, your SwiftMart assistant. What can I help you with?" },
+            { name: 'Amani', avatar: '👩‍💼', greeting: "Welcome! I'm Amani. I'm here to make your SwiftMart experience smooth. What do you need?" },
+            { name: 'Brian', avatar: '🧑‍💼', greeting: "Hey! Brian at your service. How can I help you today?" },
+            { name: 'Faith', avatar: '👩‍💻', greeting: "Hi! I'm Faith. Let me help you with anything you need at SwiftMart!" }
+        ];
+
+        let currentAgent = aiAgents[Math.floor(Math.random() * aiAgents.length)];
+        let chatInitialized = false;
+
+        const aiResponses = {
+            greeting: ["Hello! 👋 Welcome to SwiftMart! How can I help you today?", "Hi there!  Great to see you. What can I assist you with?", "Welcome! 🎉 I'm here to help. What brings you to SwiftMart today?"],
+            order: {
+                keywords: ['order', 'track', 'delivery', 'shipping', 'where is my', 'status', 'dispatch'],
+                response: " **Order Tracking**\n\nTo track your order:\n1. Log into your account at swiftmartkenya.co.ke\n2. Go to 'My Orders' in your dashboard\n3. You'll see real-time status updates\n\n **Delivery Times:**\n• Nairobi: Same/next day\n• Major towns: 1-3 days\n• Remote areas: 3-5 days\n\nNeed more help? Share your order number and I'll check it for you!"
+            },
+            bundle: {
+                keywords: ['bundle', 'data', 'airtime', 'internet', 'mb', 'gb', 'activate', 'activation', 'safari', 'safaricom'],
+                response: "📶 **Data Bundles**\n\nWe offer amazing bundles:\n• 500MB Weekly - KES 30\n• 1GB Daily - KES 50\n• 2GB Monthly - KES 250\n• 5GB Monthly - KES 500\n• 10GB Monthly - KES 1,000\n• 20GB Monthly - KES 2,000\n• Unlimited Weekend - KES 150\n• Midnight Bundle - KES 100\n• Social Media Bundle - KES 200\n• Student Bundle - KES 800\n\n⚡ **Quick Activation:**\n1. Add to cart or use 'Quick Buy'\n2. Pay via Paystack (M-Pesa/Card)\n3. WhatsApp your confirmation code to +254 754 427 226\n4. Bundle activated within 5 minutes!\n\nWould you like me to help you purchase one?"
+            },
+            payment: {
+                keywords: ['pay', 'payment', 'mpesa', 'm-pesa', 'card', 'paystack', 'failed', 'error', 'transaction', 'money', 'charge'],
+                response: " **Payment Help**\n\nWe accept:\n✅ M-Pesa (Paybill: 4084333, Account: 2692317)\n✅ Visa/Mastercard via Paystack\n✅ PayPal\n\n **All payments are secure** and PCI-DSS compliant.\n\n**If payment failed:**\n1. Check your M-Pesa balance\n2. Ensure correct phone format: 2547XXXXXXXX\n3. Try a different payment method\n4. Clear browser cache and retry\n\nStill having issues? I can connect you with our payment specialist!"
+            },
+            product: {
+                keywords: ['product', 'item', 'buy', 'purchase', 'price', 'cost', 'how much', 'available', 'stock'],
+                response: "️ **Our Products**\n\nWe offer:\n• 💻 Laptops & Computers\n• 📱 Smartphones & Tablets\n• 🎧 Audio & Headphones\n• ️ Computer Accessories\n• 👗 Fashion & Watches\n• 🏠 Home & Kitchen\n• 💄 Beauty & Health\n• 🌐 Web Development Services\n• 📱 Social Media Services\n• 📶 Data Bundles\n\nAll products come with quality guarantees! Which category interests you?"
+            },
+            shipping: {
+                keywords: ['ship', 'deliver', 'delivery', 'location', 'where', 'how long', 'time'],
+                response: "🚚 **Shipping Information**\n\n📍 **Nairobi Metro:** Same-day or next-day (KES 200-300)\n🏙️ **Major Towns:** 1-3 business days (KES 350-500)\n🌍 **Remote Areas:** 3-5 business days (KES 500-800)\n\n📦 Digital services & data bundles are delivered instantly — no shipping needed!\n\n📱 You'll receive an SMS with tracking details once your order ships. You can also check 'My Orders' in your account."
+            },
+            return: {
+                keywords: ['return', 'refund', 'exchange', 'back', 'money back'],
+                response: "🔄 **Returns & Refunds**\n\n✅ **7-day return window** for physical products\n✅ Full refund for defective items\n✅ Refunds processed via M-Pesa within 5-7 days\n\n❌ **Non-refundable:**\n• Digital services (once delivered)\n• Data bundles & airtime\n• Customized products\n\n**To request a return:**\n1. WhatsApp us at +254 754 427 226\n2. Share your order number + photos\n3. Return item to our Nairobi office\n4. Receive your refund!\n\nNeed help with a specific return?"
+            },
+            contact: {
+                keywords: ['contact', 'call', 'email', 'reach', 'talk', 'phone', 'whatsapp'],
+                response: "📞 **Contact SwiftMart**\n\n📍 **Location:** Nairobi, Kenya\n **Phone:** +254 754 427 226\n✉️ **Email:** support@swiftmartkenya.co.ke\n🕒 **Hours:** Mon-Sat, 8AM - 6PM\n💬 **WhatsApp:** +254 754 427 226\n\nWe typically respond within 2 hours during business hours. For urgent issues, WhatsApp is fastest!\n\nIs there anything specific I can help you with right now?"
+            },
+            account: {
+                keywords: ['account', 'login', 'register', 'sign up', 'password', 'profile'],
+                response: "👤 **Account Help**\n\n**To create an account:**\n1. Click 'Login' in the top menu\n2. Choose 'Create Account'\n3. Enter your details\n\n**Benefits of having an account:**\n✅ Track all your orders\n✅ Save payment details securely\n✅ Get exclusive discounts\n✅ Faster checkout\n✅ View order history\n\n**Forgot password?** Click 'Forgot Password' on the login page to reset via email.\n\nNeed help with your account?"
+            },
+            thanks: {
+                keywords: ['thank', 'thanks', 'appreciate', 'helpful', 'great', 'awesome'],
+                response: "😊 You're very welcome! I'm glad I could help. Is there anything else I can assist you with today? We're here to make your SwiftMart experience the best! "
+            },
+            goodbye: {
+                keywords: ['bye', 'goodbye', 'see you', 'later', 'thanks bye'],
+                response: "👋 Thank you for chatting with me! Have a wonderful day and happy shopping at SwiftMart! Remember, I'm here 24/7 if you need anything. See you soon! 🛍️✨"
+            },
+            default: "I appreciate your message! 🤔 While I'm still learning, I want to make sure you get the best help. Could you try asking about:\n\n• 📦 Order tracking\n•  Data bundles\n• 💳 Payment issues\n• 🚚 Shipping info\n• 🔄 Returns\n• 👤 Account help\n\nOr type 'agent' to speak with a human specialist who can help with anything!"
+        };
+
+        function toggleChat() {
+            const chatWindow = document.getElementById('chatWindow');
+            const isActive = chatWindow.classList.contains('active');
+            
+            if (!isActive) {
+                chatWindow.classList.add('active');
+                if (!chatInitialized) {
+                    initializeChat();
+                    chatInitialized = true;
+                }
+            } else {
+                chatWindow.classList.remove('active');
+            }
+        }
+
+        function initializeChat() {
+            const messagesDiv = document.getElementById('chatMessages');
+            document.getElementById('chatAgentName').textContent = currentAgent.name;
+            document.getElementById('chatAvatar').textContent = currentAgent.avatar;
+            
+            // Welcome message
+            setTimeout(() => {
+                addBotMessage(currentAgent.greeting);
+                setTimeout(() => {
+                    addBotMessage("I can help you with orders, data bundles, payments, shipping, returns, and more! What would you like to know? 😊");
+                }, 800);
+            }, 300);
+        }
+
+        function addBotMessage(text) {
+            const messagesDiv = document.getElementById('chatMessages');
+            const msgDiv = document.createElement('div');
+            msgDiv.className = 'chat-message bot';
+            
+            const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            msgDiv.innerHTML = `<span class="msg-sender">${currentAgent.name} • SwiftMart AI</span>${formatMessage(text)}<span class="msg-time">${time}</span>`;
+            
+            messagesDiv.appendChild(msgDiv);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+
+        function addUserMessage(text) {
+            const messagesDiv = document.getElementById('chatMessages');
+            const msgDiv = document.createElement('div');
+            msgDiv.className = 'chat-message user';
+            
+            const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            msgDiv.innerHTML = `${text}<span class="msg-time">${time}</span>`;
+            
+            messagesDiv.appendChild(msgDiv);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+
+        function formatMessage(text) {
+            // Simple markdown-like formatting
+            return text
+                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                .replace(/\n/g, '<br>');
+        }
+
+        function showTyping() {
+            document.getElementById('typingIndicator').classList.add('active');
+            const messagesDiv = document.getElementById('chatMessages');
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+
+        function hideTyping() {
+            document.getElementById('typingIndicator').classList.remove('active');
+        }
+
+        function getAIResponse(message) {
+            const lowerMsg = message.toLowerCase();
+            
+            // Check each response category
+            for (const key in aiResponses) {
+                if (key === 'greeting' || key === 'default' || key === 'thanks' || key === 'goodbye') continue;
+                
+                const category = aiResponses[key];
+                if (category.keywords) {
+                    for (const keyword of category.keywords) {
+                        if (lowerMsg.includes(keyword)) {
+                            return category.response;
+                        }
+                    }
+                }
+            }
+            
+            // Check greetings
+            if (/^(hi|hello|hey|howdy|greetings|jambo|habari)/i.test(lowerMsg)) {
+                return aiResponses.greeting[Math.floor(Math.random() * aiResponses.greeting.length)];
+            }
+            
+            // Check thanks
+            if (/(thank|thanks|appreciate|helpful|great job|awesome)/i.test(lowerMsg)) {
+                return aiResponses.thanks.response;
+            }
+            
+            // Check goodbye
+            if (/(bye|goodbye|see you|later|gotta go)/i.test(lowerMsg)) {
+                return aiResponses.goodbye.response;
+            }
+            
+            // Check for agent request
+            if (lowerMsg.includes('agent') || lowerMsg.includes('human') || lowerMsg.includes('real person') || lowerMsg.includes('speak to')) {
+                return "👨‍💼 **Connecting to Human Agent**\n\nI understand you'd like to speak with a human specialist. Let me connect you!\n\n📱 **WhatsApp:** +254 754 427 226\n✉️ **Email:** support@swiftmartkenya.co.ke\n\nOur team typically responds within 2 hours during business hours (Mon-Sat, 8AM-6PM).\n\nIs there anything else I can help you with in the meantime?";
+            }
+            
+            return aiResponses.default;
+        }
+
+        function sendChatMessage() {
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            
+            if (!message) return;
+            
+            addUserMessage(message);
+            input.value = '';
+            
+            // Show typing indicator
+            showTyping();
+            
+            // Simulate AI thinking time
+            const thinkingTime = 800 + Math.random() * 1200;
+            setTimeout(() => {
+                hideTyping();
+                const response = getAIResponse(message);
+                addBotMessage(response);
+            }, thinkingTime);
+        }
+
+        function sendQuickMessage(message) {
+            document.getElementById('chatInput').value = message;
+            sendChatMessage();
+        }
+
+        function handleChatKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendChatMessage();
             }
         }
 
@@ -1128,42 +1527,52 @@
             }, 3000);
         }
 
-        // --- COPY TO CLIPBOARD FUNCTION ---
-        function copyToClipboard(text) {
-            navigator.clipboard.writeText(text).then(() => {
-                showToast('✅ Copied: ' + text, '#065f46');
-            }).catch(err => {
-                console.error('Failed to copy: ', err);
-            });
-        }
-    </script>
-    <!-- Floating WhatsApp Button -->
-    <a href="https://wa.me/254754427226?text=Hello%20SwiftMart!%20I%20am%20interested%20in%20your%20services." class="whatsapp-float" target="_blank">
-        <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 24 24" fill="white"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
-    </a>
+        // --- FOOTER MODAL CONTENT ---
+        const modalContent = {
+            about: `<h2>About SwiftMart</h2><p>SwiftMart is Kenya's trusted destination for top-tier digital services and premium products. Founded with a mission to deliver quality, speed, and excellence to every customer, we bridge the gap between professional services and everyday needs.</p><h3>Our Mission</h3><p>To empower Kenyan consumers and businesses with accessible, affordable, and reliable digital and physical products.</p><h3>Our Vision</h3><p>To become East Africa's most trusted e-commerce platform by 2030.</p><h3>Why Choose Us?</h3><ul><li>Secure M-Pesa and card payments via Paystack</li><li>Fast delivery across Kenya</li><li>24/7 AI-powered customer support</li><li>Quality guaranteed on every product</li></ul>`,
+            contact: `<h2>Contact Us</h2><p>We'd love to hear from you! Reach out to us through any of the channels below.</p><div class="contact-grid"><div class="contact-item"><strong> Location</strong>Nairobi, Kenya</div><div class="contact-item"><strong>📞 Phone</strong><a href="tel:+254754427226">+254 754 427 226</a></div><div class="contact-item"><strong>✉️ Email</strong><a href="mailto:support@swiftmartkenya.co.ke">support@swiftmartkenya.co.ke</a></div><div class="contact-item"><strong> Hours</strong>Mon - Sat: 8:00 AM - 6:00 PM</div></div><h3>Instant AI Support</h3><p>Click the headset icon at the bottom right to chat with our AI assistant for instant help!</p>`,
+            blog: `<h2>SwiftMart Blog</h2><p>🚀 <strong>Coming Soon!</strong></p><p>We're working on exciting articles about tech trends, product reviews, business tips, and exclusive deals. Check back soon for our first post!</p><h3>What's Coming:</h3><ul><li>Weekly product reviews and comparisons</li><li>Tech tips for Kenyan businesses</li><li>Exclusive discount codes for subscribers</li><li>Success stories from our customers</li></ul><p>Subscribe to our newsletter to be notified when we launch!</p>`,
+            returns: `<h2>Returns & Refunds Policy</h2><p>At SwiftMart, your satisfaction is our priority. Here's how our returns process works:</p><h3>Return Window</h3><p>You may request a return within <strong>7 days</strong> of receiving your product. Digital services are non-refundable once delivered.</p><h3>Eligible Items</h3><ul><li>Products must be unused and in original packaging</li><li>Physical items must not show signs of wear</li><li>Defective items qualify for full refund or replacement</li></ul><h3>How to Request a Return</h3><ol><li>Contact us via chat or email with your order number</li><li>Provide photos of the item (if applicable)</li><li>Once approved, return the item to our Nairobi office</li><li>Refunds are processed within 5-7 business days via M-Pesa</li></ol><h3>Non-Refundable Items</h3><ul><li>Digital services (web design, hosting, consultation)</li><li>Data bundles and airtime</li><li>Customized or personalized products</li></ul>`,
+            shipping: `<h2>Shipping Information</h2><p>We deliver across Kenya with speed and reliability.</p><h3>Delivery Options</h3><ul><li><strong>Nairobi Metro:</strong> Same-day or next-day delivery (KES 200-300)</li><li><strong>Major Towns:</strong> 1-3 business days (KES 350-500)</li><li><strong>Remote Areas:</strong> 3-5 business days (KES 500-800)</li></ul><h3>Digital Services</h3><p>Digital services (web design, hosting, social media setup) are delivered electronically within the agreed timeframe — no shipping required!</p><h3>Data Bundles</h3><p>Data bundles are activated instantly upon payment confirmation via M-Pesa. WhatsApp your confirmation code to +254 754 427 226 for immediate activation.</p><h3>Tracking Your Order</h3><p>Once your order ships, you'll receive an SMS with tracking details. You can also check your order status in the "My Orders" section of your account.</p>`,
+            faq: `<h2>Frequently Asked Questions</h2><h3>How do I place an order?</h3><p>Browse our products, click "Add to Cart", then proceed to checkout. You can pay via M-Pesa or card.</p><h3>Is my payment secure?</h3><p>Yes! We use Paystack, a PCI-DSS compliant payment processor. Your card details are never stored on our servers.</p><h3>How do I receive my data bundle?</h3><p>After payment, WhatsApp your M-Pesa confirmation code to +254 754 427 226. Your bundle will be activated within 5 minutes.</p><h3>Do you offer warranties?</h3><p>Yes, all physical products come with a manufacturer warranty. Digital services include a 30-day support window.</p><h3>Can I change my order after placing it?</h3><p>Contact us within 1 hour of placing your order. After that, changes depend on whether the item has shipped.</p><h3>How do I contact support?</h3><p>Use our AI chatbot (headset icon) for instant help, or WhatsApp us at +254 754 427 226. We respond within 2 hours during business hours.</p>`,
+            privacy: `<h2>Privacy Policy</h2><p><em>Last updated: October 2026</em></p><p>SwiftMart ("we", "our", "us") is committed to protecting your privacy. This policy explains how we collect, use, and safeguard your information.</p><h3>Information We Collect</h3><ul><li><strong>Personal Info:</strong> Name, email, phone number (for order processing)</li><li><strong>Payment Info:</strong> Processed securely via Paystack — we never store card details</li><li><strong>Usage Data:</strong> Browser type, pages visited (for improving our service)</li></ul><h3>How We Use Your Info</h3><ul><li>To process and deliver your orders</li><li>To send order confirmations and updates</li><li>To improve our website and services</li><li>To send promotional offers (only if you subscribe)</li></ul><h3>Your Rights</h3><p>You can request to view, update, or delete your personal data at any time by contacting us.</p><h3>Data Security</h3><p>We use industry-standard encryption and secure servers. Your data is never sold to third parties.</p>`,
+            terms: `<h2>Terms & Conditions</h2><p><em>Last updated: October 2026</em></p><p>By using SwiftMart, you agree to the following terms:</p><h3>1. Acceptance of Terms</h3><p>Using our website constitutes acceptance of these terms. If you disagree, please do not use our services.</p><h3>2. Products & Services</h3><p>We strive for accuracy in product descriptions and pricing. However, we reserve the right to correct errors and update prices without prior notice.</p><h3>3. Payments</h3><p>All payments are processed securely via Paystack. Prices are in Kenyan Shillings (KES) and include applicable taxes.</p><h3>4. User Accounts</h3><p>You are responsible for maintaining the confidentiality of your account credentials and all activities under your account.</p><h3>5. Limitation of Liability</h3><p>SwiftMart is not liable for indirect damages arising from the use of our services, to the maximum extent permitted by Kenyan law.</p><h3>6. Governing Law</h3><p>These terms are governed by the laws of the Republic of Kenya. Any disputes will be resolved in Kenyan courts.</p>`
+        };
 
-    <style>
-        .whatsapp-float {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background-color: #25D366;
-            color: white;
-            width: 65px;
-            height: 65px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 2px 2px 15px rgba(0,0,0,0.3);
-            z-index: 1000;
-            text-decoration: none;
-            transition: transform 0.3s ease, background-color 0.3s ease;
+        function openModal(type) {
+            const modal = document.getElementById('footerModal');
+            const body = document.getElementById('modalBody');
+            body.innerHTML = modalContent[type] || '<h2>Page Not Found</h2><p>This content is coming soon.</p>';
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
         }
-        .whatsapp-float:hover {
-            transform: scale(1.1);
-            background-color: #128C7E;
+
+        function closeModal() {
+            const modal = document.getElementById('footerModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
         }
-    </style>
+
+        function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+        function scrollToProducts() {
+            const productsSection = document.querySelector('.search-filter-container');
+            if (productsSection) { productsSection.scrollIntoView({ behavior: 'smooth' }); }
+        }
+
+        // Close modals when clicking outside
+        document.getElementById('footerModal').addEventListener('click', function(e) { if (e.target === this) closeModal(); });
+        document.getElementById('bundleModal').addEventListener('click', function(e) { if (e.target === this) closeBundleModal(); });
+
+        // Close modals with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') { closeModal(); closeBundleModal(); }
+        });
+    </script>
+    
+    <!-- NEW: AI Support Chatbot Button -->
+    <button class="support-float" onclick="toggleChat()" aria-label="AI Support Assistant">
+        <i class="fas fa-headset"></i>
+        <span class="support-badge">1</span>
+    </button>
 </body>
 </html>
