@@ -663,6 +663,7 @@ app.delete('/api/admin/reviews/:id', requireAuth, async (req, res) => {
 app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'frontend', 'index.html')));
 app.get('/login', (req, res) => res.sendFile(path.join(__dirname, 'frontend', 'login.html')));
 app.get('/register', (req, res) => res.sendFile(path.join(__dirname, 'frontend', 'register.html')));
+   app.get('/reset-password', (req, res) => res.sendFile(path.join(__dirname, 'frontend', 'reset-password.html')));
 app.get('/dashboard', (req, res) => res.sendFile(path.join(__dirname, 'frontend', 'dashboard.html')));
 app.get('/receipt.html', (req, res) => res.sendFile(path.join(__dirname, 'frontend', 'receipt.html')));
 
