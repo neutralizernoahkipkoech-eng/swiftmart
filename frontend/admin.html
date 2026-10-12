@@ -4,64 +4,120 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard | SwiftMart</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root { --brand-primary: #2563eb; --bg-color: #f8fafc; --text-main: #0f172a; --border-color: #e2e8f0; }
+        :root { 
+            --brand-primary: #2563eb; 
+            --brand-secondary: #1e40af;
+            --bg-color: #f8fafc; 
+            --text-main: #0f172a; 
+            --text-muted: #64748b; 
+            --border-color: #e2e8f0; 
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+        }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: 'Inter', sans-serif; background-color: var(--bg-color); color: var(--text-main); min-height: 100vh; }
         .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
         
-        nav { background: white; padding: 16px 0; border-bottom: 1px solid var(--border-color); margin-bottom: 30px; }
+        nav { background: white; padding: 16px 0; border-bottom: 1px solid var(--border-color); margin-bottom: 30px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
         .nav-content { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-        .logo { font-weight: 800; font-size: 1.5rem; color: var(--brand-primary); text-decoration: none; }
-        .back-btn { background: var(--brand-primary); color: white; padding: 8px 16px; border-radius: 6px; text-decoration: none; font-weight: 600; }
+        .logo { font-weight: 800; font-size: 1.5rem; color: var(--brand-primary); text-decoration: none; display: flex; align-items: center; gap: 8px; }
+        .back-btn { background: var(--bg-color); color: var(--text-main); padding: 8px 16px; border-radius: 6px; text-decoration: none; font-weight: 600; border: 1px solid var(--border-color); transition: all 0.2s; }
+        .back-btn:hover { background: var(--border-color); }
 
         .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
-        .header h1 { font-size: 1.8rem; }
+        .header h1 { font-size: 1.5rem; font-weight: 700; }
+        .refresh-btn { padding: 8px 16px; background: white; border: 1px solid var(--border-color); border-radius: 6px; cursor: pointer; font-weight: 600; color: var(--text-main); transition: all 0.2s; display: flex; align-items: center; gap: 6px; }
+        .refresh-btn:hover { background: var(--bg-color); border-color: var(--text-muted); }
 
-        .table-container { background: white; border-radius: 12px; border: 1px solid var(--border-color); overflow-x: auto; }
+        /* Summary Cards */
+        .summary-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 24px; }
+        .summary-card { background: white; padding: 20px; border-radius: 12px; border: 1px solid var(--border-color); }
+        .summary-card h3 { font-size: 0.875rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase; margin-bottom: 8px; }
+        .summary-card .value { font-size: 1.75rem; font-weight: 800; color: var(--text-main); }
+        .summary-card.revenue .value { color: var(--success); }
+
+        .tabs { display: flex; gap: 8px; margin-bottom: 24px; border-bottom: 2px solid var(--border-color); }
+        .tab-btn { padding: 12px 24px; background: transparent; color: var(--text-muted); border: none; border-bottom: 2px solid transparent; margin-bottom: -2px; cursor: pointer; font-weight: 600; font-size: 0.95rem; transition: all 0.2s; display: flex; align-items: center; gap: 8px; }
+        .tab-btn:hover { color: var(--brand-primary); }
+        .tab-btn.active { color: var(--brand-primary); border-bottom-color: var(--brand-primary); }
+
+        .section { display: none; animation: fadeIn 0.3s ease; }
+        .section.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+        .table-container { background: white; border-radius: 12px; border: 1px solid var(--border-color); overflow-x: auto; box-shadow: 0 2px 8px rgba(0,0,0,0.02); }
         table { width: 100%; border-collapse: collapse; min-width: 800px; }
         th, td { padding: 16px; text-align: left; border-bottom: 1px solid var(--border-color); }
-        th { background: #f1f5f9; font-weight: 600; font-size: 0.875rem; color: #64748b; text-transform: uppercase; }
+        th { background: #f8fafc; font-weight: 600; font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
         tr:last-child td { border-bottom: none; }
+        tr:hover td { background: #fafafa; }
         
-        .status { padding: 4px 12px; border-radius: 999px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
+        .status { padding: 4px 12px; border-radius: 999px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; display: inline-block; }
         .status.success { background: #dcfce7; color: #166534; }
         .status.pending { background: #fef9c3; color: #854d0e; }
         .status.failed { background: #fee2e2; color: #991b1b; }
 
-        .method { font-weight: 600; }
+        .method { font-weight: 600; display: flex; align-items: center; gap: 6px; }
         .method.mpesa { color: #43B02A; }
-        .method.paystack { color: #0f172a; }
+        .method.paystack { color: var(--brand-primary); }
         
-        .empty-state { text-align: center; padding: 60px 20px; color: #64748b; }
+        .empty-state { text-align: center; padding: 60px 20px; color: var(--text-muted); font-size: 0.95rem; }
         
-        .btn-approve { background: #10b981; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-weight: 600; margin-right: 8px; }
-        .btn-delete { background: #ef4444; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-weight: 600; }
+        .stock-input { width: 80px; padding: 6px 10px; border: 1px solid var(--border-color); border-radius: 6px; font-weight: 600; text-align: center; }
+        .stock-input:focus { outline: none; border-color: var(--brand-primary); box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); }
+        .low-stock { color: var(--danger); font-weight: 700; }
+        
+        .btn-approve { background: var(--success); color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.85rem; margin-right: 8px; transition: opacity 0.2s; }
+        .btn-approve:hover { opacity: 0.9; }
+        .btn-delete { background: var(--danger); color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.85rem; transition: opacity 0.2s; }
+        .btn-delete:hover { opacity: 0.9; }
+        .btn-update { background: var(--brand-primary); color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.85rem; transition: background 0.2s; }
+        .btn-update:hover { background: var(--brand-secondary); }
     </style>
 </head>
 <body>
     <nav>
         <div class="nav-content">
-            <a href="/" class="logo">🛍️ SwiftMart Admin</a>
-            <a href="/" class="back-btn">← Back to Store</a>
+            <a href="/" class="logo"><i class="fas fa-bolt"></i> SwiftMart Admin</a>
+            <a href="/" class="back-btn"><i class="fas fa-arrow-left"></i> Back to Store</a>
         </div>
     </nav>
 
     <div class="container">
         <!-- Tabs -->
-        <div style="display: flex; gap: 16px; margin-bottom: 24px; border-bottom: 1px solid var(--border-color);">
-            <button onclick="showTab('orders')" id="tab-orders" style="padding: 12px 24px; background: var(--brand-primary); color: white; border: none; border-radius: 8px 8px 0 0; cursor: pointer; font-weight: 600;">📦 Orders</button>
-            <button onclick="showTab('inventory')" id="tab-inventory" style="padding: 12px 24px; background: #f1f5f9; color: var(--text-muted); border: none; border-radius: 8px 8px 0 0; cursor: pointer; font-weight: 600;">📊 Inventory</button>
-            <button onclick="showTab('reviews')" id="tab-reviews" style="padding: 12px 24px; background: #f1f5f9; color: var(--text-muted); border: none; border-radius: 8px 8px 0 0; cursor: pointer; font-weight: 600;">⭐ Reviews</button>
+        <div class="tabs">
+            <button onclick="showTab('orders')" id="tab-orders" class="tab-btn active"><i class="fas fa-box"></i> Orders</button>
+            <button onclick="showTab('inventory')" id="tab-inventory" class="tab-btn"><i class="fas fa-warehouse"></i> Inventory</button>
+            <button onclick="showTab('reviews')" id="tab-reviews" class="tab-btn"><i class="fas fa-star"></i> Reviews</button>
         </div>
 
         <!-- Orders Section -->
-        <div id="orders-section">
+        <div id="orders-section" class="section active">
             <div class="header">
                 <h1>Order Management</h1>
-                <button onclick="loadOrders()" style="padding: 8px 16px; background: #e2e8f0; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">🔄 Refresh</button>
+                <button onclick="loadOrders()" class="refresh-btn"><i class="fas fa-sync-alt"></i> Refresh</button>
             </div>
+            
+            <!-- Summary Cards -->
+            <div class="summary-cards">
+                <div class="summary-card">
+                    <h3>Total Orders</h3>
+                    <div class="value" id="total-orders-count">0</div>
+                </div>
+                <div class="summary-card revenue">
+                    <h3>Total Revenue</h3>
+                    <div class="value" id="total-revenue">KES 0</div>
+                </div>
+                <div class="summary-card">
+                    <h3>Pending Orders</h3>
+                    <div class="value" id="pending-orders-count">0</div>
+                </div>
+            </div>
+
             <div class="table-container">
                 <table id="ordersTable">
                     <thead>
@@ -75,17 +131,17 @@
                         </tr>
                     </thead>
                     <tbody id="ordersBody">
-                        <tr><td colspan="6" class="empty-state">Loading orders...</td></tr>
+                        <tr><td colspan="6" class="empty-state"><i class="fas fa-spinner fa-spin"></i> Loading orders...</td></tr>
                     </tbody>
                 </table>
             </div>
         </div>
 
         <!-- Inventory Section -->
-        <div id="inventory-section" style="display: none;">
+        <div id="inventory-section" class="section">
             <div class="header">
                 <h1>Inventory Management</h1>
-                <button onclick="loadInventory()" style="padding: 8px 16px; background: #e2e8f0; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">🔄 Refresh</button>
+                <button onclick="loadInventory()" class="refresh-btn"><i class="fas fa-sync-alt"></i> Refresh</button>
             </div>
             <div class="table-container">
                 <table id="inventoryTable">
@@ -99,17 +155,17 @@
                         </tr>
                     </thead>
                     <tbody id="inventoryBody">
-                        <tr><td colspan="5" class="empty-state">Loading inventory...</td></tr>
+                        <tr><td colspan="5" class="empty-state"><i class="fas fa-spinner fa-spin"></i> Loading inventory...</td></tr>
                     </tbody>
                 </table>
             </div>
         </div>
 
-        <!-- NEW: Reviews Section -->
-        <div id="reviews-section" style="display: none;">
+        <!-- Reviews Section -->
+        <div id="reviews-section" class="section">
             <div class="header">
                 <h1>Review Management</h1>
-                <button onclick="loadReviews()" style="padding: 8px 16px; background: #e2e8f0; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">🔄 Refresh</button>
+                <button onclick="loadReviews()" class="refresh-btn"><i class="fas fa-sync-alt"></i> Refresh</button>
             </div>
             <div class="table-container">
                 <table id="reviewsTable">
@@ -125,7 +181,7 @@
                         </tr>
                     </thead>
                     <tbody id="reviewsBody">
-                        <tr><td colspan="7" class="empty-state">Loading reviews...</td></tr>
+                        <tr><td colspan="7" class="empty-state"><i class="fas fa-spinner fa-spin"></i> Loading reviews...</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -135,73 +191,97 @@
     <script>
         // Tab Switching Logic
         function showTab(tabName) {
-            document.getElementById('orders-section').style.display = tabName === 'orders' ? 'block' : 'none';
-            document.getElementById('inventory-section').style.display = tabName === 'inventory' ? 'block' : 'none';
-            document.getElementById('reviews-section').style.display = tabName === 'reviews' ? 'block' : 'none';
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
             
-            document.getElementById('tab-orders').style.background = tabName === 'orders' ? 'var(--brand-primary)' : '#f1f5f9';
-            document.getElementById('tab-orders').style.color = tabName === 'orders' ? 'white' : 'var(--text-muted)';
-            document.getElementById('tab-inventory').style.background = tabName === 'inventory' ? 'var(--brand-primary)' : '#f1f5f9';
-            document.getElementById('tab-inventory').style.color = tabName === 'inventory' ? 'white' : 'var(--text-muted)';
-            document.getElementById('tab-reviews').style.background = tabName === 'reviews' ? 'var(--brand-primary)' : '#f1f5f9';
-            document.getElementById('tab-reviews').style.color = tabName === 'reviews' ? 'white' : 'var(--text-muted)';
+            document.getElementById(`${tabName}-section`).classList.add('active');
+            document.getElementById(`tab-${tabName}`).classList.add('active');
 
             if (tabName === 'inventory') loadInventory();
             if (tabName === 'reviews') loadReviews();
         }
 
-        // Order Loading Logic
+        // Order Loading Logic with Summary Stats
         async function loadOrders() {
             const tbody = document.getElementById('ordersBody');
-            tbody.innerHTML = '<tr><td colspan="6" class="empty-state">Loading orders...</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="6" class="empty-state"><i class="fas fa-spinner fa-spin"></i> Loading orders...</td></tr>';
             try {
                 const res = await fetch('/api/admin/orders');
-                const data = await res.json();
                 if (res.status === 401) { window.location.href = '/login'; return; }
-                if (res.status === 403) { tbody.innerHTML = '<tr><td colspan="6" class="empty-state">❌ Access Denied.</td></tr>'; return; }
+                if (res.status === 403) { tbody.innerHTML = '<tr><td colspan="6" class="empty-state">❌ Access Denied. Admin only.</td></tr>'; return; }
+                
+                const data = await res.json();
 
                 if (data.orders && data.orders.length > 0) {
+                    // Calculate Summary Stats
+                    const totalOrders = data.orders.length;
+                    const totalRevenue = data.orders.filter(o => o.status === 'success').reduce((sum, o) => sum + o.amount, 0);
+                    const pendingOrders = data.orders.filter(o => o.status === 'pending').length;
+
+                    document.getElementById('total-orders-count').textContent = totalOrders;
+                    document.getElementById('total-revenue').textContent = `KES ${totalRevenue.toLocaleString()}`;
+                    document.getElementById('pending-orders-count').textContent = pendingOrders;
+
                     tbody.innerHTML = data.orders.map(order => {
                         const date = new Date(order.createdAt).toLocaleDateString('en-KE', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
-                        const contact = order.phone !== 'N/A' ? order.phone : (order.email || 'N/A');
-                        const method = order.paymentMethod || (order.phone !== 'N/A' ? 'M-Pesa' : 'Paystack');
+                        const contact = order.phone && order.phone !== 'N/A' ? order.phone : (order.email || 'N/A');
+                        const method = order.paymentMethod || (order.phone && order.phone !== 'N/A' ? 'M-Pesa' : 'Paystack');
                         const methodClass = method.includes('M-Pesa') ? 'mpesa' : 'paystack';
+                        const methodIcon = method.includes('M-Pesa') ? '<i class="fas fa-mobile-alt"></i>' : '<i class="fas fa-credit-card"></i>';
+                        
                         return `<tr>
                             <td>${date}</td>
                             <td><strong>${order.product}</strong></td>
                             <td>KES ${order.amount.toLocaleString()}</td>
                             <td>${contact}</td>
-                            <td><span class="method ${methodClass}">${method}</span></td>
+                            <td><span class="method ${methodClass}">${methodIcon} ${method}</span></td>
                             <td><span class="status ${order.status}">${order.status}</span></td>
                         </tr>`;
                     }).join('');
                 } else {
+                    document.getElementById('total-orders-count').textContent = '0';
+                    document.getElementById('total-revenue').textContent = 'KES 0';
+                    document.getElementById('pending-orders-count').textContent = '0';
                     tbody.innerHTML = '<tr><td colspan="6" class="empty-state">No orders found yet.</td></tr>';
                 }
-            } catch (error) { tbody.innerHTML = '<tr><td colspan="6" class="empty-state">❌ Failed to load orders.</td></tr>'; }
+            } catch (error) { 
+                console.error(error);
+                tbody.innerHTML = '<tr><td colspan="6" class="empty-state">❌ Failed to load orders. Check console.</td></tr>'; 
+            }
         }
 
-        // Inventory Loading Logic
+        // Inventory Loading Logic with Low Stock Warning
         async function loadInventory() {
             const tbody = document.getElementById('inventoryBody');
-            tbody.innerHTML = '<tr><td colspan="5" class="empty-state">Loading inventory...</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="5" class="empty-state"><i class="fas fa-spinner fa-spin"></i> Loading inventory...</td></tr>';
             try {
                 const res = await fetch('/api/products');
                 const data = await res.json();
                 if (data.products && data.products.length > 0) {
-                    tbody.innerHTML = data.products.map(p => `
+                    tbody.innerHTML = data.products.map(p => {
+                        const isLowStock = p.stock < 5;
+                        const stockClass = isLowStock ? 'low-stock' : '';
+                        const stockWarning = isLowStock ? ' <i class="fas fa-exclamation-triangle" title="Low Stock"></i>' : '';
+                        
+                        return `
                         <tr>
                             <td><strong>${p.name}</strong></td>
-                            <td>${p.category}</td>
+                            <td style="text-transform: capitalize;">${p.category}</td>
                             <td>KES ${p.price.toLocaleString()}</td>
-                            <td><input type="number" id="stock-${p._id}" value="${p.stock}" min="0" style="width: 70px; padding: 6px; border: 1px solid #e2e8f0; border-radius: 4px;"></td>
-                            <td><button onclick="updateStock('${p._id}')" style="background: #10b981; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-weight: 600;">Update</button></td>
-                        </tr>
-                    `).join('');
+                            <td class="${stockClass}">${p.stock}${stockWarning}</td>
+                            <td>
+                                <input type="number" id="stock-${p._id}" value="${p.stock}" min="0" class="stock-input">
+                                <button onclick="updateStock('${p._id}')" class="btn-update">Update</button>
+                            </td>
+                        </tr>`;
+                    }).join('');
                 } else {
                     tbody.innerHTML = '<tr><td colspan="5" class="empty-state">No products in database.</td></tr>';
                 }
-            } catch (error) { tbody.innerHTML = '<tr><td colspan="5" class="empty-state">❌ Failed to load inventory.</td></tr>'; }
+            } catch (error) { 
+                console.error(error);
+                tbody.innerHTML = '<tr><td colspan="5" class="empty-state">❌ Failed to load inventory.</td></tr>'; 
+            }
         }
 
         async function updateStock(productId) {
@@ -212,24 +292,32 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ stock: parseInt(newStock) })
                 });
-                if (res.ok) { alert('✅ Stock updated!'); loadInventory(); } 
-                else { alert('❌ Failed to update stock.'); }
-            } catch (error) { alert('❌ Network error.'); }
+                if (res.ok) { 
+                    alert('✅ Stock updated successfully!'); 
+                    loadInventory(); 
+                } else { 
+                    alert('❌ Failed to update stock.'); 
+                }
+            } catch (error) { 
+                console.error(error);
+                alert('❌ Network error.'); 
+            }
         }
 
-        // NEW: Review Loading Logic
+        // Review Loading Logic
         async function loadReviews() {
             const tbody = document.getElementById('reviewsBody');
-            tbody.innerHTML = '<tr><td colspan="7" class="empty-state">Loading reviews...</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="7" class="empty-state"><i class="fas fa-spinner fa-spin"></i> Loading reviews...</td></tr>';
             try {
                 const res = await fetch('/api/admin/reviews');
-                const data = await res.json();
                 if (res.status === 401) { window.location.href = '/login'; return; }
-                if (res.status === 403) { tbody.innerHTML = '<tr><td colspan="7" class="empty-state">❌ Access Denied.</td></tr>'; return; }
+                if (res.status === 403) { tbody.innerHTML = '<tr><td colspan="7" class="empty-state">❌ Access Denied. Admin only.</td></tr>'; return; }
+
+                const data = await res.json();
 
                 if (data.reviews && data.reviews.length > 0) {
                     tbody.innerHTML = data.reviews.map(r => {
-                        const date = new Date(r.createdAt).toLocaleDateString('en-KE', { day: 'numeric', month: 'short' });
+                        const date = new Date(r.createdAt).toLocaleDateString('en-KE', { day: 'numeric', month: 'short', year: 'numeric' });
                         const statusClass = r.approved ? 'success' : 'pending';
                         const statusText = r.approved ? 'Approved' : 'Pending';
                         return `
@@ -238,18 +326,21 @@
                             <td><strong>${r.productName}</strong></td>
                             <td>${r.author}</td>
                             <td>${'⭐'.repeat(r.rating)}</td>
-                            <td style="max-width: 250px; font-style: italic;">"${r.comment}"</td>
+                            <td style="max-width: 250px; font-style: italic; color: var(--text-muted);">"${r.comment}"</td>
                             <td><span class="status ${statusClass}">${statusText}</span></td>
                             <td>
-                                ${!r.approved ? `<button class="btn-approve" onclick="approveReview('${r._id}')">Approve</button>` : ''}
-                                <button class="btn-delete" onclick="deleteReview('${r._id}')">Delete</button>
+                                ${!r.approved ? `<button class="btn-approve" onclick="approveReview('${r._id}')"><i class="fas fa-check"></i> Approve</button>` : ''}
+                                <button class="btn-delete" onclick="deleteReview('${r._id}')"><i class="fas fa-trash"></i> Delete</button>
                             </td>
                         </tr>`;
                     }).join('');
                 } else {
                     tbody.innerHTML = '<tr><td colspan="7" class="empty-state">No reviews found yet.</td></tr>';
                 }
-            } catch (error) { tbody.innerHTML = '<tr><td colspan="7" class="empty-state">❌ Failed to load reviews.</td></tr>'; }
+            } catch (error) { 
+                console.error(error);
+                tbody.innerHTML = '<tr><td colspan="7" class="empty-state">❌ Failed to load reviews.</td></tr>'; 
+            }
         }
 
         async function approveReview(reviewId) {
@@ -258,16 +349,22 @@
                 const res = await fetch(`/api/admin/reviews/${reviewId}/approve`, { method: 'PUT' });
                 if (res.ok) { alert('✅ Review approved!'); loadReviews(); }
                 else { alert('❌ Failed to approve.'); }
-            } catch (error) { alert('❌ Network error.'); }
+            } catch (error) { 
+                console.error(error);
+                alert('❌ Network error.'); 
+            }
         }
 
         async function deleteReview(reviewId) {
-            if (!confirm('Delete this review permanently?')) return;
+            if (!confirm('Delete this review permanently? This cannot be undone.')) return;
             try {
                 const res = await fetch(`/api/admin/reviews/${reviewId}`, { method: 'DELETE' });
                 if (res.ok) { alert('✅ Review deleted!'); loadReviews(); }
                 else { alert('❌ Failed to delete.'); }
-            } catch (error) { alert('❌ Network error.'); }
+            } catch (error) { 
+                console.error(error);
+                alert('❌ Network error.'); 
+            }
         }
 
         // Load orders on page load
