@@ -218,7 +218,7 @@ nav { background: white; padding: 12px 0; border-bottom: 1px solid var(--border-
 <div class="overlay" id="overlay" onclick="toggleCart()"></div>
 <div class="cart-sidebar" id="cartSidebar">
 <div class="cart-header">
-<h2> Your Cart</h2>
+<h2>🛒 Your Cart</h2>
 <button class="close-cart" onclick="toggleCart()">×</button>
 </div>
 <div class="cart-items" id="cartItems">
@@ -255,7 +255,7 @@ nav { background: white; padding: 12px 0; border-bottom: 1px solid var(--border-
 </div>
 <div class="auth-section" id="authSection" style="display: flex; align-items: center; gap: 20px;">
 <div class="cart-icon" onclick="toggleCart()" style="position: relative; cursor: pointer; font-size: 1.4rem; display: flex; align-items: center; gap: 5px;">
- <span class="cart-badge" id="cartBadge" style="position: absolute; top: -8px; right: -10px; background: #f57c00; color: white; font-size: 0.7rem; font-weight: bold; padding: 2px 6px; border-radius: 10px;">0</span>
+ 🛒 <span class="cart-badge" id="cartBadge" style="position: absolute; top: -8px; right: -10px; background: #f57c00; color: white; font-size: 0.7rem; font-weight: bold; padding: 2px 6px; border-radius: 10px;">0</span>
 </div>
 <div id="guestView" style="display: flex; gap: 10px; align-items: center;">
 <a href="/login" style="color: var(--text-main); text-decoration: none; font-weight: 600; font-size: 0.9rem;">Login</a>
@@ -310,7 +310,7 @@ nav { background: white; padding: 12px 0; border-bottom: 1px solid var(--border-
 </div>
 <div class="search-filter-container">
 <div class="search-box">
-<span class="search-icon"></span>
+<span class="search-icon">🔍</span>
 <input type="text" id="searchInput" placeholder="Search for products or services..." onkeyup="filterProducts()">
 </div>
 <div class="filter-box">
@@ -558,7 +558,7 @@ nav { background: white; padding: 12px 0; border-bottom: 1px solid var(--border-
 <div class="card-description">Valid for 30 days. Great for streaming and remote work.</div>
 <div class="card-price">KES 500</div>
 <button class="action-btn" onclick="addToCart('5GB Monthly Bundle', 500)">Add to Cart</button>
-<button class="quick-buy-btn" onclick="quickBuyBundle('5GB Monthly Bundle', 500)"> Quick Buy</button>
+<button class="quick-buy-btn" onclick="quickBuyBundle('5GB Monthly Bundle', 500)">⚡ Quick Buy</button>
 </div>
 </div>
 <div class="card" data-category="databundles">
@@ -1065,8 +1065,8 @@ btn.innerHTML = originalText;
 
 // --- ENHANCED AI CHATBOT ASSISTANT ---
 const aiAgents = [
-{ name: 'Noah', avatar: '👨‍', greeting: "Hi there! I'm Noah from SwiftMart. Tell me what issue you're facing, and I'll help you solve it right away." },
-{ name: 'Ezra', avatar: '‍💻', greeting: "Hello! Ezra here. I'm ready to help resolve any issue you're experiencing. What's the problem?" },
+{ name: 'Noah', avatar: '👨‍💼', greeting: "Hi there! I'm Noah from SwiftMart. Tell me what issue you're facing, and I'll help you solve it right away." },
+{ name: 'Ezra', avatar: '👨‍💻', greeting: "Hello! Ezra here. I'm ready to help resolve any issue you're experiencing. What's the problem?" },
 { name: 'Amani', avatar: '👩‍💼', greeting: "Welcome! I'm Amani. I'm here to solve your problems, not just talk about them. What do you need help with?" }
 ];
 let currentAgent = aiAgents[Math.floor(Math.random() * aiAgents.length)];
@@ -1082,7 +1082,7 @@ return 'general';
 },
 solve: (issue, msg) => {
 if (issue === 'late') {
-return `**I understand your order is delayed - I apologize for the inconvenience.**\n\nHere's what I'll do right now:\n\n1️⃣ **Check your order status** - Please share your order number (it starts with #ORD)\n2️⃣ **Investigate the delay** - I'll contact our logistics team immediately\n3️ **Expedite delivery** - If it's stuck, we'll rush it to you at no extra cost\n4️⃣ **Compensation** - If delay is our fault, you'll get a 10% discount on next order\n\n**Typical delivery times:**\n• Nairobi: 1-2 days (you should have received it)\n• Major towns: 2-3 days\n• Remote areas: 3-5 days\n\n**What's your order number?** I'll track it personally right now.`;
+return `**I understand your order is delayed - I apologize for the inconvenience.**\n\nHere's what I'll do right now:\n\n1️⃣ **Check your order status** - Please share your order number (it starts with #ORD)\n2️⃣ **Investigate the delay** - I'll contact our logistics team immediately\n3️⃣ **Expedite delivery** - If it's stuck, we'll rush it to you at no extra cost\n4️⃣ **Compensation** - If delay is our fault, you'll get a 10% discount on next order\n\n**Typical delivery times:**\n• Nairobi: 1-2 days (you should have received it)\n• Major towns: 2-3 days\n• Remote areas: 3-5 days\n\n**What's your order number?** I'll track it personally right now.`;
 }
 if (issue === 'notReceived') {
 return `**I'm sorry to hear you haven't received your order. Let me investigate immediately.**\n\n**Action Plan:**\n\n1. **Verify delivery status** - Share your order number\n2. **Check with courier** - I'll call them while we chat\n3. **Locate package** - We'll find where it is within 10 minutes\n4. **Resolution:**\n   • If lost: Full refund or replacement sent TODAY\n   • If delivered to wrong address: We'll retrieve it or replace\n   • If with courier: We'll expedite to you\n\n**Please provide:**\n• Order number\n• Your phone number\n• Delivery address you provided\n\nI'm staying online until this is resolved!`;
@@ -1100,7 +1100,7 @@ return 'general';
 },
 solve: (issue, msg) => {
 if (issue === 'deductedNotConfirmed') {
-return `**I understand money was deducted but order not confirmed - this is stressful, and I'll fix it NOW.**\n\n**This happens because:**\n• M-Pesa confirmation delayed (usually resolves in 5 mins)\n• Network timeout during payment\n• System didn't receive callback\n\n**IMMEDIATE ACTION:**\n\n1️⃣ **Check M-Pesa message** - Do you have transaction ID? (e.g., QGH7X8Y9)\n2️⃣ **Wait 5 minutes** - Sometimes system auto-resolves\n3️ **If still not confirmed:**\n   • Send me the M-Pesa transaction ID\n   • I'll manually verify with Paystack\n   • Your order will be confirmed within 10 minutes\n   • OR instant refund if you prefer\n\n**What's your M-Pesa transaction ID?** I'm checking it right now.`;
+return `**I understand money was deducted but order not confirmed - this is stressful, and I'll fix it NOW.**\n\n**This happens because:**\n• M-Pesa confirmation delayed (usually resolves in 5 mins)\n• Network timeout during payment\n• System didn't receive callback\n\n**IMMEDIATE ACTION:**\n\n1️⃣ **Check M-Pesa message** - Do you have transaction ID? (e.g., QGH7X8Y9)\n2️⃣ **Wait 5 minutes** - Sometimes system auto-resolves\n3️⃣ **If still not confirmed:**\n   • Send me the M-Pesa transaction ID\n   • I'll manually verify with Paystack\n   • Your order will be confirmed within 10 minutes\n   • OR instant refund if you prefer\n\n**What's your M-Pesa transaction ID?** I'm checking it right now.`;
 }
 if (issue === 'failedPayment') {
 return `**Payment failed - let me help you complete it successfully.**\n\n**Common causes & solutions:**\n\n❌ **Insufficient balance**\n✅ Check your M-Pesa balance: Dial *234#\n\n❌ **Wrong phone format**\n✅ Must be: 2547XXXXXXXX (12 digits, no + or 0)\n\n❌ **M-Pesa down**\n✅ Wait 10 mins, try again or use card\n\n❌ **Daily limit exceeded**\n✅ Use card payment instead\n\n**Try this NOW:**\n1. Clear browser cache (Ctrl+Shift+Delete)\n2. Use incognito mode\n3. Try card payment instead of M-Pesa\n4. Or try from mobile data (not WiFi)\n\n**Still failing?** Send me:\n• Exact error message\n• Phone number you used\n• Amount you tried to pay\n\nI'll process it manually for you!`;
@@ -1117,9 +1117,9 @@ return 'general';
 },
 solve: (issue, msg) => {
 if (issue === 'notActivated') {
-return `**Your data bundle hasn't activated - I'll fix this immediately.**\n\n**Quick Diagnosis:**\n\n1️⃣ **Check confirmation SMS** - Did you get SMS from Safaricom?\n   • If YES: Bundle is active, restart phone\n   • If NO: Activation failed, I'll resend\n\n2️ **Verify phone number** - What number did you provide?\n   • Must be Safaricom number\n   • Check if you typed correctly\n\n3️ **Check payment status** - Was payment successful?\n   • If yes: I'll manually activate within 5 mins\n   • If pending: Wait for confirmation\n\n**IMMEDIATE SOLUTION:**\n\n📱 **WhatsApp this to +254 754 427 226:**\n• Your order number\n• Phone number for activation\n• M-Pesa confirmation code\n\n**OR** give me your details now and I'll activate it while we chat!\n\n**What's your phone number and order number?**`;
+return `**Your data bundle hasn't activated - I'll fix this immediately.**\n\n**Quick Diagnosis:**\n\n1️⃣ **Check confirmation SMS** - Did you get SMS from Safaricom?\n   • If YES: Bundle is active, restart phone\n   • If NO: Activation failed, I'll resend\n\n2️⃣ **Verify phone number** - What number did you provide?\n   • Must be Safaricom number\n   • Check if you typed correctly\n\n3️⃣ **Check payment status** - Was payment successful?\n   • If yes: I'll manually activate within 5 mins\n   • If pending: Wait for confirmation\n\n**IMMEDIATE SOLUTION:**\n\n📱 **WhatsApp this to +254 754 427 226:**\n• Your order number\n• Phone number for activation\n• M-Pesa confirmation code\n\n**OR** give me your details now and I'll activate it while we chat!\n\n**What's your phone number and order number?**`;
 }
-return `**I'll help you purchase/activate a data bundle.**\n\n**Available bundles (instant activation):**\n• 1GB Daily - KES 50 (24 hours)\n• 2GB Monthly - KES 250 (30 days)\n• 5GB Monthly - KES 500 (30 days)  POPULAR\n• 10GB Monthly - KES 1,000\n• Unlimited Weekend - KES 150\n\n**To activate:**\n1. Add to cart or use Quick Buy\n2. Pay via M-Pesa/Card\n3. WhatsApp confirmation code to +254 754 427 226\n4. Activated within 5 minutes!\n\n**Which bundle do you want?** I'll guide you through it.`;
+return `**I'll help you purchase/activate a data bundle.**\n\n**Available bundles (instant activation):**\n• 1GB Daily - KES 50 (24 hours)\n• 2GB Monthly - KES 250 (30 days)\n• 5GB Monthly - KES 500 (30 days) ⭐ POPULAR\n• 10GB Monthly - KES 1,000\n• Unlimited Weekend - KES 150\n\n**To activate:**\n1. Add to cart or use Quick Buy\n2. Pay via M-Pesa/Card\n3. WhatsApp confirmation code to +254 754 427 226\n4. Activated within 5 minutes!\n\n**Which bundle do you want?** I'll guide you through it.`;
 }
 },
 productIssues: {
@@ -1164,10 +1164,10 @@ return 'general';
 },
 solve: (issue, msg) => {
 if (issue === 'loginIssue') {
-return `**You can't login - let me get you back into your account immediately.**\n\n**Quick Fixes (try these first):**\n\n🔑 **Forgot password?**\n• Click "Forgot Password" on login page\n• Enter your email\n• Check inbox (and spam) for reset link\n• Reset takes 2 minutes\n\n **Email not verified?**\n• Check email for verification link\n• Didn't get it? I'll resend it now\n\n🔑 **Account locked?**\n• Too many attempts locks account for 30 mins\n• I can unlock it manually - give me your email\n\n**Still can't login?**\n• Clear browser cache: Ctrl+Shift+Delete\n• Try incognito mode\n• Try from phone instead\n\n**What's your email?** I'll check your account status right now!`;
+return `**You can't login - let me get you back into your account immediately.**\n\n**Quick Fixes (try these first):**\n\n🔑 **Forgot password?**\n• Click "Forgot Password" on login page\n• Enter your email\n• Check inbox (and spam) for reset link\n• Reset takes 2 minutes\n\n🔑 **Email not verified?**\n• Check email for verification link\n• Didn't get it? I'll resend it now\n\n🔑 **Account locked?**\n• Too many attempts locks account for 30 mins\n• I can unlock it manually - give me your email\n\n**Still can't login?**\n• Clear browser cache: Ctrl+Shift+Delete\n• Try incognito mode\n• Try from phone instead\n\n**What's your email?** I'll check your account status right now!`;
 }
 if (issue === 'loadingIssue') {
-return `**Website not loading - let me get you back online.**\n\n**Try these steps IN ORDER:**\n\n1️⃣ **Clear browser cache**\n   • Chrome: Ctrl+Shift+Delete → Clear data\n   • Safari: Cmd+Opt+E → Empty caches\n\n2️⃣ **Try incognito/private mode**\n   • Ctrl+Shift+N (Chrome)\n   • Cmd+Shift+N (Safari)\n\n3️⃣ **Switch internet connection**\n   • From WiFi to mobile data (or vice versa)\n   • Disable VPN if active\n\n4️ **Try different browser**\n   • Chrome → Firefox → Edge\n\n5️⃣ **Clear DNS cache**\n   • Windows: ipconfig /flushdns in CMD\n   • Mac: sudo killall -HUP mDNSResponder\n\n**Still not loading?**\n• What error do you see?\n• What browser are you using?\n• Are you on phone or computer?\n\nI'm here until it's fixed!`;
+return `**Website not loading - let me get you back online.**\n\n**Try these steps IN ORDER:**\n\n1️⃣ **Clear browser cache**\n   • Chrome: Ctrl+Shift+Delete → Clear data\n   • Safari: Cmd+Opt+E → Empty caches\n\n2️⃣ **Try incognito/private mode**\n   • Ctrl+Shift+N (Chrome)\n   • Cmd+Shift+N (Safari)\n\n3️⃣ **Switch internet connection**\n   • From WiFi to mobile data (or vice versa)\n   • Disable VPN if active\n\n4️⃣ **Try different browser**\n   • Chrome → Firefox → Edge\n\n5️⃣ **Clear DNS cache**\n   • Windows: ipconfig /flushdns in CMD\n   • Mac: sudo killall -HUP mDNSResponder\n\n**Still not loading?**\n• What error do you see?\n• What browser are you using?\n• Are you on phone or computer?\n\nI'm here until it's fixed!`;
 }
 return `**I'll help you resolve this technical issue.**\n\n**Tell me:**\n• What were you trying to do?\n• What error message do you see? (screenshot if possible)\n• What device/browser are you using?\n• When did this start?\n\n**I'll diagnose and fix it with you right now.** What's happening?`;
 }
@@ -1195,7 +1195,7 @@ return 'general';
 },
 solve: (issue, msg) => {
 if (issue === 'cost') {
-return `**Here are our shipping costs:**\n\n **Nairobi Metro:**\n• Standard: KES 200 (1-2 days)\n• Express: KES 350 (Same day)\n• FREE for orders over KES 5,000\n\n📍 **Major Towns (Mombasa, Kisumu, Nakuru):**\n• Standard: KES 350 (2-3 days)\n• Express: KES 600 (Next day)\n• FREE for orders over KES 10,000\n\n📍 **Other Areas:**\n• Standard: KES 500 (3-5 days)\n• FREE for orders over KES 15,000\n\n**Where are you located?** I'll give you exact delivery time!`;
+return `**Here are our shipping costs:**\n\n📍 **Nairobi Metro:**\n• Standard: KES 200 (1-2 days)\n• Express: KES 350 (Same day)\n• FREE for orders over KES 5,000\n\n📍 **Major Towns (Mombasa, Kisumu, Nakuru):**\n• Standard: KES 350 (2-3 days)\n• Express: KES 600 (Next day)\n• FREE for orders over KES 10,000\n\n📍 **Other Areas:**\n• Standard: KES 500 (3-5 days)\n• FREE for orders over KES 15,000\n\n**Where are you located?** I'll give you exact delivery time!`;
 }
 return `**I'll provide shipping information for your order.**\n\n**Delivery Times:**\n• Nairobi: 1-2 days (same day if ordered before 2 PM)\n• Major towns: 2-3 days\n• Remote areas: 3-5 days\n\n**To track YOUR order:**\n• Share your order number\n• I'll give you exact delivery date\n• Share courier contact if needed\n\n**What's your order number?**`;
 }
@@ -1277,7 +1277,7 @@ if (/(bye|goodbye|see you|later)/i.test(lowerMsg)) {
 return `👋 Thank you for chatting! If any issue comes up, I'm here 24/7.\n\nHave a great day! ✨`;
 }
 if (lowerMsg.includes('human') || lowerMsg.includes('agent') || lowerMsg.includes('real person') || lowerMsg.includes('speak to')) {
-return `👨‍💼 **I understand you want to speak with a human specialist.**\n\n**I'm connecting you now:**\n\n **WhatsApp:** +254 754 427 226\n✉️ **Email:** support@swiftmartkenya.co.ke\n🕐 **Hours:** Mon-Sat, 8AM-6PM\n\n**Response time:** Usually within 2 hours\n\n**Before you go:**\n• Share your order number with them\n• Mention what issue you're facing\n• I've logged our conversation for them\n\nIs there anything I can help you with before you connect with them?`;
+return `👨‍💼 **I understand you want to speak with a human specialist.**\n\n**I'm connecting you now:**\n\n📱 **WhatsApp:** +254 754 427 226\n✉️ **Email:** support@swiftmartkenya.co.ke\n🕐 **Hours:** Mon-Sat, 8AM-6PM\n\n**Response time:** Usually within 2 hours\n\n**Before you go:**\n• Share your order number with them\n• Mention what issue you're facing\n• I've logged our conversation for them\n\nIs there anything I can help you with before you connect with them?`;
 }
 return `I want to help you **solve this issue**, but I need more details.\n\n**Please tell me:**\n• What specific problem are you facing?\n• What were you trying to do?\n• What error or issue occurred?\n• When did this happen?\n\n**Examples:**\n• "My order #ORD123 hasn't arrived and it's 3 days late"\n• "I paid via M-Pesa but order not confirmed"\n• "I received damaged headphones"\n• "Can't login, forgot password"\n\n**What's your specific issue?** I'm listening!`;
 }
@@ -1308,7 +1308,8 @@ sendChatMessage();
 // --- PROFESSIONAL AUTH CHECK (JUMIA STYLE) ---
 async function checkAuth() {
 try {
-const res = await fetch('/api/auth/me');
+// FIX: Added credentials: 'include' to ensure session cookie is sent
+const res = await fetch('/api/auth/me', { credentials: 'include' });
 const data = await res.json();
 const guestView = document.getElementById('guestView');
 const userView = document.getElementById('userView');
@@ -1346,7 +1347,8 @@ dropdown.style.display = 'none';
 }
 });
 async function logout() {
-await fetch('/api/auth/logout', { method: 'POST' });
+// FIX: Added credentials: 'include' to ensure session cookie is cleared properly
+await fetch('/api/auth/logout', { method: 'POST', credentials: 'include' });
 window.location.reload();
 }
 
@@ -1447,7 +1449,7 @@ return;
 }
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 if (!emailRegex.test(email)) {
-showToast(' Please enter a valid email format.', '#991b1b');
+showToast('❌ Please enter a valid email format.', '#991b1b');
 return;
 }
 try {
@@ -1485,7 +1487,7 @@ setTimeout(() => toast.remove(), 300);
 // --- FOOTER MODAL CONTENT ---
 const modalContent = {
 about: `<h2>About SwiftMart</h2><p>SwiftMart is Kenya's trusted destination for top-tier digital services and premium products. Founded with a mission to deliver quality, speed, and excellence to every customer, we bridge the gap between professional services and everyday needs.</p><h3>Our Mission</h3><p>To empower Kenyan consumers and businesses with accessible, affordable, and reliable digital and physical products.</p><h3>Our Vision</h3><p>To become East Africa's most trusted e-commerce platform by 2030.</p><h3>Why Choose Us?</h3><ul><li>Secure M-Pesa and card payments via Paystack</li><li>Fast delivery across Kenya</li><li>24/7 AI-powered customer support</li><li>Quality guaranteed on every product</li></ul>`,
-contact: `<h2>Contact Us</h2><p>We'd love to hear from you! Reach out to us through any of the channels below.</p><div class="contact-grid"><div class="contact-item"><strong>📍 Location</strong>Nairobi, Kenya</div><div class="contact-item"><strong> Phone</strong><a href="tel:+254754427226">+254 754 427 226</a></div><div class="contact-item"><strong>✉️ Email</strong><a href="mailto:support@swiftmartkenya.co.ke">support@swiftmartkenya.co.ke</a></div><div class="contact-item"><strong> Hours</strong>Mon - Sat: 8:00 AM - 6:00 PM</div></div><h3>Instant AI Support</h3><p>Click the headset icon at the bottom right to chat with our AI assistant for instant help!</p>`,
+contact: `<h2>Contact Us</h2><p>We'd love to hear from you! Reach out to us through any of the channels below.</p><div class="contact-grid"><div class="contact-item"><strong>📍 Location</strong>Nairobi, Kenya</div><div class="contact-item"><strong>📞 Phone</strong><a href="tel:+254754427226">+254 754 427 226</a></div><div class="contact-item"><strong>✉️ Email</strong><a href="mailto:support@swiftmartkenya.co.ke">support@swiftmartkenya.co.ke</a></div><div class="contact-item"><strong>🕒 Hours</strong>Mon - Sat: 8:00 AM - 6:00 PM</div></div><h3>Instant AI Support</h3><p>Click the headset icon at the bottom right to chat with our AI assistant for instant help!</p>`,
 blog: `<h2>SwiftMart Blog</h2><p>🚀 <strong>Coming Soon!</strong></p><p>We're working on exciting articles about tech trends, product reviews, business tips, and exclusive deals. Check back soon for our first post!</p><h3>What's Coming:</h3><ul><li>Weekly product reviews and comparisons</li><li>Tech tips for Kenyan businesses</li><li>Exclusive discount codes for subscribers</li><li>Success stories from our customers</li></ul><p>Subscribe to our newsletter to be notified when we launch!</p>`,
 returns: `<h2>Returns & Refunds Policy</h2><p>At SwiftMart, your satisfaction is our priority. Here's how our returns process works:</p><h3>Return Window</h3><p>You may request a return within <strong>7 days</strong> of receiving your product. Digital services are non-refundable once delivered.</p><h3>Eligible Items</h3><ul><li>Products must be unused and in original packaging</li><li>Physical items must not show signs of wear</li><li>Defective items qualify for full refund or replacement</li></ul><h3>How to Request a Return</h3><ol><li>Contact us via chat or email with your order number</li><li>Provide photos of the item (if applicable)</li><li>Once approved, return the item to our Nairobi office</li><li>Refunds are processed within 5-7 business days via M-Pesa</li></ol><h3>Non-Refundable Items</h3><ul><li>Digital services (web design, hosting, consultation)</li><li>Data bundles and airtime</li><li>Customized or personalized products</li></ul>`,
 shipping: `<h2>Shipping Information</h2><p>We deliver across Kenya with speed and reliability.</p><h3>Delivery Options</h3><ul><li><strong>Nairobi Metro:</strong> Same-day or next-day delivery (KES 200-300)</li><li><strong>Major Towns:</strong> 1-3 business days (KES 350-500)</li><li><strong>Remote Areas:</strong> 3-5 business days (KES 500-800)</li></ul><h3>Digital Services</h3><p>Digital services (web design, hosting, social media setup) are delivered electronically within the agreed timeframe — no shipping required!</p><h3>Data Bundles</h3><p>Data bundles are activated instantly upon payment confirmation via M-Pesa. WhatsApp your confirmation code to +254 754 427 226 for immediate activation.</p><h3>Tracking Your Order</h3><p>Once your order ships, you'll receive an SMS with tracking details. You can also check your order status in the "My Orders" section of your account.</p>`,

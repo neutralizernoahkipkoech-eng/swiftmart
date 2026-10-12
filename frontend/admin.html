@@ -25,8 +25,11 @@
         nav { background: white; padding: 16px 0; border-bottom: 1px solid var(--border-color); margin-bottom: 30px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
         .nav-content { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; padding: 0 20px; }
         .logo { font-weight: 800; font-size: 1.5rem; color: var(--brand-primary); text-decoration: none; display: flex; align-items: center; gap: 8px; }
-        .back-btn { background: var(--bg-color); color: var(--text-main); padding: 8px 16px; border-radius: 6px; text-decoration: none; font-weight: 600; border: 1px solid var(--border-color); transition: all 0.2s; }
+        .back-btn { background: var(--bg-color); color: var(--text-main); padding: 8px 16px; border-radius: 6px; text-decoration: none; font-weight: 600; border: 1px solid var(--border-color); transition: all 0.2s; display: flex; align-items: center; gap: 6px; }
         .back-btn:hover { background: var(--border-color); }
+        
+        .logout-btn { background: var(--danger); color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.85rem; transition: opacity 0.2s; display: flex; align-items: center; gap: 6px; }
+        .logout-btn:hover { opacity: 0.9; }
 
         .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
         .header h1 { font-size: 1.5rem; font-weight: 700; }
@@ -83,7 +86,10 @@
     <nav>
         <div class="nav-content">
             <a href="/" class="logo"><i class="fas fa-bolt"></i> SwiftMart Admin</a>
-            <a href="/" class="back-btn"><i class="fas fa-arrow-left"></i> Back to Store</a>
+            <div style="display: flex; gap: 12px; align-items: center;">
+                <a href="/" class="back-btn"><i class="fas fa-arrow-left"></i> Back to Store</a>
+                <button class="logout-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
+            </div>
         </div>
     </nav>
 
@@ -206,8 +212,9 @@
             const tbody = document.getElementById('ordersBody');
             tbody.innerHTML = '<tr><td colspan="6" class="empty-state"><i class="fas fa-spinner fa-spin"></i> Loading orders...</td></tr>';
             try {
-                const res = await fetch('/api/admin/orders');
-                if (res.status === 401) { window.location.href = '/login'; return; }
+                // FIX: Added credentials: 'include' to send the session cookie
+                const res = await fetch('/api/admin/orders', { credentials: 'include' });
+                if (res.status === 401) { window.location.href = '/login?redirect=/admin'; return; }
                 if (res.status === 403) { tbody.innerHTML = '<tr><td colspan="6" class="empty-state">❌ Access Denied. Admin only.</td></tr>'; return; }
                 
                 const data = await res.json();
@@ -255,7 +262,8 @@
             const tbody = document.getElementById('inventoryBody');
             tbody.innerHTML = '<tr><td colspan="5" class="empty-state"><i class="fas fa-spinner fa-spin"></i> Loading inventory...</td></tr>';
             try {
-                const res = await fetch('/api/products');
+                // FIX: Added credentials: 'include'
+                const res = await fetch('/api/products', { credentials: 'include' });
                 const data = await res.json();
                 if (data.products && data.products.length > 0) {
                     tbody.innerHTML = data.products.map(p => {
@@ -287,8 +295,10 @@
         async function updateStock(productId) {
             const newStock = document.getElementById(`stock-${productId}`).value;
             try {
+                // FIX: Added credentials: 'include'
                 const res = await fetch(`/api/admin/products/${productId}/stock`, {
                     method: 'PUT',
+                    credentials: 'include',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ stock: parseInt(newStock) })
                 });
@@ -309,8 +319,9 @@
             const tbody = document.getElementById('reviewsBody');
             tbody.innerHTML = '<tr><td colspan="7" class="empty-state"><i class="fas fa-spinner fa-spin"></i> Loading reviews...</td></tr>';
             try {
-                const res = await fetch('/api/admin/reviews');
-                if (res.status === 401) { window.location.href = '/login'; return; }
+                // FIX: Added credentials: 'include'
+                const res = await fetch('/api/admin/reviews', { credentials: 'include' });
+                if (res.status === 401) { window.location.href = '/login?redirect=/admin'; return; }
                 if (res.status === 403) { tbody.innerHTML = '<tr><td colspan="7" class="empty-state">❌ Access Denied. Admin only.</td></tr>'; return; }
 
                 const data = await res.json();
@@ -346,7 +357,11 @@
         async function approveReview(reviewId) {
             if (!confirm('Approve this review? It will become visible on the homepage.')) return;
             try {
-                const res = await fetch(`/api/admin/reviews/${reviewId}/approve`, { method: 'PUT' });
+                // FIX: Added credentials: 'include'
+                const res = await fetch(`/api/admin/reviews/${reviewId}/approve`, { 
+                    method: 'PUT',
+                    credentials: 'include'
+                });
                 if (res.ok) { alert('✅ Review approved!'); loadReviews(); }
                 else { alert('❌ Failed to approve.'); }
             } catch (error) { 
@@ -358,7 +373,11 @@
         async function deleteReview(reviewId) {
             if (!confirm('Delete this review permanently? This cannot be undone.')) return;
             try {
-                const res = await fetch(`/api/admin/reviews/${reviewId}`, { method: 'DELETE' });
+                // FIX: Added credentials: 'include'
+                const res = await fetch(`/api/admin/reviews/${reviewId}`, { 
+                    method: 'DELETE',
+                    credentials: 'include'
+                });
                 if (res.ok) { alert('✅ Review deleted!'); loadReviews(); }
                 else { alert('❌ Failed to delete.'); }
             } catch (error) { 
@@ -367,8 +386,18 @@
             }
         }
 
-        // --- UPDATED: Server already handles security for this page.
-        // We just load the data on page load to prevent redirect loops.
+        // --- NEW: Secure Logout Function ---
+        async function logout() {
+            try {
+                await fetch('/api/auth/logout', { method: 'POST', credentials: 'include' });
+                window.location.href = '/login';
+            } catch (error) {
+                console.error('Logout error:', error);
+                window.location.href = '/login';
+            }
+        }
+
+        // Initialize page
         document.addEventListener('DOMContentLoaded', () => {
             loadOrders();
         });

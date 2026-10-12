@@ -295,7 +295,8 @@
 
         async function loadDashboard() {
             try {
-                const userRes = await fetch('/api/auth/me');
+                // FIX: Added credentials: 'include' to ensure session cookie is sent
+                const userRes = await fetch('/api/auth/me', { credentials: 'include' });
                 const userData = await userRes.json();
                 
                 if (!userData.user) {
@@ -314,7 +315,8 @@
                 document.getElementById('profileJoined').textContent = new Date(userData.user.createdAt).toLocaleDateString('en-KE', { year: 'numeric', month: 'long', day: 'numeric' });
                 
                 // Fetch orders
-                const ordersRes = await fetch('/api/orders');
+                // FIX: Added credentials: 'include' to ensure session cookie is sent
+                const ordersRes = await fetch('/api/orders', { credentials: 'include' });
                 const ordersData = await ordersRes.json();
                 
                 displayOrders(ordersData.orders);
@@ -395,7 +397,8 @@
 
         async function logout() {
             try {
-                await fetch('/api/auth/logout', { method: 'POST' });
+                // FIX: Added credentials: 'include' to ensure session cookie is cleared properly
+                await fetch('/api/auth/logout', { method: 'POST', credentials: 'include' });
                 window.location.href = '/login';
             } catch (error) {
                 console.error('Logout error:', error);
