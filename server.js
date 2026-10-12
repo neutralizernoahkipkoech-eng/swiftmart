@@ -689,12 +689,21 @@ app.get('/receipt.html', (req, res) => res.sendFile(path.join(__dirname, 'fronte
 
 // SECURE ADMIN ROUTE: ONLY YOU CAN ACCESS THIS
 app.get('/admin', async (req, res) => {
-    if (!req.session.userId) {
-        // UPDATED: Redirect to login with a redirect parameter so the frontend knows to send them back here after login
+    // Check session first, then fall back to JWT cookie (prevents race condition on redirect)
+    let userId = req.session.userId;
+    if (!userId && req.cookies.token) {
+        try {
+            const decoded = jwt.verify(req.cookies.token, JWT_SECRET);
+            userId = decoded.userId;
+            req.session.userId = userId;
+        } catch (err) { /* Invalid token */ }
+    }
+    
+    if (!userId) {
         return res.redirect('/login?redirect=/admin');
     }
     try {
-        const user = await User.findById(req.session.userId);
+        const user = await User.findById(userId);
         if (!user || user.email !== 'neutralizernoahkipkoech@gmail.com') {
             return res.redirect('/'); 
         }
