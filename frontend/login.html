@@ -152,7 +152,7 @@
         }
         .modal-close:hover { color: var(--text-main); }
 
-        /* NEW: Resend Verification Styles */
+        /* Resend Verification Styles */
         .resend-container { 
             text-align: center; 
             margin-top: 16px; 
@@ -203,7 +203,7 @@
             
             <button type="submit" class="submit-btn" id="loginBtn">Login</button>
             
-            <!-- NEW: Resend Verification Container -->
+            <!-- Resend Verification Container -->
             <div id="resendContainer" class="resend-container">
                 <p>Didn't get the verification email?</p>
                 <button type="button" class="resend-btn" id="resendBtn">Resend Verification Email</button>
@@ -245,7 +245,7 @@
     </div>
 
     <script>
-        // --- Login Logic (Enhanced with Resend Verification) ---
+        // --- Login Logic (Enhanced with Smart Redirect) ---
         document.getElementById('loginForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const email = document.getElementById('email').value;
@@ -258,7 +258,7 @@
             
             errorMsg.style.display = 'none';
             successMsg.style.display = 'none';
-            resendContainer.style.display = 'none'; // Hide resend on new attempt
+            resendContainer.style.display = 'none';
             loginBtn.disabled = true;
             loginBtn.innerHTML = '<span class="spinner"></span> Logging in...';
             
@@ -275,13 +275,17 @@
                     successMsg.textContent = '✅ Login successful! Redirecting...';
                     successMsg.style.display = 'block';
                     setTimeout(() => {
-                        window.location.href = '/'; // Redirects to homepage (or change to '/dashboard')
+                        // NEW: Check for a redirect parameter in the URL (e.g., ?redirect=/admin)
+                        // If it exists, go there. Otherwise, default to the homepage '/'.
+                        const urlParams = new URLSearchParams(window.location.search);
+                        const redirectUrl = urlParams.get('redirect') || '/';
+                        window.location.href = redirectUrl;
                     }, 800);
                 } else {
                     errorMsg.textContent = data.error || 'Invalid email or password';
                     errorMsg.style.display = 'block';
                     
-                    // NEW: If the error is about email verification, show the resend button
+                    // If the error is about email verification, show the resend button
                     if (res.status === 403 && data.error && data.error.toLowerCase().includes('verify')) {
                         resendContainer.style.display = 'block';
                     }
@@ -297,7 +301,7 @@
             }
         });
 
-        // --- NEW: Resend Verification Logic ---
+        // --- Resend Verification Logic ---
         document.getElementById('resendBtn').addEventListener('click', async () => {
             const email = document.getElementById('email').value;
             if (!email) {

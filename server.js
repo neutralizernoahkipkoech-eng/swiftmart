@@ -690,7 +690,8 @@ app.get('/receipt.html', (req, res) => res.sendFile(path.join(__dirname, 'fronte
 // SECURE ADMIN ROUTE: ONLY YOU CAN ACCESS THIS
 app.get('/admin', async (req, res) => {
     if (!req.session.userId) {
-        return res.redirect('/login');
+        // UPDATED: Redirect to login with a redirect parameter so the frontend knows to send them back here after login
+        return res.redirect('/login?redirect=/admin');
     }
     try {
         const user = await User.findById(req.session.userId);
