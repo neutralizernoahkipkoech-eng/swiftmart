@@ -367,26 +367,11 @@
             }
         }
 
-        // --- NEW: SECURITY CHECK (Ensures only YOU can view this page) ---
-        async function checkAdminAuth() {
-            try {
-                const res = await fetch('/api/auth/me');
-                const data = await res.json();
-                // If no user is logged in, or the email is NOT your admin email, redirect to homepage
-                if (!data.user || data.user.email !== 'neutralizernoahkipkoech@gmail.com') {
-                    window.location.href = '/';
-                    return;
-                }
-                // If authorized, load the initial data
-                loadOrders();
-            } catch (error) {
-                console.error('Auth check failed:', error);
-                window.location.href = '/';
-            }
-        }
-
-        // Initialize page with security check instead of directly loading orders
-        checkAdminAuth();
+        // --- UPDATED: Server already handles security for this page.
+        // We just load the data on page load to prevent redirect loops.
+        document.addEventListener('DOMContentLoaded', () => {
+            loadOrders();
+        });
     </script>
 </body>
 </html>
