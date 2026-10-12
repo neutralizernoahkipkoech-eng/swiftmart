@@ -131,12 +131,24 @@ async function getAccessToken() {
     }
 }
 
+// ================= FIX: UPDATED requireAuth MIDDLEWARE =================
 const requireAuth = (req, res, next) => {
+    // 1. Check session first
     if (req.session.userId) {
-        next();
-    } else {
-        res.status(401).json({ error: 'Please log in to continue' });
+        return next();
     }
+    // 2. Fallback to JWT cookie if session is missing (prevents redirect loops)
+    if (req.cookies.token) {
+        try {
+            const decoded = jwt.verify(req.cookies.token, JWT_SECRET);
+            req.session.userId = decoded.userId; // Restore session
+            return next();
+        } catch (err) {
+            // Invalid token, fall through to 401
+        }
+    }
+    // 3. If neither is valid, reject
+    res.status(401).json({ error: 'Please log in to continue' });
 };
 
 // ================= AUTH ROUTES =================
