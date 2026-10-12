@@ -3,16 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Payment Receipt | M-Pesa</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <title>Payment Receipt | SwiftMart</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --mpesa-green: #43B02A;
-            --bg-color: #f3f4f6;
+            --brand-primary: #2563eb;
+            --brand-secondary: #1e40af;
+            --bg-color: #f8fafc;
             --card-bg: #ffffff;
-            --text-main: #1f2937;
-            --text-muted: #6b7280;
-            --border-color: #e5e7eb;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --success: #10b981;
+            --error: #ef4444;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
@@ -27,55 +31,72 @@
         .receipt-card {
             background: var(--card-bg);
             width: 100%;
-            max-width: 400px;
+            max-width: 450px;
             border-radius: 16px;
-            padding: 32px;
+            padding: 40px 32px;
             text-align: center;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
             border: 1px solid var(--border-color);
         }
         .success-icon {
-            width: 64px;
-            height: 64px;
-            background: #ecfdf5;
-            color: var(--mpesa-green);
+            width: 80px;
+            height: 80px;
+            background: #d1fae5;
+            color: var(--success);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 20px;
-            font-size: 2rem;
+            margin: 0 auto 24px;
+            font-size: 2.5rem;
         }
-        h1 { font-size: 1.5rem; color: var(--text-main); margin-bottom: 8px; }
-        .subtitle { color: var(--text-muted); font-size: 0.875rem; margin-bottom: 24px; }
+        .error-icon {
+            width: 80px;
+            height: 80px;
+            background: #fee2e2;
+            color: var(--error);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+            font-size: 2.5rem;
+        }
+        h1 { font-size: 1.5rem; color: var(--text-main); margin-bottom: 8px; font-weight: 800; }
+        .subtitle { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 32px; line-height: 1.6; }
         
         .receipt-details {
-            background: #f9fafb;
-            border-radius: 8px;
-            padding: 16px;
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 20px;
             text-align: left;
-            margin-bottom: 24px;
+            margin-bottom: 32px;
+            border: 1px solid var(--border-color);
         }
         .detail-row {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 12px;
-            font-size: 0.875rem;
+            margin-bottom: 16px;
+            font-size: 0.9rem;
         }
         .detail-row:last-child { margin-bottom: 0; }
-        .detail-label { color: var(--text-muted); }
-        .detail-value { font-weight: 600; color: var(--text-main); }
+        .detail-label { color: var(--text-muted); font-weight: 500; }
+        .detail-value { font-weight: 600; color: var(--text-main); text-align: right; }
         .total-row {
             border-top: 1px dashed var(--border-color);
-            padding-top: 12px;
-            margin-top: 12px;
+            padding-top: 16px;
+            margin-top: 16px;
         }
-        .total-value { font-size: 1.25rem; color: var(--mpesa-green); }
+        .total-value { font-size: 1.25rem; color: var(--success); font-weight: 800; }
 
+        .btn-group { display: flex; flex-direction: column; gap: 12px; }
         .home-btn {
-            display: inline-block;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
             width: 100%;
-            background: var(--mpesa-green);
+            background: var(--brand-primary);
             color: white;
             text-decoration: none;
             padding: 14px;
@@ -83,16 +104,54 @@
             font-weight: 600;
             transition: background 0.2s;
         }
-        .home-btn:hover { background: #2E8B1D; }
+        .home-btn:hover { background: var(--brand-secondary); }
         
-        .loading { color: var(--text-muted); font-size: 0.875rem; }
+        .secondary-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            background: transparent;
+            color: var(--text-muted);
+            border: 1px solid var(--border-color);
+            text-decoration: none;
+            padding: 14px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        .secondary-btn:hover { background: var(--bg-color); color: var(--text-main); }
+        
+        .loading { color: var(--text-muted); font-size: 0.95rem; display: flex; flex-direction: column; align-items: center; gap: 16px; }
+        .spinner { 
+            width: 32px; height: 32px; 
+            border: 3px solid var(--border-color); 
+            border-top-color: var(--brand-primary); 
+            border-radius: 50%; 
+            animation: spin 1s linear infinite; 
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
+    <!-- Loading State -->
+    <div class="receipt-card" id="loadingCard">
+        <div class="loading">
+            <div class="spinner"></div>
+            <span>Verifying your payment status...</span>
+        </div>
+    </div>
+
+    <!-- Success State -->
     <div class="receipt-card" id="receiptCard" style="display: none;">
-        <div class="success-icon">✓</div>
-        <h1>Payment Successful!</h1>
-        <p class="subtitle">Your transaction has been confirmed.</p>
+        <div class="success-icon"><i class="fas fa-check"></i></div>
+        <h1>Payment Successful! 🎉</h1>
+        <!-- UPDATED: Clear instructions for bundle activation -->
+        <p class="subtitle">
+            Your transaction has been confirmed and a receipt has been sent to your email.<br><br>
+            <strong>📱 Note for Data Bundles:</strong> If you purchased a data bundle, you will receive an activation SMS from Safaricom within 5 to 15 minutes.
+        </p>
         
         <div class="receipt-details">
             <div class="detail-row">
@@ -100,8 +159,12 @@
                 <span class="detail-value" id="r-product">-</span>
             </div>
             <div class="detail-row">
-                <span class="detail-label">Phone</span>
+                <span class="detail-label">Phone Number</span>
                 <span class="detail-value" id="r-phone">-</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Transaction ID</span>
+                <span class="detail-value" id="r-txid" style="font-family: monospace; font-size: 0.85rem;">-</span>
             </div>
             <div class="detail-row total-row">
                 <span class="detail-label">Total Paid</span>
@@ -109,11 +172,21 @@
             </div>
         </div>
 
-        <a href="/" class="home-btn">Continue Shopping</a>
+        <div class="btn-group">
+            <a href="/dashboard" class="home-btn"><i class="fas fa-receipt"></i> View My Orders</a>
+            <a href="/" class="secondary-btn"><i class="fas fa-arrow-left"></i> Continue Shopping</a>
+        </div>
     </div>
 
-    <div class="receipt-card" id="loadingCard">
-        <div class="loading">Verifying payment status...</div>
+    <!-- Error State -->
+    <div class="receipt-card" id="errorCard" style="display: none;">
+        <div class="error-icon"><i class="fas fa-times"></i></div>
+        <h1 style="color: var(--error);">Payment Failed</h1>
+        <p class="subtitle">We couldn't verify this transaction. Please check your M-Pesa messages or try again.</p>
+        <div class="btn-group">
+            <a href="/" class="home-btn" style="background: var(--error);"><i class="fas fa-redo"></i> Try Again</a>
+            <a href="/" class="secondary-btn">Go to Homepage</a>
+        </div>
     </div>
 
     <script>
@@ -125,19 +198,22 @@
             fetch(`/api/status/${txId}`)
                 .then(res => res.json())
                 .then(tx => {
+                    document.getElementById('loadingCard').style.display = 'none';
+                    
                     if (tx.status === 'success') {
-                        document.getElementById('r-product').textContent = tx.product;
-                        document.getElementById('r-phone').textContent = tx.phone;
-                        document.getElementById('r-amount').textContent = 'KES ' + tx.amount;
+                        document.getElementById('r-product').textContent = tx.product || 'N/A';
+                        document.getElementById('r-phone').textContent = tx.phone || 'N/A';
+                        document.getElementById('r-txid').textContent = tx.mpesaReceiptNumber || txId;
+                        document.getElementById('r-amount').textContent = 'KES ' + (tx.amount ? tx.amount.toLocaleString() : '0');
                         
-                        document.getElementById('loadingCard').style.display = 'none';
                         document.getElementById('receiptCard').style.display = 'block';
                     } else {
-                        document.getElementById('loadingCard').innerHTML = '<h1 style="color: #991b1b;">Payment Failed</h1><p class="subtitle">Please try again.</p><a href="/" class="home-btn" style="background: #991b1b;">Go Back</a>';
+                        document.getElementById('errorCard').style.display = 'block';
                     }
                 })
                 .catch(() => {
-                    document.getElementById('loadingCard').innerHTML = '<h1 style="color: #991b1b;">Error</h1><p class="subtitle">Could not verify transaction.</p><a href="/" class="home-btn" style="background: #991b1b;">Go Back</a>';
+                    document.getElementById('loadingCard').style.display = 'none';
+                    document.getElementById('errorCard').style.display = 'block';
                 });
         } else {
             window.location.href = '/';

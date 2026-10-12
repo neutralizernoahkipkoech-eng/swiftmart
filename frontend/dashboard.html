@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Orders | SwiftMart</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <title>My Dashboard | SwiftMart</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             --brand-primary: #2563eb;
@@ -24,24 +25,47 @@
             background-color: var(--bg-color);
             color: var(--text-main);
             min-height: 100vh;
-            padding: 20px;
         }
-        .container { max-width: 900px; margin: 0 auto; }
         
-        .header {
+        /* Professional Top Navigation */
+        .top-nav {
             background: var(--card-bg);
-            padding: 24px 32px;
-            border-radius: 12px;
-            margin-bottom: 24px;
+            border-bottom: 1px solid var(--border-color);
+            padding: 16px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+        }
+        .nav-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-            border: 1px solid var(--border-color);
         }
-        .header h1 { font-size: 1.5rem; color: var(--brand-primary); display: flex; align-items: center; gap: 8px; }
-        .user-info { text-align: right; display: flex; flex-direction: column; gap: 8px; align-items: flex-end;}
-        .user-name { font-weight: 600; color: var(--text-main); }
+        .nav-logo {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--brand-primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .nav-actions { display: flex; align-items: center; gap: 16px; }
+        .back-link {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+        .back-link:hover { color: var(--brand-primary); }
         .logout-btn {
             background: var(--text-muted);
             color: white;
@@ -50,46 +74,88 @@
             border-radius: 6px;
             cursor: pointer;
             font-size: 0.875rem;
+            font-weight: 500;
             transition: background 0.2s;
         }
         .logout-btn:hover { background: #475569; }
+
+        .container { max-width: 900px; margin: 0 auto; padding: 32px 20px; }
         
-        .orders-list { display: flex; flex-direction: column; gap: 16px; }
-        .order-card {
+        .page-header { margin-bottom: 24px; }
+        .page-header h1 { font-size: 1.75rem; font-weight: 800; color: var(--text-main); margin-bottom: 4px; }
+        .page-header p { color: var(--text-muted); font-size: 0.95rem; }
+        .user-greeting { color: var(--brand-primary); font-weight: 600; }
+        
+        /* --- NEW: Tab Navigation --- */
+        .tabs { 
+            display: flex; 
+            gap: 8px; 
+            margin-bottom: 24px; 
+            border-bottom: 2px solid var(--border-color); 
+        }
+        .tab-btn { 
+            background: none; 
+            border: none; 
+            padding: 12px 20px; 
+            font-size: 1rem; 
+            font-weight: 600; 
+            color: var(--text-muted); 
+            cursor: pointer; 
+            border-bottom: 2px solid transparent; 
+            margin-bottom: -2px; 
+            transition: all 0.2s; 
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .tab-btn:hover { color: var(--brand-primary); }
+        .tab-btn.active { color: var(--brand-primary); border-bottom-color: var(--brand-primary); }
+        
+        .orders-list { display: flex; flex-direction: column; gap: 20px; }
+        
+        .order-card, .profile-card {
             background: var(--card-bg);
             border-radius: 12px;
             padding: 24px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
             border: 1px solid var(--border-color);
+            transition: transform 0.2s, box-shadow 0.2s;
         }
+        .order-card:hover { transform: translateY(-2px); box-shadow: 0 8px 16px rgba(0,0,0,0.06); }
+        
         .order-header {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            margin-bottom: 16px;
+            align-items: flex-start;
+            margin-bottom: 20px;
             padding-bottom: 16px;
             border-bottom: 1px solid var(--border-color);
+            flex-wrap: wrap;
+            gap: 12px;
         }
-        .order-id { font-size: 0.875rem; color: var(--text-muted); }
+        .order-id { font-size: 0.8rem; color: var(--text-muted); font-weight: 500; margin-bottom: 4px; }
+        .order-product { font-weight: 700; font-size: 1.1rem; color: var(--text-main); }
+        
         .order-status {
-            padding: 6px 12px;
+            padding: 6px 14px;
             border-radius: 20px;
             font-size: 0.75rem;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.5px;
+            white-space: nowrap;
         }
-        .status-success { background: #d1fae5; color: var(--success); }
-        .status-failed { background: #fee2e2; color: var(--failed); }
-        .status-pending { background: #fef3c7; color: var(--pending); }
+        .status-success { background: #d1fae5; color: #065f46; }
+        .status-failed { background: #fee2e2; color: #991b1b; }
+        .status-pending { background: #fef3c7; color: #92400e; }
         
-        .order-details {
+        .order-details, .profile-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 16px;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 20px;
         }
-        .detail-item label { display: block; font-size: 0.75rem; color: var(--text-muted); margin-bottom: 4px; font-weight: 500; }
-        .detail-item value { font-size: 0.9rem; font-weight: 600; color: var(--text-main); }
+        .detail-item label { display: block; font-size: 0.75rem; color: var(--text-muted); margin-bottom: 6px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+        .detail-item value { font-size: 0.95rem; font-weight: 600; color: var(--text-main); display: block; }
         
         .empty-state {
             text-align: center;
@@ -98,38 +164,135 @@
             border-radius: 12px;
             border: 1px solid var(--border-color);
         }
-        .empty-state h2 { color: var(--text-main); margin-bottom: 16px; }
+        .empty-state i { font-size: 3rem; color: var(--border-color); margin-bottom: 16px; }
+        .empty-state h2 { color: var(--text-main); margin-bottom: 8px; font-size: 1.25rem; }
+        .empty-state p { color: var(--text-muted); margin-bottom: 24px; }
         .shop-btn {
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
             background: var(--brand-primary);
             color: white;
             padding: 12px 24px;
             border-radius: 8px;
             text-decoration: none;
             font-weight: 600;
-            margin-top: 16px;
+            transition: background 0.2s;
         }
         .shop-btn:hover { background: var(--brand-secondary); }
         
-        .loading { text-align: center; padding: 32px; color: var(--text-muted); }
+        .loading { text-align: center; padding: 64px 24px; color: var(--text-muted); }
+        .spinner { 
+            width: 32px; height: 32px; 
+            border: 3px solid var(--border-color); 
+            border-top-color: var(--brand-primary); 
+            border-radius: 50%; 
+            animation: spin 1s linear infinite; 
+            margin: 0 auto 16px;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        @media (max-width: 600px) {
+            .order-header { flex-direction: column; }
+            .order-details, .profile-grid { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>🛍️ My Orders</h1>
-            <div class="user-info">
-                <div class="user-name" id="userName">Loading...</div>
+    <!-- Professional Top Navigation -->
+    <nav class="top-nav">
+        <div class="nav-container">
+            <a href="/" class="nav-logo">⚡ SwiftMart</a>
+            <div class="nav-actions">
+                <a href="/" class="back-link"><i class="fas fa-arrow-left"></i> Back to Shop</a>
                 <button class="logout-btn" onclick="logout()">Logout</button>
             </div>
         </div>
+    </nav>
+
+    <div class="container">
+        <div class="page-header">
+            <h1>Hello, <span class="user-greeting" id="userName">User</span> 👋</h1>
+            <p>Manage your orders and account details.</p>
+        </div>
+
+        <!-- NEW: Tab Navigation -->
+        <div class="tabs">
+            <button class="tab-btn active" onclick="showTab('orders')" id="tab-orders">
+                <i class="fas fa-shopping-bag"></i> My Orders
+            </button>
+            <button class="tab-btn" onclick="showTab('profile')" id="tab-profile">
+                <i class="fas fa-user"></i> My Profile
+            </button>
+        </div>
         
-        <div id="ordersContainer">
-            <div class="loading">Loading your orders...</div>
+        <!-- Orders Section -->
+        <div id="ordersSection">
+            <div id="ordersContainer">
+                <div class="loading">
+                    <div class="spinner"></div>
+                    Loading your orders...
+                </div>
+            </div>
+        </div>
+
+        <!-- NEW: Profile Section -->
+        <div id="profileSection" style="display: none;">
+            <div class="profile-card">
+                <h2 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 8px;">Account Information</h2>
+                <p style="color: var(--text-muted); margin-bottom: 24px;">Your personal details registered with SwiftMart.</p>
+                <div class="profile-grid">
+                    <div class="detail-item">
+                        <label>Full Name</label>
+                        <value id="profileName">-</value>
+                    </div>
+                    <div class="detail-item">
+                        <label>Email Address</label>
+                        <value id="profileEmail">-</value>
+                    </div>
+                    <div class="detail-item">
+                        <label>Phone Number</label>
+                        <value id="profilePhone">-</value>
+                    </div>
+                    <div class="detail-item">
+                        <label>Member Since</label>
+                        <value id="profileJoined">-</value>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
     <script>
+        // --- NEW: Tab Switching Logic ---
+        function showTab(tabName) {
+            const ordersSection = document.getElementById('ordersSection');
+            const profileSection = document.getElementById('profileSection');
+            const tabOrders = document.getElementById('tab-orders');
+            const tabProfile = document.getElementById('tab-profile');
+
+            if (tabName === 'orders') {
+                ordersSection.style.display = 'block';
+                profileSection.style.display = 'none';
+                tabOrders.classList.add('active');
+                tabProfile.classList.remove('active');
+                window.history.replaceState(null, null, ' '); // Clear hash
+            } else {
+                ordersSection.style.display = 'none';
+                profileSection.style.display = 'block';
+                tabProfile.classList.add('active');
+                tabOrders.classList.remove('active');
+                window.history.replaceState(null, null, '#profile'); // Set hash
+            }
+        }
+
+        // Handle URL hash on page load (e.g., if clicked from homepage dropdown)
+        window.addEventListener('DOMContentLoaded', () => {
+            if (window.location.hash === '#profile') {
+                showTab('profile');
+            }
+        });
+
         async function loadDashboard() {
             try {
                 const userRes = await fetch('/api/auth/me');
@@ -140,15 +303,30 @@
                     return;
                 }
                 
-                document.getElementById('userName').textContent = userData.user.name;
+                // Update UI with user info
+                const firstName = userData.user.name.split(' ')[0];
+                document.getElementById('userName').textContent = firstName;
                 
+                // NEW: Populate Profile Section
+                document.getElementById('profileName').textContent = userData.user.name;
+                document.getElementById('profileEmail').textContent = userData.user.email;
+                document.getElementById('profilePhone').textContent = userData.user.phone || 'Not provided';
+                document.getElementById('profileJoined').textContent = new Date(userData.user.createdAt).toLocaleDateString('en-KE', { year: 'numeric', month: 'long', day: 'numeric' });
+                
+                // Fetch orders
                 const ordersRes = await fetch('/api/orders');
                 const ordersData = await ordersRes.json();
                 
                 displayOrders(ordersData.orders);
             } catch (error) {
                 console.error('Dashboard error:', error);
-                window.location.href = '/login';
+                document.getElementById('ordersContainer').innerHTML = `
+                    <div class="empty-state">
+                        <h2>Something went wrong</h2>
+                        <p>Please refresh the page or try logging in again.</p>
+                        <a href="/login" class="shop-btn">Go to Login</a>
+                    </div>
+                `;
             }
         }
 
@@ -158,56 +336,74 @@
             if (!orders || orders.length === 0) {
                 container.innerHTML = `
                     <div class="empty-state">
+                        <i class="fas fa-shopping-bag"></i>
                         <h2>No orders yet</h2>
-                        <p style="color: var(--text-muted); margin-bottom: 16px;">Start shopping to see your orders here</p>
-                        <a href="/" class="shop-btn">Start Shopping</a>
+                        <p>Start shopping to see your orders and track their status here.</p>
+                        <a href="/" class="shop-btn"><i class="fas fa-store"></i> Start Shopping</a>
                     </div>
                 `;
                 return;
             }
             
+            // Map raw status to friendly text and classes
+            const statusMap = {
+                'pending': { text: '⏳ Processing', class: 'status-pending' },
+                'success': { text: '✅ Completed', class: 'status-success' },
+                'failed': { text: '❌ Failed', class: 'status-failed' }
+            };
+            
             container.innerHTML = `
                 <div class="orders-list">
-                    ${orders.map(order => `
+                    ${orders.map(order => {
+                        const statusInfo = statusMap[order.status] || { text: order.status, class: 'status-pending' };
+                        const shortId = order.checkoutRequestId ? order.checkoutRequestId.slice(-8).toUpperCase() : 'N/A';
+                        
+                        return `
                         <div class="order-card">
                             <div class="order-header">
                                 <div>
-                                    <div class="order-id">Order #${order.checkoutRequestId.slice(-8).toUpperCase()}</div>
-                                    <div style="font-weight: 700; margin-top: 4px; font-size: 1.1rem;">${order.product}</div>
+                                    <div class="order-id">Order #${shortId}</div>
+                                    <div class="order-product">${order.product}</div>
                                 </div>
-                                <span class="order-status status-${order.status}">${order.status}</span>
+                                <span class="order-status ${statusInfo.class}">${statusInfo.text}</span>
                             </div>
                             <div class="order-details">
                                 <div class="detail-item">
-                                    <label>Amount</label>
+                                    <label>Total Amount</label>
                                     <value>KES ${order.amount.toLocaleString()}</value>
                                 </div>
                                 <div class="detail-item">
-                                    <label>Phone</label>
-                                    <value>${order.phone}</value>
+                                    <label>Phone Number</label>
+                                    <value>${order.phone || 'N/A'}</value>
                                 </div>
                                 <div class="detail-item">
                                     <label>Date</label>
-                                    <value>${new Date(order.createdAt).toLocaleDateString()}</value>
+                                    <value>${new Date(order.createdAt).toLocaleDateString('en-KE', { year: 'numeric', month: 'short', day: 'numeric' })}</value>
                                 </div>
                                 ${order.mpesaReceiptNumber ? `
                                 <div class="detail-item">
                                     <label>M-Pesa Receipt</label>
-                                    <value>${order.mpesaReceiptNumber}</value>
+                                    <value style="color: var(--success);">${order.mpesaReceiptNumber}</value>
                                 </div>
                                 ` : ''}
                             </div>
                         </div>
-                    `).join('')}
+                    `}).join('')}
                 </div>
             `;
         }
 
         async function logout() {
-            await fetch('/api/auth/logout', { method: 'POST' });
-            window.location.href = '/login';
+            try {
+                await fetch('/api/auth/logout', { method: 'POST' });
+                window.location.href = '/login';
+            } catch (error) {
+                console.error('Logout error:', error);
+                window.location.href = '/login';
+            }
         }
 
+        // Initialize
         loadDashboard();
     </script>
 </body>

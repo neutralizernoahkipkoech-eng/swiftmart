@@ -52,7 +52,7 @@ async function sendOrderEmail(customerEmail, productName, amount, paymentMethod,
                 <div style="padding: 30px;">
                     <h2 style="color: #0f172a;">Thank you for your purchase!</h2>
                     <p>Hi there,</p>
-                    <p>Thank you for your purchase! <strong>Since this is a digital service, our team will contact you within 24 hours</strong> via the email or phone number you provided to get started.</p>
+                    <p>Thank you for your purchase! <strong>If you purchased a data bundle, you will receive an activation SMS from Safaricom within 5 to 15 minutes.</strong> For other digital services, our team will contact you within 24 hours via the email or phone number you provided.</p>
                     <p>Here are your order details:</p>
                     <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
                         <tr style="background: #f8fafc;">
@@ -274,6 +274,36 @@ app.get('/api/auth/verify-email', async (req, res) => {
     }
 });
 
+// RESEND VERIFICATION EMAIL
+app.post('/api/auth/resend-verification', async (req, res) => {
+    try {
+        const { email } = req.body;
+        const user = await User.findOne({ email, emailVerified: false });
+        
+        if (!user) {
+            return res.status(400).json({ message: 'User not found or already verified.' });
+        }
+        
+        const verificationToken = crypto.randomBytes(32).toString('hex');
+        user.emailVerificationToken = verificationToken;
+        await user.save();
+        
+        const verificationUrl = `${process.env.BASE_URL || 'https://swiftmartkenya.co.ke'}/api/auth/verify-email?token=${verificationToken}`;
+        
+        await transporter.sendMail({
+            from: `"SwiftMart" <${process.env.EMAIL_USER}>`,
+            to: email,
+            subject: 'Verify Your SwiftMart Account (New Request)',
+            html: `<h2>Welcome to SwiftMart! 👋</h2><p>Please click below to verify your email:</p><a href="${verificationUrl}" style="display:inline-block; padding:12px 24px; background:#2563eb; color:white; text-decoration:none; border-radius:6px;">Verify Email</a><p>Link expires in 24 hours.</p>`
+        });
+        
+        res.json({ message: 'Verification email sent!' });
+    } catch (error) {
+        console.error('Resend verification error:', error);
+        res.status(500).json({ message: 'Failed to send verification email' });
+    }
+});
+
 // LOGOUT
 app.post('/api/auth/logout', (req, res) => {
     res.clearCookie('token');
@@ -296,8 +326,7 @@ app.get('/api/auth/me', async (req, res) => {
     res.json({ user });
 });
 
-// ================= GOOGLE OAUTH ROUTES (NEW) =================
-
+// ================= GOOGLE OAUTH ROUTES =================
 app.get('/api/auth/google', (req, res) => {
     const redirectUri = process.env.NODE_ENV === 'production' 
         ? 'https://swiftmartkenya.co.ke/api/auth/google/callback' 
@@ -314,7 +343,6 @@ app.get('/api/auth/google/callback', async (req, res) => {
             ? 'https://swiftmartkenya.co.ke/api/auth/google/callback' 
             : 'http://localhost:3000/api/auth/google/callback';
 
-        // 1. Exchange code for tokens
         const tokenRes = await axios.post('https://oauth2.googleapis.com/token', {
             code,
             client_id: process.env.GOOGLE_CLIENT_ID,
@@ -323,13 +351,11 @@ app.get('/api/auth/google/callback', async (req, res) => {
             grant_type: 'authorization_code'
         });
 
-        // 2. Get user info from Google
         const userRes = await axios.get('https://www.googleapis.com/oauth2/v2/userinfo', {
             headers: { Authorization: `Bearer ${tokenRes.data.access_token}` }
         });
         const googleUser = userRes.data;
 
-        // 3. Find or create user in database
         let user = await User.findOne({ email: googleUser.email });
         if (!user) {
             user = new User({
@@ -342,7 +368,6 @@ app.get('/api/auth/google/callback', async (req, res) => {
             await user.save();
         }
 
-        // 4. Log the user in
         const token = jwt.sign({ userId: user._id, email: user.email }, JWT_SECRET, { expiresIn: '30d' });
         res.cookie('token', token, { httpOnly: true, secure: process.env.NODE_ENV === 'production', maxAge: 30 * 24 * 60 * 60 * 1000 });
         req.session.userId = user._id;
@@ -355,8 +380,6 @@ app.get('/api/auth/google/callback', async (req, res) => {
 });
 
 // ================= M-PESA & ORDER ROUTES =================
-
-// STK Push
 app.post('/api/stkpush', requireAuth, async (req, res) => {
     try {
         const { phoneNumber, amount, productName } = req.body;
@@ -530,10 +553,8 @@ app.put('/api/admin/products/:id/stock', requireAuth, async (req, res) => {
         if (!user || user.email !== 'neutralizernoahkipkoech@gmail.com') {
             return res.status(403).json({ error: 'Access denied' });
         }
-
         const { stock } = req.body;
         const product = await Product.findByIdAndUpdate(req.params.id, { stock }, { returnDocument: 'after' });
-        
         if (!product) return res.status(404).json({ error: 'Product not found' });
         res.json({ success: true, product });
     } catch (error) {
@@ -579,7 +600,6 @@ app.get('/api/seed-products', async (req, res) => {
             { name: 'Electric Toothbrush', category: 'beauty', price: 2900, stock: 45 },
             { name: 'Fitness Tracker', category: 'beauty', price: 3200, stock: 35 }
         ];
-
         await Product.deleteMany({});
         await Product.insertMany(initialProducts);
         res.json({ message: '✅ Database seeded with all products!' });
@@ -663,7 +683,7 @@ app.delete('/api/admin/reviews/:id', requireAuth, async (req, res) => {
 app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'frontend', 'index.html')));
 app.get('/login', (req, res) => res.sendFile(path.join(__dirname, 'frontend', 'login.html')));
 app.get('/register', (req, res) => res.sendFile(path.join(__dirname, 'frontend', 'register.html')));
-   app.get('/reset-password', (req, res) => res.sendFile(path.join(__dirname, 'frontend', 'reset-password.html')));
+app.get('/reset-password', (req, res) => res.sendFile(path.join(__dirname, 'frontend', 'reset-password.html')));
 app.get('/dashboard', (req, res) => res.sendFile(path.join(__dirname, 'frontend', 'dashboard.html')));
 app.get('/receipt.html', (req, res) => res.sendFile(path.join(__dirname, 'frontend', 'receipt.html')));
 
@@ -679,10 +699,11 @@ app.get('/admin', async (req, res) => {
         }
         res.sendFile(path.join(__dirname, 'frontend', 'admin.html'));
     } catch (error) {
+        console.error('Admin route error:', error);
         res.redirect('/');
     }
 });
 
 app.listen(PORT, () => {
-    console.log(`🚀 Server running on http://localhost:${PORT}`); // Force new deploy
+    console.log(`🚀 Server running on http://localhost:${PORT}`);
 });
