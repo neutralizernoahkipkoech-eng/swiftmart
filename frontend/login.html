@@ -152,7 +152,6 @@
         }
         .modal-close:hover { color: var(--text-main); }
 
-        /* Resend Verification Styles */
         .resend-container { 
             text-align: center; 
             margin-top: 16px; 
@@ -203,7 +202,6 @@
             
             <button type="submit" class="submit-btn" id="loginBtn">Login</button>
             
-            <!-- Resend Verification Container -->
             <div id="resendContainer" class="resend-container">
                 <p>Didn't get the verification email?</p>
                 <button type="button" class="resend-btn" id="resendBtn">Resend Verification Email</button>
@@ -245,7 +243,12 @@
     </div>
 
     <script>
-        // --- Login Logic (Enhanced with Smart Redirect) ---
+        // Check for redirect parameter on page load
+        const urlParams = new URLSearchParams(window.location.search);
+        const redirectUrl = urlParams.get('redirect') || '/';
+        console.log('Redirect URL:', redirectUrl);
+        
+        // --- Login Logic ---
         document.getElementById('loginForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const email = document.getElementById('email').value;
@@ -270,22 +273,19 @@
                 });
                 
                 const data = await res.json();
+                console.log('Login response:', data);
                 
                 if (res.ok) {
                     successMsg.textContent = '✅ Login successful! Redirecting...';
                     successMsg.style.display = 'block';
-                    setTimeout(() => {
-                        // NEW: Check for a redirect parameter in the URL (e.g., ?redirect=/admin)
-                        // If it exists, go there. Otherwise, default to the homepage '/'.
-                        const urlParams = new URLSearchParams(window.location.search);
-                        const redirectUrl = urlParams.get('redirect') || '/';
-                        window.location.href = redirectUrl;
-                    }, 800);
+                    
+                    // Immediate redirect without setTimeout
+                    console.log('Redirecting to:', redirectUrl);
+                    window.location.href = redirectUrl;
                 } else {
                     errorMsg.textContent = data.error || 'Invalid email or password';
                     errorMsg.style.display = 'block';
                     
-                    // If the error is about email verification, show the resend button
                     if (res.status === 403 && data.error && data.error.toLowerCase().includes('verify')) {
                         resendContainer.style.display = 'block';
                     }
@@ -294,6 +294,7 @@
                     loginBtn.innerHTML = 'Login';
                 }
             } catch (error) {
+                console.error('Login error:', error);
                 errorMsg.textContent = 'Network error. Please try again.';
                 errorMsg.style.display = 'block';
                 loginBtn.disabled = false;
@@ -390,7 +391,6 @@
             }
         });
         
-        // --- Social Login Placeholder ---
         function socialLogin(provider) {
             const errorMsg = document.getElementById('errorMsg');
             errorMsg.textContent = '⚙️ ' + provider + ' login coming soon! Please use email login for now.';
@@ -400,7 +400,6 @@
             errorMsg.style.display = 'block';
         }
         
-        // Close modal when clicking outside
         document.getElementById('forgotModal').addEventListener('click', function(e) {
             if (e.target === this) closeForgotModal();
         });
