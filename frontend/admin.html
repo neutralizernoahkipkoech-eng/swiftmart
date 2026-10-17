@@ -19,8 +19,8 @@
             --danger: #ef4444;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Inter', sans-serif; background-color: var(--bg-color); color: var(--text-main); min-height: 100vh; }
-        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-color); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; flex-grow: 1; }
         
         nav { background: white; padding: 16px 0; border-bottom: 1px solid var(--border-color); margin-bottom: 30px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
         .nav-content { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; padding: 0 20px; }
@@ -80,6 +80,11 @@
         .btn-delete:hover { opacity: 0.9; }
         .btn-update { background: var(--brand-primary); color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.85rem; transition: background 0.2s; }
         .btn-update:hover { background: var(--brand-secondary); }
+
+        /* Admin Footer */
+        .admin-footer { text-align: center; padding: 40px 20px; color: var(--text-muted); font-size: 0.85rem; border-top: 1px solid var(--border-color); margin-top: 40px; }
+        .admin-footer a { color: #f57c00; text-decoration: none; font-weight: 600; }
+        .admin-footer a:hover { text-decoration: underline; }
     </style>
 </head>
 <body>
@@ -194,6 +199,11 @@
         </div>
     </div>
 
+    <!-- NEW: Admin Footer with Jumia Link -->
+    <footer class="admin-footer">
+        <p>&copy; 2026 SwiftMart Admin. All rights reserved. | <a href="https://jforce.jumia.co.ke/s/HhGX6Ds" target="_blank">Shop on Jumia</a></p>
+    </footer>
+
     <script>
         // Tab Switching Logic
         function showTab(tabName) {
@@ -212,7 +222,6 @@
             const tbody = document.getElementById('ordersBody');
             tbody.innerHTML = '<tr><td colspan="6" class="empty-state"><i class="fas fa-spinner fa-spin"></i> Loading orders...</td></tr>';
             try {
-                // FIX: Added credentials: 'include' to send the session cookie
                 const res = await fetch('/api/admin/orders', { credentials: 'include' });
                 if (res.status === 401) { window.location.href = '/login?redirect=/admin'; return; }
                 if (res.status === 403) { tbody.innerHTML = '<tr><td colspan="6" class="empty-state">❌ Access Denied. Admin only.</td></tr>'; return; }
@@ -220,7 +229,6 @@
                 const data = await res.json();
 
                 if (data.orders && data.orders.length > 0) {
-                    // Calculate Summary Stats
                     const totalOrders = data.orders.length;
                     const totalRevenue = data.orders.filter(o => o.status === 'success').reduce((sum, o) => sum + o.amount, 0);
                     const pendingOrders = data.orders.filter(o => o.status === 'pending').length;
@@ -262,7 +270,6 @@
             const tbody = document.getElementById('inventoryBody');
             tbody.innerHTML = '<tr><td colspan="5" class="empty-state"><i class="fas fa-spinner fa-spin"></i> Loading inventory...</td></tr>';
             try {
-                // FIX: Added credentials: 'include'
                 const res = await fetch('/api/products', { credentials: 'include' });
                 const data = await res.json();
                 if (data.products && data.products.length > 0) {
@@ -295,7 +302,6 @@
         async function updateStock(productId) {
             const newStock = document.getElementById(`stock-${productId}`).value;
             try {
-                // FIX: Added credentials: 'include'
                 const res = await fetch(`/api/admin/products/${productId}/stock`, {
                     method: 'PUT',
                     credentials: 'include',
@@ -319,7 +325,6 @@
             const tbody = document.getElementById('reviewsBody');
             tbody.innerHTML = '<tr><td colspan="7" class="empty-state"><i class="fas fa-spinner fa-spin"></i> Loading reviews...</td></tr>';
             try {
-                // FIX: Added credentials: 'include'
                 const res = await fetch('/api/admin/reviews', { credentials: 'include' });
                 if (res.status === 401) { window.location.href = '/login?redirect=/admin'; return; }
                 if (res.status === 403) { tbody.innerHTML = '<tr><td colspan="7" class="empty-state">❌ Access Denied. Admin only.</td></tr>'; return; }
@@ -357,7 +362,6 @@
         async function approveReview(reviewId) {
             if (!confirm('Approve this review? It will become visible on the homepage.')) return;
             try {
-                // FIX: Added credentials: 'include'
                 const res = await fetch(`/api/admin/reviews/${reviewId}/approve`, { 
                     method: 'PUT',
                     credentials: 'include'
@@ -373,7 +377,6 @@
         async function deleteReview(reviewId) {
             if (!confirm('Delete this review permanently? This cannot be undone.')) return;
             try {
-                // FIX: Added credentials: 'include'
                 const res = await fetch(`/api/admin/reviews/${reviewId}`, { 
                     method: 'DELETE',
                     credentials: 'include'
@@ -386,7 +389,7 @@
             }
         }
 
-        // --- NEW: Secure Logout Function ---
+        // Secure Logout Function
         async function logout() {
             try {
                 await fetch('/api/auth/logout', { method: 'POST', credentials: 'include' });

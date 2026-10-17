@@ -116,6 +116,22 @@
         .auth-footer a { color: var(--brand-primary); text-decoration: none; font-weight: 600; }
         .auth-footer a:hover { text-decoration: underline; }
         
+        /* NEW: Jumia Footer Link Style */
+        .jumia-footer-link { 
+            text-align: center; 
+            margin-top: 24px; 
+            font-size: 0.8rem; 
+            color: var(--text-muted); 
+            padding-top: 16px;
+            border-top: 1px solid var(--border-color);
+        }
+        .jumia-footer-link a { 
+            color: #f57c00; 
+            text-decoration: none; 
+            font-weight: 600; 
+        }
+        .jumia-footer-link a:hover { text-decoration: underline; }
+        
         .error-msg { background: #fef2f2; color: #991b1b; padding: 12px; border-radius: 8px; margin-bottom: 16px; display: none; text-align: center; border: 1px solid #fecaca; font-size: 0.875rem; }
         .success-msg { background: #ecfdf5; color: #065f46; padding: 12px; border-radius: 8px; margin-bottom: 16px; display: none; text-align: center; border: 1px solid #a7f3d0; font-size: 0.875rem; }
 
@@ -222,6 +238,11 @@
         <div class="auth-footer">
             Don't have an account? <a href="/register">Register here</a>
         </div>
+
+        <!-- NEW: Jumia Affiliate Footer Link -->
+        <div class="jumia-footer-link">
+            &copy; 2026 SwiftMart. All rights reserved. | <a href="https://jforce.jumia.co.ke/s/HhGX6Ds" target="_blank">Shop on Jumia</a>
+        </div>
     </div>
     
     <!-- Forgot Password Modal -->
@@ -269,7 +290,8 @@
                 const res = await fetch('/api/auth/login', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email, password, rememberMe })
+                    body: JSON.stringify({ email, password, rememberMe }),
+                    credentials: 'include' // ADDED: Ensures session cookie is saved properly
                 });
                 
                 const data = await res.json();
@@ -322,7 +344,8 @@
                 const res = await fetch('/api/auth/resend-verification', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email })
+                    body: JSON.stringify({ email }),
+                    credentials: 'include' // ADDED: Best practice for auth endpoints
                 });
                 const data = await res.json();
                 
@@ -371,7 +394,8 @@
                 const res = await fetch('/api/auth/forgot-password', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email })
+                    body: JSON.stringify({ email }),
+                    credentials: 'include' // ADDED: Best practice for auth endpoints
                 });
                 const data = await res.json();
                 

@@ -86,7 +86,54 @@
         .page-header p { color: var(--text-muted); font-size: 0.95rem; }
         .user-greeting { color: var(--brand-primary); font-weight: 600; }
         
-        /* --- NEW: Tab Navigation --- */
+        /* --- Jumia Promo Card Styles --- */
+        .jumia-promo-card {
+            background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%);
+            border: 2px solid #f57c00;
+            border-radius: 12px;
+            padding: 24px;
+            text-align: center;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 12px rgba(245, 124, 0, 0.1);
+        }
+        .jumia-promo-card h3 {
+            color: #c2410c;
+            font-size: 1.2rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .jumia-promo-card p {
+            color: #9a3412;
+            font-size: 0.95rem;
+            margin-bottom: 16px;
+            line-height: 1.5;
+        }
+        .jumia-promo-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: #f57c00;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1rem;
+            transition: all 0.2s;
+            box-shadow: 0 4px 12px rgba(245, 124, 0, 0.3);
+        }
+        .jumia-promo-btn:hover {
+            background: #ea580c;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(245, 124, 0, 0.4);
+        }
+
+        /* --- Tab Navigation --- */
         .tabs { 
             display: flex; 
             gap: 8px; 
@@ -192,9 +239,24 @@
         }
         @keyframes spin { to { transform: rotate(360deg); } }
 
+        /* --- Chatbot Styles (Handled by app.js) --- */
+        .support-float { position: fixed; bottom: 30px; right: 30px; background: linear-gradient(135deg, #2563eb, #7c3aed); color: white; width: 68px; height: 68px; border-radius: 50%; border: none; display: flex; align-items: center; justify-content: center; box-shadow: 0 6px 24px rgba(37, 99, 235, 0.5); z-index: 1000; cursor: pointer; transition: transform 0.3s ease; font-size: 1.8rem; animation: pulseSupport 2s infinite; }
+        .support-float:hover { transform: scale(1.1) rotate(10deg); }
+        .support-badge { position: absolute; top: -4px; right: -4px; background: #ef4444; color: white; font-size: 0.7rem; font-weight: 700; padding: 3px 7px; border-radius: 10px; border: 2px solid white; animation: bounce 1.5s infinite; }
+        .chat-window { position: fixed; bottom: 110px; right: 30px; width: 380px; max-width: calc(100vw - 40px); height: 560px; max-height: calc(100vh - 140px); background: white; border-radius: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.25); z-index: 1001; display: none; flex-direction: column; overflow: hidden; font-family: 'Inter', sans-serif; }
+        .chat-header { background: linear-gradient(135deg, #2563eb, #7c3aed); color: white; padding: 18px 20px; display: flex; align-items: center; gap: 12px; }
+        .chat-messages { flex-grow: 1; overflow-y: auto; padding: 20px; background: #f1f5f9; display: flex; flex-direction: column; gap: 12px; }
+        .chat-input-area { padding: 14px 20px; background: white; border-top: 1px solid #e2e8f0; display: flex; gap: 10px; align-items: center; }
+        .chat-input { flex-grow: 1; padding: 12px 16px; border: 1px solid #e2e8f0; border-radius: 24px; font-size: 0.9rem; outline: none; }
+        .chat-input:focus { border-color: var(--brand-primary); }
+        @keyframes pulseSupport { 0% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.7); } 70% { box-shadow: 0 0 0 18px rgba(37, 99, 235, 0); } 100% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0); } }
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
+
         @media (max-width: 600px) {
             .order-header { flex-direction: column; }
             .order-details, .profile-grid { grid-template-columns: 1fr; }
+            .chat-window { width: calc(100vw - 40px); right: 20px; bottom: 100px; }
+            .support-float { right: 20px; bottom: 20px; }
         }
     </style>
 </head>
@@ -216,7 +278,16 @@
             <p>Manage your orders and account details.</p>
         </div>
 
-        <!-- NEW: Tab Navigation -->
+        <!-- Jumia Affiliate Promo Card -->
+        <div class="jumia-promo-card">
+            <h3><i class="fas fa-shopping-bag"></i> Partner Store: Jumia</h3>
+            <p>Explore millions of products, fast delivery, and exclusive deals on our trusted partner platform.</p>
+            <a href="https://jforce.jumia.co.ke/s/HhGX6Ds" target="_blank" class="jumia-promo-btn">
+                Shop on Jumia <i class="fas fa-external-link-alt"></i>
+            </a>
+        </div>
+
+        <!-- Tab Navigation -->
         <div class="tabs">
             <button class="tab-btn active" onclick="showTab('orders')" id="tab-orders">
                 <i class="fas fa-shopping-bag"></i> My Orders
@@ -236,7 +307,7 @@
             </div>
         </div>
 
-        <!-- NEW: Profile Section -->
+        <!-- Profile Section -->
         <div id="profileSection" style="display: none;">
             <div class="profile-card">
                 <h2 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 8px;">Account Information</h2>
@@ -263,8 +334,35 @@
         </div>
     </div>
 
+    <!-- AI Support Chatbot (Logic handled by app.js) -->
+    <button class="support-float" onclick="toggleChat()" aria-label="AI Support Assistant">
+        <i class="fas fa-headset"></i>
+        <span class="support-badge">1</span>
+    </button>
+
+    <div class="chat-window" id="chatWindow">
+        <div class="chat-header">
+            <div style="width: 44px; height: 44px; border-radius: 50%; background: rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; font-size: 1.3rem;">🤖</div>
+            <div style="flex-grow: 1;">
+                <div style="font-weight: 700; font-size: 1rem;">SwiftMart AI</div>
+                <div style="font-size: 0.75rem; opacity: 0.9; display: flex; align-items: center; gap: 5px;"><span style="width: 7px; height: 7px; background: #10b981; border-radius: 50%;"></span> Online • Ready to help</div>
+            </div>
+            <button onclick="toggleChat()" style="background: rgba(255,255,255,0.2); border: none; color: white; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-size: 1rem;">×</button>
+        </div>
+        <div class="chat-messages" id="chatMessages"></div>
+        <div class="chat-input-area">
+            <input type="text" class="chat-input" id="chatInput" placeholder="Type your message..." onkeypress="handleChatKeyPress(event)">
+            <button onclick="sendChatMessage()" style="background: #2563eb; color: white; border: none; width: 42px; height: 42px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center;"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
+
+    <!-- Load centralized App.js (Handles Chatbot, Cart, Auth) -->
+    <script src="/js/app.js"></script>
+
     <script>
-        // --- NEW: Tab Switching Logic ---
+        // --- Dashboard Specific Logic Only ---
+        
+        // Tab Switching Logic
         function showTab(tabName) {
             const ordersSection = document.getElementById('ordersSection');
             const profileSection = document.getElementById('profileSection');
@@ -276,17 +374,16 @@
                 profileSection.style.display = 'none';
                 tabOrders.classList.add('active');
                 tabProfile.classList.remove('active');
-                window.history.replaceState(null, null, ' '); // Clear hash
+                window.history.replaceState(null, null, ' ');
             } else {
                 ordersSection.style.display = 'none';
                 profileSection.style.display = 'block';
                 tabProfile.classList.add('active');
                 tabOrders.classList.remove('active');
-                window.history.replaceState(null, null, '#profile'); // Set hash
+                window.history.replaceState(null, null, '#profile');
             }
         }
 
-        // Handle URL hash on page load (e.g., if clicked from homepage dropdown)
         window.addEventListener('DOMContentLoaded', () => {
             if (window.location.hash === '#profile') {
                 showTab('profile');
@@ -295,7 +392,6 @@
 
         async function loadDashboard() {
             try {
-                // FIX: Added credentials: 'include' to ensure session cookie is sent
                 const userRes = await fetch('/api/auth/me', { credentials: 'include' });
                 const userData = await userRes.json();
                 
@@ -304,18 +400,14 @@
                     return;
                 }
                 
-                // Update UI with user info
                 const firstName = userData.user.name.split(' ')[0];
                 document.getElementById('userName').textContent = firstName;
                 
-                // NEW: Populate Profile Section
                 document.getElementById('profileName').textContent = userData.user.name;
                 document.getElementById('profileEmail').textContent = userData.user.email;
                 document.getElementById('profilePhone').textContent = userData.user.phone || 'Not provided';
                 document.getElementById('profileJoined').textContent = new Date(userData.user.createdAt).toLocaleDateString('en-KE', { year: 'numeric', month: 'long', day: 'numeric' });
                 
-                // Fetch orders
-                // FIX: Added credentials: 'include' to ensure session cookie is sent
                 const ordersRes = await fetch('/api/orders', { credentials: 'include' });
                 const ordersData = await ordersRes.json();
                 
@@ -347,7 +439,6 @@
                 return;
             }
             
-            // Map raw status to friendly text and classes
             const statusMap = {
                 'pending': { text: '⏳ Processing', class: 'status-pending' },
                 'success': { text: '✅ Completed', class: 'status-success' },
@@ -397,7 +488,6 @@
 
         async function logout() {
             try {
-                // FIX: Added credentials: 'include' to ensure session cookie is cleared properly
                 await fetch('/api/auth/logout', { method: 'POST', credentials: 'include' });
                 window.location.href = '/login';
             } catch (error) {
@@ -406,7 +496,7 @@
             }
         }
 
-        // Initialize
+        // Initialize Dashboard
         loadDashboard();
     </script>
 </body>

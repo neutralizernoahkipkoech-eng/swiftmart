@@ -7,8 +7,10 @@ const orderSchema = new mongoose.Schema({
     amount: { type: Number, required: true },
     phone: { type: String, required: true },
     status: { type: String, enum: ['pending', 'success', 'failed'], default: 'pending' },
-    mpesaReceiptNumber: String,
+    mpesaReceiptNumber: { type: String, default: null },
     createdAt: { type: Date, default: Date.now }
+}, {
+    timestamps: true // Automatically manages updatedAt, great for future features
 });
 
 module.exports = mongoose.model('Order', orderSchema);

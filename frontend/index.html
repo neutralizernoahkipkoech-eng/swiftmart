@@ -164,7 +164,7 @@ nav { background: white; padding: 12px 0; border-bottom: 1px solid var(--border-
 .chat-send:hover { background: var(--brand-secondary); }
 .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 998; display: none; justify-content: center; align-items: center; padding: 20px; backdrop-filter: blur(4px); }
 .modal-overlay.active { display: flex; }
-.modal-content { background: white; border-radius: 16px; max-width: 700px; width: 100%; max-height: 85vh; overflow-y: auto; padding: 40px; position: relative; animation: slideUp 0.3s ease; }
+.modal-content { background: white; border-radius: 16px; max-width: 700px; width: 100%; max-height: 85vh; overflow-y: auto; padding: 40px; position: relative; animation: slideUp 0.3s ease; line-height: 1.7; }
 @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 .modal-close { position: absolute; top: 16px; right: 20px; background: none; border: none; font-size: 1.8rem; cursor: pointer; color: var(--text-muted); transition: color 0.2s; }
 .modal-close:hover { color: var(--text-main); }
@@ -320,13 +320,17 @@ nav { background: white; padding: 12px 0; border-bottom: 1px solid var(--border-
 <option value="services">Professional Services</option>
 <option value="webdev">Web Development & Hosting</option>
 <option value="socialmedia">Social Media Services</option>
-<option value="smartphones">Smartphones & Tablets</option>
+<option value="smartphones">Smartphones</option>
+<option value="tablets">Computer Tablets</option>
 <option value="laptops">Laptops & Computers</option>
 <option value="audio">Audio & Headphones</option>
+<option value="pcspeakers">PC Speakers</option>
 <option value="accessories">Computer Accessories</option>
-<option value="fashion">Fashion & Watches</option>
+<option value="fashion">Fashion</option>
+<option value="watches">Watches</option>
 <option value="home">Home & Kitchen</option>
-<option value="beauty">Beauty & Health</option>
+<option value="beauty">Beauty</option>
+<option value="healthcare">Health Care</option>
 </select>
 </div>
 </div>
@@ -387,130 +391,157 @@ nav { background: white; padding: 12px 0; border-bottom: 1px solid var(--border-
 </div>
 </div>
 
-<!-- SMARTPHONES (NO Add to Cart - Jumia Only) -->
-<div class="section-header" data-section="smartphones"><div class="section-divider"></div><h2>Smartphones & Tablets</h2><p>Latest mobile devices</p></div>
+<!-- SMARTPHONES (Jumia Affiliate Only - No Prices) -->
+<div class="section-header" data-section="smartphones"><div class="section-divider"></div><h2>Smartphones</h2><p>Latest mobile devices</p></div>
 <div class="grid" id="grid-smartphones">
 <div class="card" data-category="smartphones">
 <img src="https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?auto=format&fit=crop&w=400&h=300&q=80" alt="iPhone" class="card-image">
-<div class="card-body"><div class="card-name">iPhone 13 Pro</div><div class="card-description">128GB, 5G, A15 Bionic chip, Pro camera system.</div><div class="card-price">KES 95,000</div></div>
+<div class="card-body"><div class="card-name">iPhone 13 Pro</div><div class="card-description">128GB, 5G, A15 Bionic chip, Pro camera system.</div></div>
 </div>
 <div class="card" data-category="smartphones">
 <img src="https://images.unsplash.com/photo-1585060544812-6b45742d762f?auto=format&fit=crop&w=400&h=300&q=80" alt="Samsung Phone" class="card-image">
-<div class="card-body"><div class="card-name">Samsung Galaxy S22</div><div class="card-description">256GB, 5G, 108MP camera, 120Hz display.</div><div class="card-price">KES 78,000</div></div>
-</div>
-<div class="card" data-category="smartphones">
-<img src="https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?auto=format&fit=crop&w=400&h=300&q=80" alt="iPad" class="card-image">
-<div class="card-body"><div class="card-name">iPad Air 5th Gen</div><div class="card-description">64GB WiFi, M1 chip, 10.9-inch display.</div><div class="card-price">KES 65,000</div></div>
+<div class="card-body"><div class="card-name">Samsung Galaxy S22</div><div class="card-description">256GB, 5G, 108MP camera, 120Hz display.</div></div>
 </div>
 </div>
 
-<!-- LAPTOPS (NO Add to Cart - Jumia Only) -->
+<!-- TABLETS (Jumia Affiliate Only - No Prices) -->
+<div class="section-header" data-section="tablets"><div class="section-divider"></div><h2>Computer Tablets</h2><p>iPads and Android Tablets</p></div>
+<div class="grid" id="grid-tablets">
+<div class="card" data-category="tablets">
+<img src="https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?auto=format&fit=crop&w=400&h=300&q=80" alt="iPad" class="card-image">
+<div class="card-body"><div class="card-name">iPad Air 5th Gen</div><div class="card-description">64GB WiFi, M1 chip, 10.9-inch display.</div></div>
+</div>
+</div>
+
+<!-- LAPTOPS (Jumia Affiliate Only - No Prices) -->
 <div class="section-header" data-section="laptops"><div class="section-divider"></div><h2>Laptops & Computers</h2><p>Powerful computing devices</p></div>
 <div class="grid" id="grid-laptops">
 <div class="card" data-category="laptops">
 <img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=400&h=300&q=80" alt="MacBook" class="card-image">
-<div class="card-body"><div class="card-name">MacBook Air M2</div><div class="card-description">13.6-inch, M2 chip, 8GB RAM, 256GB SSD.</div><div class="card-price">KES 115,000</div></div>
+<div class="card-body"><div class="card-name">MacBook Air M2</div><div class="card-description">13.6-inch, M2 chip, 8GB RAM, 256GB SSD.</div></div>
 </div>
 <div class="card" data-category="laptops">
 <img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=400&h=300&q=80" alt="Dell Laptop" class="card-image">
-<div class="card-body"><div class="card-name">Dell XPS 13</div><div class="card-description">Intel i7, 16GB RAM, 512GB SSD.</div><div class="card-price">KES 98,000</div></div>
+<div class="card-body"><div class="card-name">Dell XPS 13</div><div class="card-description">Intel i7, 16GB RAM, 512GB SSD.</div></div>
 </div>
 <div class="card" data-category="laptops">
 <img src="https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?auto=format&fit=crop&w=400&h=300&q=80" alt="HP Laptop" class="card-image">
-<div class="card-body"><div class="card-name">HP Pavilion 15</div><div class="card-description">AMD Ryzen 5, 8GB RAM, 512GB SSD.</div><div class="card-price">KES 52,000</div></div>
+<div class="card-body"><div class="card-name">HP Pavilion 15</div><div class="card-description">AMD Ryzen 5, 8GB RAM, 512GB SSD.</div></div>
 </div>
 </div>
 
-<!-- AUDIO (NO Add to Cart - Jumia Only) -->
+<!-- AUDIO (Jumia Affiliate Only - No Prices) -->
 <div class="section-header" data-section="audio"><div class="section-divider"></div><h2>Audio & Headphones</h2><p>Premium sound quality</p></div>
 <div class="grid" id="grid-audio">
 <div class="card" data-category="audio">
 <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=400&h=300&q=80" alt="Headphones" class="card-image">
-<div class="card-body"><div class="card-name">Sony WH-1000XM5</div><div class="card-description">Noise cancellation, 30hr battery, premium sound.</div><div class="card-price">KES 32,000</div></div>
+<div class="card-body"><div class="card-name">Sony WH-1000XM5</div><div class="card-description">Noise cancellation, 30hr battery, premium sound.</div></div>
 </div>
 <div class="card" data-category="audio">
 <img src="https://images.unsplash.com/photo-1606220588913-b3aacb4d2f46?auto=format&fit=crop&w=400&h=300&q=80" alt="AirPods" class="card-image">
-<div class="card-body"><div class="card-name">Apple AirPods Pro 2</div><div class="card-description">Active noise cancellation, spatial audio.</div><div class="card-price">KES 24,000</div></div>
-</div>
-<div class="card" data-category="audio">
-<img src="https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?auto=format&fit=crop&w=400&h=300&q=80" alt="Speaker" class="card-image">
-<div class="card-body"><div class="card-name">JBL Flip 6 Speaker</div><div class="card-description">Portable, waterproof, 12hr playtime.</div><div class="card-price">KES 12,000</div></div>
+<div class="card-body"><div class="card-name">Apple AirPods Pro 2</div><div class="card-description">Active noise cancellation, spatial audio.</div></div>
 </div>
 </div>
 
-<!-- ACCESSORIES (NO Add to Cart - Jumia Only) -->
+<!-- PC SPEAKERS (Jumia Affiliate Only - No Prices) -->
+<div class="section-header" data-section="pcspeakers"><div class="section-divider"></div><h2>PC Speakers</h2><p>Desktop Audio Systems</p></div>
+<div class="grid" id="grid-pcspeakers">
+<div class="card" data-category="pcspeakers">
+<img src="https://images.unsplash.com/photo-1545454675-3531b543be5d?auto=format&fit=crop&w=400&h=300&q=80" alt="Speakers" class="card-image">
+<div class="card-body"><div class="card-name">Desktop Speaker System</div><div class="card-description">High fidelity sound for your computer.</div></div>
+</div>
+</div>
+
+<!-- ACCESSORIES (Jumia Affiliate Only - No Prices) -->
 <div class="section-header" data-section="accessories"><div class="section-divider"></div><h2>Computer Accessories</h2><p>Essential accessories</p></div>
 <div class="grid" id="grid-accessories">
 <div class="card" data-category="accessories">
 <img src="https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?auto=format&fit=crop&w=400&h=300&q=80" alt="Mouse" class="card-image">
-<div class="card-body"><div class="card-name">Logitech MX Master 3</div><div class="card-description">Wireless, ergonomic, customizable buttons.</div><div class="card-price">KES 8,500</div></div>
+<div class="card-body"><div class="card-name">Logitech MX Master 3</div><div class="card-description">Wireless, ergonomic, customizable buttons.</div></div>
 </div>
 <div class="card" data-category="accessories">
 <img src="https://images.unsplash.com/photo-1587829741301-dc798b83add3?auto=format&fit=crop&w=400&h=300&q=80" alt="Keyboard" class="card-image">
-<div class="card-body"><div class="card-name">Mechanical Keyboard RGB</div><div class="card-description">Cherry MX switches, RGB backlight.</div><div class="card-price">KES 7,200</div></div>
+<div class="card-body"><div class="card-name">Mechanical Keyboard RGB</div><div class="card-description">Cherry MX switches, RGB backlight.</div></div>
 </div>
 <div class="card" data-category="accessories">
 <img src="https://images.unsplash.com/photo-1586953208448-b95a79798f07?auto=format&fit=crop&w=400&h=300&q=80" alt="Webcam" class="card-image">
-<div class="card-body"><div class="card-name">Logitech C920 Webcam</div><div class="card-description">1080p HD, stereo audio, auto-focus.</div><div class="card-price">KES 9,500</div></div>
+<div class="card-body"><div class="card-name">Logitech C920 Webcam</div><div class="card-description">1080p HD, stereo audio, auto-focus.</div></div>
 </div>
 <div class="card" data-category="accessories">
 <img src="https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?auto=format&fit=crop&w=400&h=300&q=80" alt="Monitor" class="card-image">
-<div class="card-body"><div class="card-name">27-inch 4K Monitor</div><div class="card-description">IPS panel, HDR, USB-C connectivity.</div><div class="card-price">KES 35,000</div></div>
+<div class="card-body"><div class="card-name">27-inch 4K Monitor</div><div class="card-description">IPS panel, HDR, USB-C connectivity.</div></div>
 </div>
 </div>
 
-<!-- FASHION (NO Add to Cart - Jumia Only) -->
-<div class="section-header" data-section="fashion"><div class="section-divider"></div><h2>Fashion & Watches</h2><p>Style and comfort</p></div>
+<!-- FASHION (Jumia Affiliate Only - No Prices) -->
+<div class="section-header" data-section="fashion"><div class="section-divider"></div><h2>Fashion</h2><p>Style and comfort</p></div>
 <div class="grid" id="grid-fashion">
 <div class="card" data-category="fashion">
-<img src="https://images.unsplash.com/photo-1524592094714-0f0654e20314?auto=format&fit=crop&w=400&h=300&q=80" alt="Watch" class="card-image">
-<div class="card-body"><div class="card-name">Classic Leather Watch</div><div class="card-description">Genuine leather strap, quartz movement.</div><div class="card-price">KES 3,500</div></div>
-</div>
-<div class="card" data-category="fashion">
 <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=400&h=300&q=80" alt="Sneakers" class="card-image">
-<div class="card-body"><div class="card-name">Nike Air Max Sneakers</div><div class="card-description">Comfortable, stylish, various sizes.</div><div class="card-price">KES 8,500</div></div>
+<div class="card-body"><div class="card-name">Nike Air Max Sneakers</div><div class="card-description">Comfortable, stylish, various sizes.</div></div>
 </div>
 <div class="card" data-category="fashion">
 <img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=400&h=300&q=80" alt="Backpack" class="card-image">
-<div class="card-body"><div class="card-name">Premium Leather Backpack</div><div class="card-description">Spacious, laptop compartment, durable.</div><div class="card-price">KES 4,500</div></div>
+<div class="card-body"><div class="card-name">Premium Leather Backpack</div><div class="card-description">Spacious, laptop compartment, durable.</div></div>
 </div>
 <div class="card" data-category="fashion">
 <img src="https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=400&h=300&q=80" alt="Sunglasses" class="card-image">
-<div class="card-body"><div class="card-name">Polarized Sunglasses</div><div class="card-description">UV400 protection, stylish frames.</div><div class="card-price">KES 1,800</div></div>
+<div class="card-body"><div class="card-name">Polarized Sunglasses</div><div class="card-description">UV400 protection, stylish frames.</div></div>
 </div>
 </div>
 
-<!-- HOME & KITCHEN (NO Add to Cart - Jumia Only) -->
+<!-- WATCHES (Jumia Affiliate Only - No Prices) -->
+<div class="section-header" data-section="watches">
+    <div class="section-divider"></div>
+    <h2>Watches</h2>
+    <p>Smart and Classic Watches</p>
+</div>
+<div class="grid" id="grid-watches">
+    <div class="card" data-category="watches">
+        <img src="https://images.unsplash.com/photo-1524592094714-0f0654e20314?auto=format&fit=crop&w=400&h=300&q=80" alt="Watch" class="card-image">
+        <div class="card-body">
+            <div class="card-name">Classic Leather Watch</div>
+            <div class="card-description">Genuine leather strap, quartz movement.</div>
+        </div>
+    </div>
+</div>
+
+<!-- HOME & KITCHEN (Jumia Affiliate Only - No Prices) -->
 <div class="section-header" data-section="home"><div class="section-divider"></div><h2>Home & Kitchen</h2><p>Enhance your living space</p></div>
 <div class="grid" id="grid-home">
 <div class="card" data-category="home">
 <img src="https://images.unsplash.com/photo-1570222094114-d054a817e56b?auto=format&fit=crop&w=400&h=300&q=80" alt="Blender" class="card-image">
-<div class="card-body"><div class="card-name">Electric Blender 1000W</div><div class="card-description">Powerful, multiple speeds, easy to clean.</div><div class="card-price">KES 4,200</div></div>
+<div class="card-body"><div class="card-name">Electric Blender 1000W</div><div class="card-description">Powerful, multiple speeds, easy to clean.</div></div>
 </div>
 <div class="card" data-category="home">
 <img src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=400&h=300&q=80" alt="Coffee Maker" class="card-image">
-<div class="card-body"><div class="card-name">Automatic Coffee Maker</div><div class="card-description">Programmable, 12-cup capacity.</div><div class="card-price">KES 6,500</div></div>
+<div class="card-body"><div class="card-name">Automatic Coffee Maker</div><div class="card-description">Programmable, 12-cup capacity.</div></div>
 </div>
 <div class="card" data-category="home">
 <img src="https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=400&h=300&q=80" alt="Desk Lamp" class="card-image">
-<div class="card-body"><div class="card-name">LED Desk Lamp</div><div class="card-description">Adjustable brightness, USB charging.</div><div class="card-price">KES 2,200</div></div>
+<div class="card-body"><div class="card-name">LED Desk Lamp</div><div class="card-description">Adjustable brightness, USB charging.</div></div>
 </div>
 </div>
 
-<!-- BEAUTY & HEALTH (NO Add to Cart - Jumia Only) -->
-<div class="section-header" data-section="beauty"><div class="section-divider"></div><h2>Beauty & Health</h2><p>Look and feel your best</p></div>
+<!-- BEAUTY (Jumia Affiliate Only - No Prices) -->
+<div class="section-header" data-section="beauty"><div class="section-divider"></div><h2>Beauty</h2><p>Look and feel your best</p></div>
 <div class="grid" id="grid-beauty">
 <div class="card" data-category="beauty">
 <img src="https://images.unsplash.com/photo-1522338242992-e1a54906a8da?auto=format&fit=crop&w=400&h=300&q=80" alt="Hair Dryer" class="card-image">
-<div class="card-body"><div class="card-name">Professional Hair Dryer</div><div class="card-description">Ionic technology, 2000W, multiple settings.</div><div class="card-price">KES 3,800</div></div>
+<div class="card-body"><div class="card-name">Professional Hair Dryer</div><div class="card-description">Ionic technology, 2000W, multiple settings.</div></div>
 </div>
 <div class="card" data-category="beauty">
 <img src="https://images.unsplash.com/photo-1607613009820-a29f7bb81c04?auto=format&fit=crop&w=400&h=300&q=80" alt="Electric Toothbrush" class="card-image">
-<div class="card-body"><div class="card-name">Electric Toothbrush</div><div class="card-description">Sonic cleaning, 5 modes, USB charging.</div><div class="card-price">KES 2,900</div></div>
+<div class="card-body"><div class="card-name">Electric Toothbrush</div><div class="card-description">Sonic cleaning, 5 modes, USB charging.</div></div>
 </div>
-<div class="card" data-category="beauty">
-<img src="https://images.unsplash.com/photo-1575311373937-040b8e1fd5b6?auto=format&fit=crop&w=400&h=300&q=80" alt="Fitness Band" class="card-image">
-<div class="card-body"><div class="card-name">Fitness Tracker Band</div><div class="card-description">Heart rate, sleep monitoring, waterproof.</div><div class="card-price">KES 3,200</div></div>
+</div>
+
+<!-- HEALTH CARE (Jumia Affiliate Only - No Prices) -->
+<div class="section-header" data-section="healthcare"><div class="section-divider"></div><h2>Health Care</h2><p>Personal Health & Wellness</p></div>
+<div class="grid" id="grid-healthcare">
+<div class="card" data-category="healthcare">
+<img src="https://images.unsplash.com/photo-1575311373937-040b8e1fd5b6?auto=format&fit=crop&w=400&h=300&q=80" alt="Fitness Tracker" class="card-image">
+<div class="card-body"><div class="card-name">Health Monitor</div><div class="card-description">Track your vitals and stay healthy.</div></div>
 </div>
 </div>
 
@@ -538,7 +569,7 @@ nav { background: white; padding: 12px 0; border-bottom: 1px solid var(--border-
 <div class="card-description">Valid for 24 hours. Perfect for quick browsing and social media.</div>
 <div class="card-price">KES 50</div>
 <button class="action-btn" onclick="addToCart('1GB Daily Bundle', 50)">Add to Cart</button>
-<button class="quick-buy-btn" onclick="quickBuyBundle('1GB Daily Bundle', 50)">⚡ Quick Buy</button>
+<button class="quick-buy-btn" onclick="quickBuyBundle('1GB Daily Bundle', 50)"> Quick Buy</button>
 </div>
 </div>
 <div class="card" data-category="databundles">
@@ -712,6 +743,7 @@ Your trusted destination for top-tier digital services and premium products. We 
 <ul class="footer-links">
 <li><a href="#" onclick="scrollToTop(); return false;">Home</a></li>
 <li><a href="#" onclick="scrollToProducts(); return false;">Shop</a></li>
+<li><a href="https://jforce.jumia.co.ke/s/HhGX6Ds" target="_blank" style="color: #f57c00; font-weight: bold;">🛒 Shop All on Jumia</a></li>
 <li><a href="#" onclick="openModal('about'); return false;">About Us</a></li>
 <li><a href="#" onclick="openModal('contact'); return false;">Contact</a></li>
 <li><a href="#" onclick="openModal('blog'); return false;">Blog</a></li>
@@ -746,6 +778,16 @@ Your trusted destination for top-tier digital services and premium products. We 
 </form>
 </div>
 </div>
+
+<!-- AFFILIATE DISCLOSURE (Required by Jumia & Kenyan Law) -->
+<div style="max-width: 1200px; margin: 0 auto; padding: 20px; text-align: center; border-top: 1px solid rgba(255, 255, 255, 0.1);">
+    <p style="font-size: 0.8rem; color: #94a3b8; line-height: 1.5;">
+        <strong>Affiliate Disclosure:</strong> Swift Mart Kenya participates in the Jumia Affiliate Program. 
+        When you click on "Buy on Jumia" links and make a qualifying purchase, we may earn a small commission at no extra cost to you. 
+        This helps us keep our digital services affordable and our platform running. Thank you for your support!
+    </p>
+</div>
+
 <div class="payment-methods">
 <span>We Accept:</span>
 <div class="payment-icons">
@@ -821,721 +863,189 @@ Your trusted destination for top-tier digital services and premium products. We 
 </div>
 </div>
 
-<script>
-// --- SEARCH & FILTER LOGIC ---
-function filterProducts() {
-const searchText = document.getElementById('searchInput').value.toLowerCase();
-const selectedCategory = document.getElementById('categoryFilter').value;
-const cards = document.querySelectorAll('.card');
-const sectionHeaders = document.querySelectorAll('.section-header');
-let visibleCount = 0;
-cards.forEach(card => {
-const cardCategory = card.getAttribute('data-category');
-const cardName = card.querySelector('.card-name').textContent.toLowerCase();
-const cardDesc = card.querySelector('.card-description').textContent.toLowerCase();
-const matchesSearch = cardName.includes(searchText) || cardDesc.includes(searchText);
-const matchesCategory = selectedCategory === 'all' || cardCategory === selectedCategory;
-if (matchesSearch && matchesCategory) {
-card.style.display = 'flex';
-visibleCount++;
-} else {
-card.style.display = 'none';
-}
-});
-sectionHeaders.forEach(header => {
-const sectionId = header.getAttribute('data-section');
-const grid = document.getElementById('grid-' + sectionId);
-if (grid) {
-let hasVisible = false;
-grid.querySelectorAll('.card').forEach(c => {
-if (c.style.display !== 'none') hasVisible = true;
-});
-header.style.display = hasVisible ? 'block' : 'none';
-grid.style.display = hasVisible ? 'grid' : 'none';
-}
-});
-document.getElementById('noResults').style.display = visibleCount === 0 ? 'block' : 'none';
-}
+<!-- Load the centralized App.js (Cart, Chatbot, Auth, Jumia Links) -->
+<script src="/js/app.js"></script>
 
-// --- Top Navigation Search Bar Logic ---
+<script>
+// --- SEARCH & FILTER LOGIC (Homepage Only) ---
+function filterProducts() {
+    const searchText = document.getElementById('searchInput').value.toLowerCase();
+    const selectedCategory = document.getElementById('categoryFilter').value;
+    const cards = document.querySelectorAll('.card');
+    const sectionHeaders = document.querySelectorAll('.section-header');
+    let visibleCount = 0;
+    cards.forEach(card => {
+        const cardCategory = card.getAttribute('data-category');
+        const cardName = card.querySelector('.card-name').textContent.toLowerCase();
+        const cardDesc = card.querySelector('.card-description').textContent.toLowerCase();
+        const matchesSearch = cardName.includes(searchText) || cardDesc.includes(searchText);
+        const matchesCategory = selectedCategory === 'all' || cardCategory === selectedCategory;
+        if (matchesSearch && matchesCategory) { card.style.display = 'flex'; visibleCount++; } 
+        else { card.style.display = 'none'; }
+    });
+    sectionHeaders.forEach(header => {
+        const sectionId = header.getAttribute('data-section');
+        const grid = document.getElementById('grid-' + sectionId);
+        if (grid) {
+            let hasVisible = false;
+            grid.querySelectorAll('.card').forEach(c => { if (c.style.display !== 'none') hasVisible = true; });
+            header.style.display = hasVisible ? 'block' : 'none';
+            grid.style.display = hasVisible ? 'grid' : 'none';
+        }
+    });
+    document.getElementById('noResults').style.display = visibleCount === 0 ? 'block' : 'none';
+}
 const navSearchInput = document.getElementById('navSearchInput');
 if (navSearchInput) {
-navSearchInput.addEventListener('input', function() {
-const mainSearchInput = document.getElementById('searchInput');
-if (mainSearchInput) {
-mainSearchInput.value = this.value;
-}
-filterProducts();
-});
-}
-
-// --- SHOPPING CART LOGIC ---
-let cart = JSON.parse(localStorage.getItem('swiftmart_cart')) || [];
-function saveCart() {
-localStorage.setItem('swiftmart_cart', JSON.stringify(cart));
-updateCartUI();
-}
-function addToCart(name, price) {
-const existingItem = cart.find(item => item.name === name);
-if (existingItem) {
-existingItem.qty += 1;
-} else {
-cart.push({ name, price, qty: 1 });
-}
-saveCart();
-toggleCart(true);
-showToast('✅ Added to cart: ' + name, '#065f46');
-}
-function updateQty(name, change) {
-const item = cart.find(item => item.name === name);
-if (item) {
-item.qty += change;
-if (item.qty <= 0) cart = cart.filter(i => i.name !== name);
-saveCart();
-}
-}
-function removeItem(name) {
-cart = cart.filter(item => item.name !== name);
-saveCart();
-}
-function updateCartUI() {
-const cartItemsDiv = document.getElementById('cartItems');
-const cartBadge = document.getElementById('cartBadge');
-const cartTotal = document.getElementById('cartTotal');
-const checkoutBtn = document.getElementById('proceedToCheckoutBtn');
-const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
-const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
-cartBadge.textContent = totalQty;
-cartTotal.textContent = `KES ${totalPrice.toLocaleString()}`;
-checkoutBtn.disabled = totalQty === 0;
-if (cart.length === 0) {
-cartItemsDiv.innerHTML = '<p style="text-align: center; color: var(--text-muted); margin-top: 40px;">Your cart is empty.</p>';
-} else {
-cartItemsDiv.innerHTML = cart.map(item => `
-<div class="cart-item">
-<div class="cart-item-info">
-<h4>${item.name}</h4>
-<p>KES ${item.price.toLocaleString()} x ${item.qty}</p>
-</div>
-<div class="cart-item-actions">
-<button class="qty-btn" onclick="updateQty('${item.name}', -1)">-</button>
-<span>${item.qty}</span>
-<button class="qty-btn" onclick="updateQty('${item.name}', 1)">+</button>
-<button class="remove-btn" onclick="removeItem('${item.name}')">Remove</button>
-</div>
-</div>
-`).join('');
-}
-}
-function toggleCart(forceOpen = false) {
-const sidebar = document.getElementById('cartSidebar');
-const overlay = document.getElementById('overlay');
-if (forceOpen || !sidebar.classList.contains('open')) {
-sidebar.classList.add('open');
-overlay.classList.add('active');
-} else {
-sidebar.classList.remove('open');
-overlay.classList.remove('active');
-}
-}
-function proceedToCheckout() {
-toggleCart(false);
-const checkoutSection = document.getElementById('checkout');
-const checkoutSummary = document.getElementById('checkoutSummary');
-const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
-const productList = cart.map(item => `${item.name} (x${item.qty})`).join(', ');
-checkoutSummary.innerHTML = `
-<p style="font-weight: 600; margin-bottom: 8px;">Items:</p>
-<p style="color: var(--text-muted); margin-bottom: 16px; font-size: 0.9rem;">${productList}</p>
-<p style="font-weight: 700; font-size: 1.1rem; color: var(--brand-primary);">Total: KES ${totalPrice.toLocaleString()}</p>
-`;
-checkoutSection.style.display = 'block';
-checkoutSection.scrollIntoView({ behavior: 'smooth' });
+    navSearchInput.addEventListener('input', function() {
+        const mainSearchInput = document.getElementById('searchInput');
+        if (mainSearchInput) { mainSearchInput.value = this.value; }
+        filterProducts();
+    });
 }
 
 // --- PAYMENT LOGIC (Paystack Only) ---
 async function payWithPaystack() {
-if (cart.length === 0) return;
-const email = document.getElementById('email').value;
-const phone = document.getElementById('phone').value;
-const amount = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
-const product = cart.map(item => `${item.name} (x${item.qty})`).join(', ');
-const messageBox = document.getElementById('messageBox');
-if (!email) {
-messageBox.textContent = '❌ Please enter your email address.';
-messageBox.className = 'message error';
-messageBox.style.display = 'block';
-return;
-}
-if (!phone || phone.length !== 12 || !phone.startsWith('254')) {
-messageBox.textContent = '❌ Please enter a valid M-Pesa number (Format: 2547XXXXXXXX)';
-messageBox.className = 'message error';
-messageBox.style.display = 'block';
-return;
-}
-messageBox.style.display = 'none';
-const btn = document.getElementById('globalPayBtn');
-const originalText = btn.innerHTML;
-btn.disabled = true;
-btn.innerHTML = '<div class="spinner" style="display: block;"></div> Processing...';
-try {
-const response = await fetch('/api/paystack/initialize', {
-method: 'POST',
-headers: { 'Content-Type': 'application/json' },
-body: JSON.stringify({ email, amount, productName: product, phone })
-});
-const data = await response.json();
-if (data.authorization_url) {
-window.location.href = data.authorization_url;
-} else {
-messageBox.textContent = '❌ Could not start payment. Please try again.';
-messageBox.className = 'message error';
-messageBox.style.display = 'block';
-btn.disabled = false;
-btn.innerHTML = originalText;
-}
-} catch (error) {
-console.error('Payment error:', error);
-messageBox.textContent = '❌ Network error. Please check your connection and try again.';
-messageBox.className = 'message error';
-messageBox.style.display = 'block';
-btn.disabled = false;
-btn.innerHTML = originalText;
-}
+    if (typeof cart === 'undefined' || cart.length === 0) return;
+    const email = document.getElementById('email').value;
+    const phone = document.getElementById('phone').value;
+    const amount = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+    const product = cart.map(item => `${item.name} (x${item.qty})`).join(', ');
+    const messageBox = document.getElementById('messageBox');
+    if (!email) { messageBox.textContent = '❌ Please enter your email address.'; messageBox.className = 'message error'; messageBox.style.display = 'block'; return; }
+    if (!phone || phone.length !== 12 || !phone.startsWith('254')) { messageBox.textContent = '❌ Please enter a valid M-Pesa number (Format: 2547XXXXXXXX)'; messageBox.className = 'message error'; messageBox.style.display = 'block'; return; }
+    messageBox.style.display = 'none';
+    const btn = document.getElementById('globalPayBtn');
+    const originalText = btn.innerHTML;
+    btn.disabled = true; btn.innerHTML = '<div class="spinner" style="display: block;"></div> Processing...';
+    try {
+        const response = await fetch('/api/paystack/initialize', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email, amount, productName: product, phone }) });
+        const data = await response.json();
+        if (data.authorization_url) { window.location.href = data.authorization_url; } 
+        else { messageBox.textContent = '❌ Could not start payment. Please try again.'; messageBox.className = 'message error'; messageBox.style.display = 'block'; btn.disabled = false; btn.innerHTML = originalText; }
+    } catch (error) { console.error('Payment error:', error); messageBox.textContent = '❌ Network error. Please check your connection and try again.'; messageBox.className = 'message error'; messageBox.style.display = 'block'; btn.disabled = false; btn.innerHTML = originalText; }
 }
 
 // --- BUNDLE QUICK BUY LOGIC ---
 let currentBundle = { name: '', price: 0 };
 function quickBuyBundle(name, price) {
-currentBundle = { name, price };
-document.getElementById('bundleModalTitle').textContent = 'Activate: ' + name;
-document.getElementById('bundleModalPrice').textContent = 'KES ' + price.toLocaleString();
-document.getElementById('bundleMessageBox').style.display = 'none';
-document.getElementById('bundleModal').classList.add('active');
-document.body.style.overflow = 'hidden';
+    currentBundle = { name, price };
+    document.getElementById('bundleModalTitle').textContent = 'Activate: ' + name;
+    document.getElementById('bundleModalPrice').textContent = 'KES ' + price.toLocaleString();
+    document.getElementById('bundleMessageBox').style.display = 'none';
+    document.getElementById('bundleModal').classList.add('active');
+    document.body.style.overflow = 'hidden';
 }
-function closeBundleModal() {
-document.getElementById('bundleModal').classList.remove('active');
-document.body.style.overflow = 'auto';
-}
+function closeBundleModal() { document.getElementById('bundleModal').classList.remove('active'); document.body.style.overflow = 'auto'; }
 async function processBundlePayment(e) {
-e.preventDefault();
-const email = document.getElementById('bundleEmail').value;
-const phone = document.getElementById('bundlePhone').value;
-const messageBox = document.getElementById('bundleMessageBox');
-const btn = document.getElementById('bundlePayBtn');
-let formattedPhone = phone;
-if (phone.startsWith('0')) {
-formattedPhone = '254' + phone.substring(1);
-}
-messageBox.style.display = 'none';
-const originalText = btn.innerHTML;
-btn.disabled = true;
-btn.innerHTML = '<div class="spinner" style="display: block;"></div> Processing...';
-try {
-const response = await fetch('/api/paystack/initialize', {
-method: 'POST',
-headers: { 'Content-Type': 'application/json' },
-body: JSON.stringify({
-email,
-amount: currentBundle.price,
-productName: currentBundle.name,
-phone: formattedPhone
-})
-});
-const data = await response.json();
-if (data.authorization_url) {
-window.location.href = data.authorization_url;
-} else {
-messageBox.textContent = '❌ Could not start payment.';
-messageBox.className = 'message error';
-messageBox.style.display = 'block';
-btn.disabled = false;
-btn.innerHTML = originalText;
-}
-} catch (error) {
-console.error('Payment error:', error);
-messageBox.textContent = '❌ Network error.';
-messageBox.className = 'message error';
-messageBox.style.display = 'block';
-btn.disabled = false;
-btn.innerHTML = originalText;
-}
+    e.preventDefault();
+    const email = document.getElementById('bundleEmail').value;
+    const phone = document.getElementById('bundlePhone').value;
+    const messageBox = document.getElementById('bundleMessageBox');
+    const btn = document.getElementById('bundlePayBtn');
+    let formattedPhone = phone;
+    if (phone.startsWith('0')) { formattedPhone = '254' + phone.substring(1); }
+    messageBox.style.display = 'none';
+    const originalText = btn.innerHTML;
+    btn.disabled = true; btn.innerHTML = '<div class="spinner" style="display: block;"></div> Processing...';
+    try {
+        const response = await fetch('/api/paystack/initialize', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email, amount: currentBundle.price, productName: currentBundle.name, phone: formattedPhone }) });
+        const data = await response.json();
+        if (data.authorization_url) { window.location.href = data.authorization_url; } 
+        else { messageBox.textContent = '❌ Could not start payment.'; messageBox.className = 'message error'; messageBox.style.display = 'block'; btn.disabled = false; btn.innerHTML = originalText; }
+    } catch (error) { console.error('Payment error:', error); messageBox.textContent = '❌ Network error.'; messageBox.className = 'message error'; messageBox.style.display = 'block'; btn.disabled = false; btn.innerHTML = originalText; }
 }
 
-// --- ENHANCED AI CHATBOT ASSISTANT ---
-const aiAgents = [
-{ name: 'Noah', avatar: '👨‍💼', greeting: "Hi there! I'm Noah from SwiftMart. Tell me what issue you're facing, and I'll help you solve it right away." },
-{ name: 'Ezra', avatar: '👨‍💻', greeting: "Hello! Ezra here. I'm ready to help resolve any issue you're experiencing. What's the problem?" },
-{ name: 'Amani', avatar: '👩‍💼', greeting: "Welcome! I'm Amani. I'm here to solve your problems, not just talk about them. What do you need help with?" }
-];
-let currentAgent = aiAgents[Math.floor(Math.random() * aiAgents.length)];
-let chatInitialized = false;
-const aiResponses = {
-orderTracking: {
-keywords: ['track', 'where', 'order', 'delivery', 'status', 'dispatch', 'shipped', 'arrived', 'late'],
-analyze: (msg) => {
-if (msg.includes('late') || msg.includes('delayed')) return 'late';
-if (msg.includes('not received')) return 'notReceived';
-if (msg.includes('wrong')) return 'wrongAddress';
-return 'general';
-},
-solve: (issue, msg) => {
-if (issue === 'late') {
-return `**I understand your order is delayed - I apologize for the inconvenience.**\n\nHere's what I'll do right now:\n\n1️⃣ **Check your order status** - Please share your order number (it starts with #ORD)\n2️⃣ **Investigate the delay** - I'll contact our logistics team immediately\n3️⃣ **Expedite delivery** - If it's stuck, we'll rush it to you at no extra cost\n4️⃣ **Compensation** - If delay is our fault, you'll get a 10% discount on next order\n\n**Typical delivery times:**\n• Nairobi: 1-2 days (you should have received it)\n• Major towns: 2-3 days\n• Remote areas: 3-5 days\n\n**What's your order number?** I'll track it personally right now.`;
-}
-if (issue === 'notReceived') {
-return `**I'm sorry to hear you haven't received your order. Let me investigate immediately.**\n\n**Action Plan:**\n\n1. **Verify delivery status** - Share your order number\n2. **Check with courier** - I'll call them while we chat\n3. **Locate package** - We'll find where it is within 10 minutes\n4. **Resolution:**\n   • If lost: Full refund or replacement sent TODAY\n   • If delivered to wrong address: We'll retrieve it or replace\n   • If with courier: We'll expedite to you\n\n**Please provide:**\n• Order number\n• Your phone number\n• Delivery address you provided\n\nI'm staying online until this is resolved!`;
-}
-return `**I'll help you track your order right now.**\n\n**To locate your order instantly, I need:**\n\n📋 **Order Number** (check your email - starts with #ORD)\n\n**Once you provide it, I will:**\n✅ Check real-time location\n✅ Give you exact delivery date\n✅ Share courier contact if needed\n✅ Send tracking link to your phone\n\n**What's your order number?**`;
-}
-},
-paymentIssues: {
-keywords: ['payment', 'pay', 'mpesa', 'failed', 'error', 'charged', 'money', 'deducted', 'not confirmed', 'transaction'],
-analyze: (msg) => {
-if (msg.includes('deducted') || msg.includes('charged') || msg.includes('money taken')) return 'deductedNotConfirmed';
-if (msg.includes('failed') || msg.includes('error')) return 'failedPayment';
-if (msg.includes('refund')) return 'refund';
-return 'general';
-},
-solve: (issue, msg) => {
-if (issue === 'deductedNotConfirmed') {
-return `**I understand money was deducted but order not confirmed - this is stressful, and I'll fix it NOW.**\n\n**This happens because:**\n• M-Pesa confirmation delayed (usually resolves in 5 mins)\n• Network timeout during payment\n• System didn't receive callback\n\n**IMMEDIATE ACTION:**\n\n1️⃣ **Check M-Pesa message** - Do you have transaction ID? (e.g., QGH7X8Y9)\n2️⃣ **Wait 5 minutes** - Sometimes system auto-resolves\n3️⃣ **If still not confirmed:**\n   • Send me the M-Pesa transaction ID\n   • I'll manually verify with Paystack\n   • Your order will be confirmed within 10 minutes\n   • OR instant refund if you prefer\n\n**What's your M-Pesa transaction ID?** I'm checking it right now.`;
-}
-if (issue === 'failedPayment') {
-return `**Payment failed - let me help you complete it successfully.**\n\n**Common causes & solutions:**\n\n❌ **Insufficient balance**\n✅ Check your M-Pesa balance: Dial *234#\n\n❌ **Wrong phone format**\n✅ Must be: 2547XXXXXXXX (12 digits, no + or 0)\n\n❌ **M-Pesa down**\n✅ Wait 10 mins, try again or use card\n\n❌ **Daily limit exceeded**\n✅ Use card payment instead\n\n**Try this NOW:**\n1. Clear browser cache (Ctrl+Shift+Delete)\n2. Use incognito mode\n3. Try card payment instead of M-Pesa\n4. Or try from mobile data (not WiFi)\n\n**Still failing?** Send me:\n• Exact error message\n• Phone number you used\n• Amount you tried to pay\n\nI'll process it manually for you!`;
-}
-return `**I'll help you with your payment issue.**\n\n**Tell me specifically:**\n• Did payment fail completely?\n• Was money deducted but order not confirmed?\n• Are you trying to get a refund?\n• Wrong amount charged?\n\n**I need details to solve this quickly.** What exactly happened?`;
-}
-},
-bundleActivation: {
-keywords: ['bundle', 'data', 'airtime', 'not activated', 'not received', 'activate', 'activation', 'safari', 'internet'],
-analyze: (msg) => {
-if (msg.includes('not activated') || msg.includes('not received')) return 'notActivated';
-if (msg.includes('wrong')) return 'wrongNumber';
-return 'general';
-},
-solve: (issue, msg) => {
-if (issue === 'notActivated') {
-return `**Your data bundle hasn't activated - I'll fix this immediately.**\n\n**Quick Diagnosis:**\n\n1️⃣ **Check confirmation SMS** - Did you get SMS from Safaricom?\n   • If YES: Bundle is active, restart phone\n   • If NO: Activation failed, I'll resend\n\n2️⃣ **Verify phone number** - What number did you provide?\n   • Must be Safaricom number\n   • Check if you typed correctly\n\n3️⃣ **Check payment status** - Was payment successful?\n   • If yes: I'll manually activate within 5 mins\n   • If pending: Wait for confirmation\n\n**IMMEDIATE SOLUTION:**\n\n📱 **WhatsApp this to +254 754 427 226:**\n• Your order number\n• Phone number for activation\n• M-Pesa confirmation code\n\n**OR** give me your details now and I'll activate it while we chat!\n\n**What's your phone number and order number?**`;
-}
-return `**I'll help you purchase/activate a data bundle.**\n\n**Available bundles (instant activation):**\n• 1GB Daily - KES 50 (24 hours)\n• 2GB Monthly - KES 250 (30 days)\n• 5GB Monthly - KES 500 (30 days) ⭐ POPULAR\n• 10GB Monthly - KES 1,000\n• Unlimited Weekend - KES 150\n\n**To activate:**\n1. Add to cart or use Quick Buy\n2. Pay via M-Pesa/Card\n3. WhatsApp confirmation code to +254 754 427 226\n4. Activated within 5 minutes!\n\n**Which bundle do you want?** I'll guide you through it.`;
-}
-},
-productIssues: {
-keywords: ['product', 'item', 'defective', 'damaged', 'wrong', 'broken', 'not working', 'quality'],
-analyze: (msg) => {
-if (msg.includes('damaged') || msg.includes('broken')) return 'damaged';
-if (msg.includes('wrong')) return 'wrongItem';
-if (msg.includes('not working') || msg.includes('defective')) return 'defective';
-return 'general';
-},
-solve: (issue, msg) => {
-if (issue === 'damaged') {
-return `**I'm very sorry you received a damaged item - this is unacceptable, and I'll make it right immediately.**\n\n**IMMEDIATE ACTION PLAN:**\n\n1️⃣ **Document damage** - Take 2-3 clear photos\n2️⃣ **Don't discard packaging** - Keep everything\n3️⃣ **Choose resolution:**\n   • 🔄 **Replacement** - We send new item TODAY (free express shipping)\n   • 💰 **Full refund** - Money back to M-Pesa within 24 hours\n   • 🎁 **Store credit** - 110% value for future purchase\n\n**I'll process this RIGHT NOW:**\n• Share order number\n• Send photos via WhatsApp to +254 754 427 226\n• I'll approve replacement/refund immediately\n• No need to return damaged item (we'll arrange pickup)\n\n**What's your order number?** I'm escalating this personally!`;
-}
-if (issue === 'wrongItem') {
-return `**You received the wrong item - I sincerely apologize. Let me fix this immediately.**\n\n**Resolution Process:**\n\n✅ **We send correct item TODAY** (free express delivery)\n✅ **Free return pickup** of wrong item\n✅ **10% discount** on next order for inconvenience\n\n**What I need from you:**\n1. Order number\n2. What you ordered vs what you received\n3. Photos of received item\n\n**I'll personally:**\n• Dispatch correct item within 2 hours\n• Send you tracking number immediately\n• Arrange pickup of wrong item at your convenience\n\n**What's your order number?** Let me check what happened!`;
-}
-return `**I'll help you with your product issue.**\n\n**Tell me:**\n• What product did you buy?\n• What's the specific problem?\n• When did you receive it?\n• Is it completely not working or partially defective?\n\n**I need details to provide the exact solution.** What's happening?`;
-}
-},
-returns: {
-keywords: ['return', 'refund', 'exchange', 'send back', 'money back'],
-analyze: (msg) => {
-if (msg.includes('exchange')) return 'exchange';
-if (msg.includes('refund')) return 'refund';
-return 'general';
-},
-solve: (issue, msg) => {
-if (issue === 'exchange') {
-return `**I'll help you exchange your item for a different one.**\n\n**Exchange Process:**\n\n✅ **Eligible within 7 days** of delivery\n✅ **Item must be unused** with original tags\n✅ **Free exchange** - no extra charges\n\n**Steps:**\n1. Share order number\n2. Tell me what you want to exchange it for\n3. I'll check availability\n4. Arrange free pickup of current item\n5. Send new item immediately\n\n**What item do you want to exchange, and what would you like instead?**`;
-}
-return `**I'll process your return/refund right away.**\n\n**Return Policy:**\n✅ 7-day return window\n✅ Full refund for defective items\n✅ Refund via M-Pesa within 24-48 hours\n\n**To initiate return:**\n1. Order number\n2. Reason for return\n3. Choose: Refund or Replacement\n\n**I'll email you a return label** and arrange free pickup.\n\n**What's your order number?**`;
-}
-},
-technicalSupport: {
-keywords: ['website', 'app', 'not loading', 'error', 'bug', 'login', 'can\'t access', 'technical'],
-analyze: (msg) => {
-if (msg.includes('login')) return 'loginIssue';
-if (msg.includes('loading')) return 'loadingIssue';
-if (msg.includes('error')) return 'errorMessage';
-return 'general';
-},
-solve: (issue, msg) => {
-if (issue === 'loginIssue') {
-return `**You can't login - let me get you back into your account immediately.**\n\n**Quick Fixes (try these first):**\n\n🔑 **Forgot password?**\n• Click "Forgot Password" on login page\n• Enter your email\n• Check inbox (and spam) for reset link\n• Reset takes 2 minutes\n\n🔑 **Email not verified?**\n• Check email for verification link\n• Didn't get it? I'll resend it now\n\n🔑 **Account locked?**\n• Too many attempts locks account for 30 mins\n• I can unlock it manually - give me your email\n\n**Still can't login?**\n• Clear browser cache: Ctrl+Shift+Delete\n• Try incognito mode\n• Try from phone instead\n\n**What's your email?** I'll check your account status right now!`;
-}
-if (issue === 'loadingIssue') {
-return `**Website not loading - let me get you back online.**\n\n**Try these steps IN ORDER:**\n\n1️⃣ **Clear browser cache**\n   • Chrome: Ctrl+Shift+Delete → Clear data\n   • Safari: Cmd+Opt+E → Empty caches\n\n2️⃣ **Try incognito/private mode**\n   • Ctrl+Shift+N (Chrome)\n   • Cmd+Shift+N (Safari)\n\n3️⃣ **Switch internet connection**\n   • From WiFi to mobile data (or vice versa)\n   • Disable VPN if active\n\n4️⃣ **Try different browser**\n   • Chrome → Firefox → Edge\n\n5️⃣ **Clear DNS cache**\n   • Windows: ipconfig /flushdns in CMD\n   • Mac: sudo killall -HUP mDNSResponder\n\n**Still not loading?**\n• What error do you see?\n• What browser are you using?\n• Are you on phone or computer?\n\nI'm here until it's fixed!`;
-}
-return `**I'll help you resolve this technical issue.**\n\n**Tell me:**\n• What were you trying to do?\n• What error message do you see? (screenshot if possible)\n• What device/browser are you using?\n• When did this start?\n\n**I'll diagnose and fix it with you right now.** What's happening?`;
-}
-},
-accountIssues: {
-keywords: ['account', 'register', 'signup', 'verify', 'email verification'],
-analyze: (msg) => {
-if (msg.includes('verify') || msg.includes('verification')) return 'verification';
-if (msg.includes('register') || msg.includes('signup')) return 'registration';
-return 'general';
-},
-solve: (issue, msg) => {
-if (issue === 'verification') {
-return `**You haven't received email verification - I'll resend it immediately.**\n\n**Quick Solution:**\n\n1️⃣ **Check spam/junk folder**\n   • Email might be there\n   • Mark as "Not Spam"\n\n2️⃣ **I'll resend verification NOW**\n   • Give me your email address\n   • I'll send it within 30 seconds\n   • Check inbox immediately\n\n3️⃣ **Still not received?**\n   • I'll verify your account manually\n   • No need to wait for email\n   • You'll be able to login immediately\n\n**What's your email address?** I'm resending it right now!`;
-}
-return `**I'll help you create or access your account.**\n\n**To create account:**\n1. Click "Login" → "Create Account"\n2. Enter email, phone, password\n3. Verify email (check spam folder)\n4. Login immediately\n\n**Benefits:**\n✅ Track all orders\n✅ Save payment details\n✅ Exclusive discounts\n✅ Faster checkout\n\n**Having trouble?** Tell me where you're stuck!`;
-}
-},
-shipping: {
-keywords: ['shipping', 'delivery', 'how long', 'when', 'arrive', 'location'],
-analyze: (msg) => {
-if (msg.includes('cost') || msg.includes('price') || msg.includes('charge')) return 'cost';
-if (msg.includes('change') || msg.includes('update')) return 'changeAddress';
-return 'general';
-},
-solve: (issue, msg) => {
-if (issue === 'cost') {
-return `**Here are our shipping costs:**\n\n📍 **Nairobi Metro:**\n• Standard: KES 200 (1-2 days)\n• Express: KES 350 (Same day)\n• FREE for orders over KES 5,000\n\n📍 **Major Towns (Mombasa, Kisumu, Nakuru):**\n• Standard: KES 350 (2-3 days)\n• Express: KES 600 (Next day)\n• FREE for orders over KES 10,000\n\n📍 **Other Areas:**\n• Standard: KES 500 (3-5 days)\n• FREE for orders over KES 15,000\n\n**Where are you located?** I'll give you exact delivery time!`;
-}
-return `**I'll provide shipping information for your order.**\n\n**Delivery Times:**\n• Nairobi: 1-2 days (same day if ordered before 2 PM)\n• Major towns: 2-3 days\n• Remote areas: 3-5 days\n\n**To track YOUR order:**\n• Share your order number\n• I'll give you exact delivery date\n• Share courier contact if needed\n\n**What's your order number?**`;
-}
-}
-};
-function toggleChat() {
-const chatWindow = document.getElementById('chatWindow');
-const isActive = chatWindow.classList.contains('active');
-if (!isActive) {
-chatWindow.classList.add('active');
-if (!chatInitialized) {
-initializeChat();
-chatInitialized = true;
-}
-} else {
-chatWindow.classList.remove('active');
-}
-}
-function initializeChat() {
-const messagesDiv = document.getElementById('chatMessages');
-document.getElementById('chatAgentName').textContent = currentAgent.name;
-document.getElementById('chatAvatar').textContent = currentAgent.avatar;
-setTimeout(() => {
-addBotMessage(currentAgent.greeting);
-setTimeout(() => {
-addBotMessage("I'm here to **solve your problems**, not just talk about them. Tell me what issue you're facing right now.");
-}, 800);
-}, 300);
-}
-function addBotMessage(text) {
-const messagesDiv = document.getElementById('chatMessages');
-const msgDiv = document.createElement('div');
-msgDiv.className = 'chat-message bot';
-const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-msgDiv.innerHTML = `<span class="msg-sender">${currentAgent.name} • SwiftMart AI</span>${formatMessage(text)}<span class="msg-time">${time}</span>`;
-messagesDiv.appendChild(msgDiv);
-messagesDiv.scrollTop = messagesDiv.scrollHeight;
-}
-function addUserMessage(text) {
-const messagesDiv = document.getElementById('chatMessages');
-const msgDiv = document.createElement('div');
-msgDiv.className = 'chat-message user';
-const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-msgDiv.innerHTML = `${text}<span class="msg-time">${time}</span>`;
-messagesDiv.appendChild(msgDiv);
-messagesDiv.scrollTop = messagesDiv.scrollHeight;
-}
-function formatMessage(text) {
-return text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>');
-}
-function showTyping() {
-document.getElementById('typingIndicator').classList.add('active');
-const messagesDiv = document.getElementById('chatMessages');
-messagesDiv.scrollTop = messagesDiv.scrollHeight;
-}
-function hideTyping() {
-document.getElementById('typingIndicator').classList.remove('active');
-}
-function getAIResponse(message) {
-const lowerMsg = message.toLowerCase();
-for (const key in aiResponses) {
-const category = aiResponses[key];
-if (category.keywords) {
-for (const keyword of category.keywords) {
-if (lowerMsg.includes(keyword)) {
-const issue = category.analyze ? category.analyze(lowerMsg) : 'general';
-return category.solve(issue, lowerMsg);
-}
-}
-}
-}
-if (/^(hi|hello|hey|howdy|jambo|habari)/i.test(lowerMsg)) {
-return `Hello! 👋 I'm here to **solve your actual problems**, not just chat.\n\n**Tell me what issue you're facing:**\n• Order delayed or lost?\n• Payment failed or money deducted?\n• Product damaged or wrong item?\n• Can't login or technical issue?\n• Bundle not activated?\n\n**I'm ready to help - what's the problem?**`;
-}
-if (/(thank|thanks|appreciate|helpful|great)/i.test(lowerMsg)) {
-return `😊 You're welcome! I'm glad I could **actually solve your problem**.\n\nIs there anything else I can help you with? I'm here until everything is completely resolved!`;
-}
-if (/(bye|goodbye|see you|later)/i.test(lowerMsg)) {
-return `👋 Thank you for chatting! If any issue comes up, I'm here 24/7.\n\nHave a great day! ✨`;
-}
-if (lowerMsg.includes('human') || lowerMsg.includes('agent') || lowerMsg.includes('real person') || lowerMsg.includes('speak to')) {
-return `👨‍💼 **I understand you want to speak with a human specialist.**\n\n**I'm connecting you now:**\n\n📱 **WhatsApp:** +254 754 427 226\n✉️ **Email:** support@swiftmartkenya.co.ke\n🕐 **Hours:** Mon-Sat, 8AM-6PM\n\n**Response time:** Usually within 2 hours\n\n**Before you go:**\n• Share your order number with them\n• Mention what issue you're facing\n• I've logged our conversation for them\n\nIs there anything I can help you with before you connect with them?`;
-}
-return `I want to help you **solve this issue**, but I need more details.\n\n**Please tell me:**\n• What specific problem are you facing?\n• What were you trying to do?\n• What error or issue occurred?\n• When did this happen?\n\n**Examples:**\n• "My order #ORD123 hasn't arrived and it's 3 days late"\n• "I paid via M-Pesa but order not confirmed"\n• "I received damaged headphones"\n• "Can't login, forgot password"\n\n**What's your specific issue?** I'm listening!`;
-}
-function sendChatMessage() {
-const input = document.getElementById('chatInput');
-const message = input.value.trim();
-if (!message) return;
-addUserMessage(message);
-input.value = '';
-showTyping();
-const thinkingTime = 1000 + Math.random() * 1500;
-setTimeout(() => {
-hideTyping();
-const response = getAIResponse(message);
-addBotMessage(response);
-}, thinkingTime);
-}
-function sendQuickMessage(message) {
-document.getElementById('chatInput').value = message;
-sendChatMessage();
-}
-function handleChatKeyPress(event) {
-if (event.key === 'Enter') {
-sendChatMessage();
-}
-}
-
-// --- PROFESSIONAL AUTH CHECK (JUMIA STYLE) ---
-async function checkAuth() {
-try {
-// FIX: Added credentials: 'include' to ensure session cookie is sent
-const res = await fetch('/api/auth/me', { credentials: 'include' });
-const data = await res.json();
-const guestView = document.getElementById('guestView');
-const userView = document.getElementById('userView');
-const adminLink = document.getElementById('adminLink');
-const displayUserName = document.getElementById('displayUserName');
-const dropdownUserEmail = document.getElementById('dropdownUserEmail');
-if (data.user) {
-guestView.style.display = 'none';
-userView.style.display = 'block';
-displayUserName.textContent = data.user.name.split(' ')[0];
-dropdownUserEmail.textContent = data.user.email;
-if (data.user.email === 'neutralizernoahkipkoech@gmail.com') {
-adminLink.style.display = 'block';
-} else {
-adminLink.style.display = 'none';
-}
-} else {
-guestView.style.display = 'flex';
-userView.style.display = 'none';
-adminLink.style.display = 'none';
-}
-} catch (error) {
-console.error('Auth check error:', error);
-}
-}
-function toggleUserDropdown() {
-const dropdown = document.getElementById('userDropdown');
-dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
-}
-document.addEventListener('click', function(event) {
-const userView = document.getElementById('userView');
-const dropdown = document.getElementById('userDropdown');
-if (userView && !userView.contains(event.target)) {
-dropdown.style.display = 'none';
-}
-});
-async function logout() {
-// FIX: Added credentials: 'include' to ensure session cookie is cleared properly
-await fetch('/api/auth/logout', { method: 'POST', credentials: 'include' });
-window.location.reload();
-}
-
-// Initialize
-updateCartUI();
-checkAuth();
-checkStockLevels();
+// --- STOCK LEVELS CHECK ---
 async function checkStockLevels() {
-try {
-const res = await fetch('/api/products');
-const data = await res.json();
-if (data.products) {
-data.products.forEach(dbProduct => {
-const buttons = document.querySelectorAll('.action-btn');
-buttons.forEach(btn => {
-if (btn.getAttribute('onclick').includes(`'${dbProduct.name}'`)) {
-if (dbProduct.stock <= 0) {
-btn.textContent = 'Out of Stock';
-btn.disabled = true;
-btn.style.background = '#94a3b8';
-btn.style.cursor = 'not-allowed';
-} else {
-btn.textContent = `Add to Cart (${dbProduct.stock} left)`;
+    try {
+        const res = await fetch('/api/products');
+        const data = await res.json();
+        if (data.products) {
+            data.products.forEach(dbProduct => {
+                const buttons = document.querySelectorAll('.action-btn');
+                buttons.forEach(btn => {
+                    if (btn.getAttribute('onclick') && btn.getAttribute('onclick').includes(`'${dbProduct.name}'`)) {
+                        if (dbProduct.stock <= 0) { btn.textContent = 'Out of Stock'; btn.disabled = true; btn.style.background = '#94a3b8'; btn.style.cursor = 'not-allowed'; } 
+                        else { btn.textContent = `Add to Cart (${dbProduct.stock} left)`; }
+                    }
+                });
+            });
+        }
+    } catch (error) { console.error('Stock check error:', error); }
 }
-}
-});
-});
-}
-} catch (error) {
-console.error('Stock check error:', error);
-}
-}
+checkStockLevels();
 
 // --- REVIEW LOGIC ---
 loadReviews();
 async function loadReviews() {
-const list = document.getElementById('reviewsList');
-try {
-const res = await fetch('/api/reviews');
-const data = await res.json();
-if (data.reviews && data.reviews.length > 0) {
-list.innerHTML = data.reviews.map(r => `
-<div style="border-bottom: 1px solid var(--border-color); padding: 12px 0;">
-<div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
-<strong>${r.productName}</strong>
-<span style="color: #f59e0b;">${'⭐'.repeat(r.rating)}</span>
-</div>
-<p style="font-size: 0.875rem; color: var(--text-main); margin-bottom: 4px; font-style: italic;">"${r.comment}"</p>
-<small style="color: var(--text-muted);">- ${r.author}</small>
-</div>
-`).join('');
-} else {
-list.innerHTML = '<p style="color: var(--text-muted); text-align: center; padding: 20px;">No approved reviews yet. Be the first!</p>';
-}
-} catch (error) {
-list.innerHTML = '<p style="color: red; text-align: center; padding: 20px;">Failed to load reviews.</p>';
-}
+    const list = document.getElementById('reviewsList');
+    try {
+        const res = await fetch('/api/reviews');
+        const data = await res.json();
+        if (data.reviews && data.reviews.length > 0) {
+            list.innerHTML = data.reviews.map(r => `<div style="border-bottom: 1px solid var(--border-color); padding: 12px 0;"><div style="display: flex; justify-content: space-between; margin-bottom: 4px;"><strong>${r.productName}</strong><span style="color: #f59e0b;">${'⭐'.repeat(r.rating)}</span></div><p style="font-size: 0.875rem; color: var(--text-main); margin-bottom: 4px; font-style: italic;">"${r.comment}"</p><small style="color: var(--text-muted);">- ${r.author}</small></div>`).join('');
+        } else { list.innerHTML = '<p style="color: var(--text-muted); text-align: center; padding: 20px;">No approved reviews yet. Be the first!</p>'; }
+    } catch (error) { list.innerHTML = '<p style="color: red; text-align: center; padding: 20px;">Failed to load reviews.</p>'; }
 }
 document.getElementById('reviewForm').addEventListener('submit', async (e) => {
-e.preventDefault();
-const msg = document.getElementById('reviewMessage');
-msg.textContent = 'Submitting...';
-msg.style.color = 'var(--text-muted)';
-try {
-const res = await fetch('/api/reviews', {
-method: 'POST',
-headers: { 'Content-Type': 'application/json' },
-body: JSON.stringify({
-productName: document.getElementById('reviewProduct').value,
-author: document.getElementById('reviewAuthor').value,
-rating: parseInt(document.getElementById('reviewRating').value),
-comment: document.getElementById('reviewComment').value
-})
-});
-const data = await res.json();
-if (data.success) {
-msg.textContent = '✅ ' + data.message;
-msg.style.color = '#065f46';
-document.getElementById('reviewForm').reset();
-} else {
-msg.textContent = '❌ Failed to submit.';
-msg.style.color = '#991b1b';
-}
-} catch (error) {
-msg.textContent = '❌ Network error.';
-msg.style.color = '#991b1b';
-}
+    e.preventDefault();
+    const msg = document.getElementById('reviewMessage');
+    msg.textContent = 'Submitting...'; msg.style.color = 'var(--text-muted)';
+    try {
+        const res = await fetch('/api/reviews', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ productName: document.getElementById('reviewProduct').value, author: document.getElementById('reviewAuthor').value, rating: parseInt(document.getElementById('reviewRating').value), comment: document.getElementById('reviewComment').value }) });
+        const data = await res.json();
+        if (data.success) { msg.textContent = '✅ ' + data.message; msg.style.color = '#065f46'; document.getElementById('reviewForm').reset(); } 
+        else { msg.textContent = ' Failed to submit.'; msg.style.color = '#991b1b'; }
+    } catch (error) { msg.textContent = '❌ Network error.'; msg.style.color = '#991b1b'; }
 });
 
 // --- NEWSLETTER SUBSCRIPTION ---
 document.getElementById('newsletterForm').addEventListener('submit', async (e) => {
-e.preventDefault();
-const emailInput = document.getElementById('newsletterEmail');
-const email = emailInput.value.trim();
-if (!email) {
-showToast('❌ Please enter a valid email address.', '#991b1b');
-return;
-}
-const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-if (!emailRegex.test(email)) {
-showToast('❌ Please enter a valid email format.', '#991b1b');
-return;
-}
-try {
-const res = await fetch('/api/newsletter/subscribe', {
-method: 'POST',
-headers: { 'Content-Type': 'application/json' },
-body: JSON.stringify({ email })
-});
-if (res.ok) {
-showToast('✅ Successfully subscribed! Welcome to SwiftMart.', '#065f46');
-emailInput.value = '';
-} else {
-showToast('✅ Thanks for subscribing! We\'ll keep you updated.', '#065f46');
-emailInput.value = '';
-}
-} catch (error) {
-console.log('Newsletter email captured:', email);
-showToast('✅ Thanks for subscribing! We\'ll keep you updated.', '#065f46');
-emailInput.value = '';
-}
+    e.preventDefault();
+    const emailInput = document.getElementById('newsletterEmail');
+    const email = emailInput.value.trim();
+    if (!email) { showToast('❌ Please enter a valid email address.', '#991b1b'); return; }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) { showToast('❌ Please enter a valid email format.', '#991b1b'); return; }
+    try {
+        const res = await fetch('/api/newsletter/subscribe', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email }) });
+        if (res.ok) { showToast('✅ Successfully subscribed! Welcome to SwiftMart.', '#065f46'); emailInput.value = ''; } 
+        else { showToast('✅ Thanks for subscribing! We\'ll keep you updated.', '#065f46'); emailInput.value = ''; }
+    } catch (error) { console.log('Newsletter email captured:', email); showToast('✅ Thanks for subscribing! We\'ll keep you updated.', '#065f46'); emailInput.value = ''; }
 });
 
-// --- TOAST NOTIFICATION HELPER ---
-function showToast(message, color = '#0f172a') {
-const toast = document.createElement('div');
-toast.textContent = message;
-toast.style.cssText = `position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%); background: ${color}; color: white; padding: 14px 28px; border-radius: 10px; font-weight: 600; z-index: 9999; animation: fadeIn 0.3s ease; box-shadow: 0 10px 25px rgba(0,0,0,0.2); font-size: 0.95rem;`;
-document.body.appendChild(toast);
-setTimeout(() => {
-toast.style.animation = 'fadeOut 0.3s ease';
-setTimeout(() => toast.remove(), 300);
-}, 3000);
-}
-
-// --- FOOTER MODAL CONTENT ---
+// --- FOOTER MODAL CONTENT & LOGIC (EXPANDED) ---
 const modalContent = {
-about: `<h2>About SwiftMart</h2><p>SwiftMart is Kenya's trusted destination for top-tier digital services and premium products. Founded with a mission to deliver quality, speed, and excellence to every customer, we bridge the gap between professional services and everyday needs.</p><h3>Our Mission</h3><p>To empower Kenyan consumers and businesses with accessible, affordable, and reliable digital and physical products.</p><h3>Our Vision</h3><p>To become East Africa's most trusted e-commerce platform by 2030.</p><h3>Why Choose Us?</h3><ul><li>Secure M-Pesa and card payments via Paystack</li><li>Fast delivery across Kenya</li><li>24/7 AI-powered customer support</li><li>Quality guaranteed on every product</li></ul>`,
-contact: `<h2>Contact Us</h2><p>We'd love to hear from you! Reach out to us through any of the channels below.</p><div class="contact-grid"><div class="contact-item"><strong>📍 Location</strong>Nairobi, Kenya</div><div class="contact-item"><strong>📞 Phone</strong><a href="tel:+254754427226">+254 754 427 226</a></div><div class="contact-item"><strong>✉️ Email</strong><a href="mailto:support@swiftmartkenya.co.ke">support@swiftmartkenya.co.ke</a></div><div class="contact-item"><strong>🕒 Hours</strong>Mon - Sat: 8:00 AM - 6:00 PM</div></div><h3>Instant AI Support</h3><p>Click the headset icon at the bottom right to chat with our AI assistant for instant help!</p>`,
-blog: `<h2>SwiftMart Blog</h2><p>🚀 <strong>Coming Soon!</strong></p><p>We're working on exciting articles about tech trends, product reviews, business tips, and exclusive deals. Check back soon for our first post!</p><h3>What's Coming:</h3><ul><li>Weekly product reviews and comparisons</li><li>Tech tips for Kenyan businesses</li><li>Exclusive discount codes for subscribers</li><li>Success stories from our customers</li></ul><p>Subscribe to our newsletter to be notified when we launch!</p>`,
-returns: `<h2>Returns & Refunds Policy</h2><p>At SwiftMart, your satisfaction is our priority. Here's how our returns process works:</p><h3>Return Window</h3><p>You may request a return within <strong>7 days</strong> of receiving your product. Digital services are non-refundable once delivered.</p><h3>Eligible Items</h3><ul><li>Products must be unused and in original packaging</li><li>Physical items must not show signs of wear</li><li>Defective items qualify for full refund or replacement</li></ul><h3>How to Request a Return</h3><ol><li>Contact us via chat or email with your order number</li><li>Provide photos of the item (if applicable)</li><li>Once approved, return the item to our Nairobi office</li><li>Refunds are processed within 5-7 business days via M-Pesa</li></ol><h3>Non-Refundable Items</h3><ul><li>Digital services (web design, hosting, consultation)</li><li>Data bundles and airtime</li><li>Customized or personalized products</li></ul>`,
-shipping: `<h2>Shipping Information</h2><p>We deliver across Kenya with speed and reliability.</p><h3>Delivery Options</h3><ul><li><strong>Nairobi Metro:</strong> Same-day or next-day delivery (KES 200-300)</li><li><strong>Major Towns:</strong> 1-3 business days (KES 350-500)</li><li><strong>Remote Areas:</strong> 3-5 business days (KES 500-800)</li></ul><h3>Digital Services</h3><p>Digital services (web design, hosting, social media setup) are delivered electronically within the agreed timeframe — no shipping required!</p><h3>Data Bundles</h3><p>Data bundles are activated instantly upon payment confirmation via M-Pesa. WhatsApp your confirmation code to +254 754 427 226 for immediate activation.</p><h3>Tracking Your Order</h3><p>Once your order ships, you'll receive an SMS with tracking details. You can also check your order status in the "My Orders" section of your account.</p>`,
-faq: `<h2>Frequently Asked Questions</h2><h3>How do I place an order?</h3><p>Browse our products, click "Add to Cart", then proceed to checkout. You can pay via M-Pesa or card.</p><h3>Is my payment secure?</h3><p>Yes! We use Paystack, a PCI-DSS compliant payment processor. Your card details are never stored on our servers.</p><h3>How do I receive my data bundle?</h3><p>After payment, WhatsApp your M-Pesa confirmation code to +254 754 427 226. Your bundle will be activated within 5 minutes.</p><h3>Do you offer warranties?</h3><p>Yes, all physical products come with a manufacturer warranty. Digital services include a 30-day support window.</p><h3>Can I change my order after placing it?</h3><p>Contact us within 1 hour of placing your order. After that, changes depend on whether the item has shipped.</p><h3>How do I contact support?</h3><p>Use our AI chatbot (headset icon) for instant help, or WhatsApp us at +254 754 427 226. We respond within 2 hours during business hours.</p>`,
-privacy: `<h2>Privacy Policy</h2><p><em>Last updated: October 2026</em></p><p>SwiftMart ("we", "our", "us") is committed to protecting your privacy. This policy explains how we collect, use, and safeguard your information.</p><h3>Information We Collect</h3><ul><li><strong>Personal Info:</strong> Name, email, phone number (for order processing)</li><li><strong>Payment Info:</strong> Processed securely via Paystack — we never store card details</li><li><strong>Usage Data:</strong> Browser type, pages visited (for improving our service)</li></ul><h3>How We Use Your Info</h3><ul><li>To process and deliver your orders</li><li>To send order confirmations and updates</li><li>To improve our website and services</li><li>To send promotional offers (only if you subscribe)</li></ul><h3>Your Rights</h3><p>You can request to view, update, or delete your personal data at any time by contacting us.</p><h3>Data Security</h3><p>We use industry-standard encryption and secure servers. Your data is never sold to third parties.</p>`,
-terms: `<h2>Terms & Conditions</h2><p><em>Last updated: October 2026</em></p><p>By using SwiftMart, you agree to the following terms:</p><h3>1. Acceptance of Terms</h3><p>Using our website constitutes acceptance of these terms. If you disagree, please do not use our services.</p><h3>2. Products & Services</h3><p>We strive for accuracy in product descriptions and pricing. However, we reserve the right to correct errors and update prices without prior notice.</p><h3>3. Payments</h3><p>All payments are processed securely via Paystack. Prices are in Kenyan Shillings (KES) and include applicable taxes.</p><h3>4. User Accounts</h3><p>You are responsible for maintaining the confidentiality of your account credentials and all activities under your account.</p><h3>5. Limitation of Liability</h3><p>SwiftMart is not liable for indirect damages arising from the use of our services, to the maximum extent permitted by Kenyan law.</p><h3>6. Governing Law</h3><p>These terms are governed by the laws of the Republic of Kenya. Any disputes will be resolved in Kenyan courts.</p>`
+    about: `<h2>About SwiftMart</h2><p>SwiftMart is Kenya's trusted destination for top-tier digital services and premium products. Founded with a mission to deliver quality, speed, and excellence to every customer, we bridge the gap between professional services and everyday needs.</p><h3>Our Mission</h3><p>To empower Kenyan consumers and businesses with accessible, affordable, and reliable digital and physical products.</p><h3>Our Vision</h3><p>To become East Africa's most trusted e-commerce platform by 2030.</p><h3>Why Choose Us?</h3><ul><li>Secure M-Pesa and card payments via Paystack</li><li>Fast delivery across Kenya</li><li>24/7 AI-powered customer support</li><li>Quality guaranteed on every product</li></ul>`,
+    contact: `<h2>Contact Us</h2><p>We'd love to hear from you! Reach out to us through any of the channels below.</p><div class="contact-grid"><div class="contact-item"><strong>📍 Location</strong>Nairobi, Kenya</div><div class="contact-item"><strong>📞 Phone</strong><a href="tel:+254754427226">+254 754 427 226</a></div><div class="contact-item"><strong>✉️ Email</strong><a href="mailto:support@swiftmartkenya.co.ke">support@swiftmartkenya.co.ke</a></div><div class="contact-item"><strong>🕒 Hours</strong>Mon - Sat: 8:00 AM - 6:00 PM</div></div><h3>Instant AI Support</h3><p>Click the headset icon at the bottom right to chat with our AI assistant for instant help!</p>`,
+    blog: `<h2>SwiftMart Blog</h2><p> <strong>Coming Soon!</strong></p><p>We're working on exciting articles about tech trends, product reviews, business tips, and exclusive deals. Check back soon for our first post!</p><h3>What's Coming:</h3><ul><li>Weekly product reviews and comparisons</li><li>Tech tips for Kenyan businesses</li><li>Exclusive discount codes for subscribers</li><li>Success stories from our customers</li></ul><p>Subscribe to our newsletter to be notified when we launch!</p>`,
+    returns: `<h2>Returns & Refunds Policy</h2><p>At SwiftMart, your satisfaction is our priority. Here's how our returns process works:</p><h3>Return Window</h3><p>You may request a return within <strong>7 days</strong> of receiving your product. Digital services are non-refundable once delivered.</p><h3>Eligible Items</h3><ul><li>Products must be unused and in original packaging</li><li>Physical items must not show signs of wear</li><li>Defective items qualify for full refund or replacement</li></ul><h3>How to Request a Return</h3><ol><li>Contact us via chat or email with your order number</li><li>Provide photos of the item (if applicable)</li><li>Once approved, return the item to our Nairobi office</li><li>Refunds are processed within 5-7 business days via M-Pesa</li></ol><h3>Non-Refundable Items</h3><ul><li>Digital services (web design, hosting, consultation)</li><li>Data bundles and airtime</li><li>Customized or personalized products</li></ul>`,
+    shipping: `<h2>Shipping Information</h2><p>We deliver across Kenya with speed and reliability.</p><h3>Delivery Options</h3><ul><li><strong>Nairobi Metro:</strong> Same-day or next-day delivery (KES 200-300)</li><li><strong>Major Towns:</strong> 1-3 business days (KES 350-500)</li><li><strong>Remote Areas:</strong> 3-5 business days (KES 500-800)</li></ul><h3>Digital Services</h3><p>Digital services (web design, hosting, social media setup) are delivered electronically within the agreed timeframe — no shipping required!</p><h3>Data Bundles</h3><p>Data bundles are activated instantly upon payment confirmation via M-Pesa. WhatsApp your confirmation code to +254 754 427 226 for immediate activation.</p><h3>Tracking Your Order</h3><p>Once your order ships, you'll receive an SMS with tracking details. You can also check your order status in the "My Orders" section of your account.</p>`,
+    faq: `<h2>Frequently Asked Questions</h2><h3>How do I place an order?</h3><p>Browse our products, click "Add to Cart", then proceed to checkout. You can pay via M-Pesa or card.</p><h3>Is my payment secure?</h3><p>Yes! We use Paystack, a PCI-DSS compliant payment processor. Your card details are never stored on our servers.</p><h3>How do I receive my data bundle?</h3><p>After payment, WhatsApp your M-Pesa confirmation code to +254 754 427 226. Your bundle will be activated within 5 minutes.</p><h3>Do you offer warranties?</h3><p>Yes, all physical products come with a manufacturer warranty. Digital services include a 30-day support window.</p><h3>Can I change my order after placing it?</h3><p>Contact us within 1 hour of placing your order. After that, changes depend on whether the item has shipped.</p><h3>How do I contact support?</h3><p>Use our AI chatbot (headset icon) for instant help, or WhatsApp us at +254 754 427 226. We respond within 2 hours during business hours.</p>`,
+    privacy: `<h2>Privacy Policy</h2><p><em>Last updated: October 2026</em></p><p>SwiftMart ("we", "our", "us") is committed to protecting your privacy. This policy explains how we collect, use, and safeguard your information.</p><h3>Information We Collect</h3><ul><li><strong>Personal Info:</strong> Name, email, phone number (for order processing)</li><li><strong>Payment Info:</strong> Processed securely via Paystack — we never store card details</li><li><strong>Usage Data:</strong> Browser type, pages visited (for improving our service)</li></ul><h3>How We Use Your Info</h3><ul><li>To process and deliver your orders</li><li>To send order confirmations and updates</li><li>To improve our website and services</li><li>To send promotional offers (only if you subscribe)</li></ul><h3>Your Rights</h3><p>You can request to view, update, or delete your personal data at any time by contacting us.</p><h3>Data Security</h3><p>We use industry-standard encryption and secure servers. Your data is never sold to third parties.</p>`,
+    terms: `<h2>Terms & Conditions</h2><p><em>Last updated: October 2026</em></p><p>By using SwiftMart, you agree to the following terms:</p><h3>1. Acceptance of Terms</h3><p>Using our website constitutes acceptance of these terms. If you disagree, please do not use our services.</p><h3>2. Products & Services</h3><p>We strive for accuracy in product descriptions and pricing. However, we reserve the right to correct errors and update prices without prior notice.</p><h3>3. Payments</h3><p>All payments are processed securely via Paystack. Prices are in Kenyan Shillings (KES) and include applicable taxes.</p><h3>4. User Accounts</h3><p>You are responsible for maintaining the confidentiality of your account credentials and all activities under your account.</p><h3>5. Limitation of Liability</h3><p>SwiftMart is not liable for indirect damages arising from the use of our services, to the maximum extent permitted by Kenyan law.</p><h3>6. Governing Law</h3><p>These terms are governed by the laws of the Republic of Kenya. Any disputes will be resolved in Kenyan courts.</p>`
 };
 function openModal(type) {
-const modal = document.getElementById('footerModal');
-const body = document.getElementById('modalBody');
-body.innerHTML = modalContent[type] || '<h2>Page Not Found</h2><p>This content is coming soon.</p>';
-modal.classList.add('active');
-document.body.style.overflow = 'hidden';
+    const modal = document.getElementById('footerModal');
+    const body = document.getElementById('modalBody');
+    body.innerHTML = modalContent[type] || '<h2>Page Not Found</h2><p>This content is coming soon.</p>';
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
 }
 function closeModal() {
-const modal = document.getElementById('footerModal');
-modal.classList.remove('active');
-document.body.style.overflow = 'auto';
+    const modal = document.getElementById('footerModal');
+    modal.classList.remove('active');
+    document.body.style.overflow = 'auto';
 }
 function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
 function scrollToProducts() {
-const productsSection = document.querySelector('.search-filter-container');
-if (productsSection) { productsSection.scrollIntoView({ behavior: 'smooth' }); }
+    const productsSection = document.querySelector('.search-filter-container');
+    if (productsSection) { productsSection.scrollIntoView({ behavior: 'smooth' }); }
 }
 document.getElementById('footerModal').addEventListener('click', function(e) { if (e.target === this) closeModal(); });
 document.getElementById('bundleModal').addEventListener('click', function(e) { if (e.target === this) closeBundleModal(); });
-document.addEventListener('keydown', function(e) {
-if (e.key === 'Escape') { closeModal(); closeBundleModal(); }
-});
-
-// --- NEW: Automatically Add "Check Price on Jumia" to Physical Products ---
-document.addEventListener('DOMContentLoaded', () => {
-const physicalCategories = ['smartphones', 'laptops', 'audio', 'accessories', 'fashion', 'home', 'beauty'];
-physicalCategories.forEach(category => {
-const cards = document.querySelectorAll(`.card[data-category="${category}"]`);
-cards.forEach(card => {
-const productName = card.querySelector('.card-name').textContent;
-const jumiaUrl = `https://www.jumia.co.ke/catalog/?q=${encodeURIComponent(productName)}`;
-const jumiaBtn = document.createElement('a');
-jumiaBtn.href = jumiaUrl;
-jumiaBtn.target = '_blank';
-jumiaBtn.className = 'jumia-btn';
-jumiaBtn.innerHTML = '<i class="fas fa-shopping-bag"></i> Check Price on Jumia';
-const cardBody = card.querySelector('.card-body');
-cardBody.appendChild(jumiaBtn);
-});
-});
-});
+document.addEventListener('keydown', function(e) { if (e.key === 'Escape') { closeModal(); closeBundleModal(); } });
 </script>
 <!-- AI Support Chatbot Button -->
 <button class="support-float" onclick="toggleChat()" aria-label="AI Support Assistant">

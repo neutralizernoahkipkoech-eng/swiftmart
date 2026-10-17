@@ -578,6 +578,7 @@ app.put('/api/admin/products/:id/stock', requireAuth, async (req, res) => {
 app.get('/api/seed-products', async (req, res) => {
     try {
         const initialProducts = [
+            // Services & Web Dev
             { name: 'E-commerce Store Setup', category: 'webdev', price: 25000, stock: 99 },
             { name: 'Website Maintenance & Support', category: 'webdev', price: 3000, stock: 99 },
             { name: 'Domain & Hosting Setup', category: 'webdev', price: 2500, stock: 99 },
@@ -588,29 +589,39 @@ app.get('/api/seed-products', async (req, res) => {
             { name: 'Social Media Page Setup', category: 'socialmedia', price: 6000, stock: 99 },
             { name: 'Monthly Social Media Management', category: 'socialmedia', price: 12000, stock: 99 },
             { name: 'Custom Social Media Graphics (10 Posts)', category: 'socialmedia', price: 8000, stock: 99 },
+            // Smartphones & Tablets
             { name: 'iPhone 13 Pro', category: 'smartphones', price: 95000, stock: 5 },
             { name: 'Samsung Galaxy S22', category: 'smartphones', price: 78000, stock: 8 },
-            { name: 'iPad Air', category: 'smartphones', price: 65000, stock: 12 },
+            { name: 'iPad Air 5th Gen', category: 'tablets', price: 65000, stock: 10 }, // NEW
+            // Laptops
             { name: 'MacBook Air M2', category: 'laptops', price: 115000, stock: 3 },
             { name: 'Dell XPS 13', category: 'laptops', price: 98000, stock: 4 },
             { name: 'HP Pavilion 15', category: 'laptops', price: 52000, stock: 10 },
+            // Audio & PC Speakers
             { name: 'Sony WH-1000XM5', category: 'audio', price: 32000, stock: 15 },
             { name: 'AirPods Pro 2', category: 'audio', price: 24000, stock: 20 },
             { name: 'JBL Flip 6', category: 'audio', price: 12000, stock: 25 },
+            { name: 'Desktop Speaker System', category: 'pcspeakers', price: 4500, stock: 20 }, // NEW
+            // Accessories
             { name: 'Logitech MX Master 3', category: 'accessories', price: 8500, stock: 30 },
             { name: 'Mechanical Keyboard', category: 'accessories', price: 7200, stock: 20 },
             { name: 'Logitech C920', category: 'accessories', price: 9500, stock: 15 },
             { name: '27-inch 4K Monitor', category: 'accessories', price: 35000, stock: 7 },
-            { name: 'Classic Leather Watch', category: 'fashion', price: 3500, stock: 50 },
+            // Fashion & Watches
+            { name: 'Classic Leather Watch', category: 'watches', price: 3500, stock: 50 }, // UPDATED CATEGORY
+            { name: 'Smart Watch Series 7', category: 'watches', price: 15000, stock: 15 }, // NEW
             { name: 'Nike Air Max', category: 'fashion', price: 8500, stock: 40 },
             { name: 'Leather Backpack', category: 'fashion', price: 4500, stock: 35 },
             { name: 'Polarized Sunglasses', category: 'fashion', price: 1800, stock: 60 },
+            // Home
             { name: 'Electric Blender', category: 'home', price: 4200, stock: 25 },
             { name: 'Coffee Maker', category: 'home', price: 6500, stock: 18 },
             { name: 'LED Desk Lamp', category: 'home', price: 2200, stock: 40 },
+            // Beauty & Health Care
             { name: 'Hair Dryer', category: 'beauty', price: 3800, stock: 30 },
             { name: 'Electric Toothbrush', category: 'beauty', price: 2900, stock: 45 },
-            { name: 'Fitness Tracker', category: 'beauty', price: 3200, stock: 35 }
+            { name: 'Fitness Tracker', category: 'healthcare', price: 3200, stock: 35 }, // UPDATED CATEGORY
+            { name: 'Health Monitor', category: 'healthcare', price: 5000, stock: 25 } // NEW
         ];
         await Product.deleteMany({});
         await Product.insertMany(initialProducts);
