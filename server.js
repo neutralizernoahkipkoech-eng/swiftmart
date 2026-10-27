@@ -1,11 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
-
-// 1. LOAD ENVIRONMENT VARIABLES FIRST!
-dotenv.config();
-
-const axios = require('axios');
+const axios = require('axios'); // Still needed for Google OAuth
 const path = require('path');
 const mongoose = require('mongoose');
 const session = require('express-session');
@@ -14,6 +10,13 @@ const nodemailer = require('nodemailer');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
+
+// Security & Rate Limiting Packages
+const helmet = require('helmet');
+const rateLimit = require('express-rate-limit');
+
+// 1. LOAD ENVIRONMENT VARIABLES FIRST!
+dotenv.config();
 
 // 2. NOW initialize Paystack
 const paystack = require('paystack')(process.env.PAYSTACK_SECRET_KEY);
@@ -40,6 +43,11 @@ const transporter = nodemailer.createTransport({
 });
 
 async function sendOrderEmail(customerEmail, productName, amount, paymentMethod, status) {
+    const isBundle = productName.toLowerCase().includes('bundle');
+    const bundleInstructions = isBundle ? 
+        `<p style="background: #ecfdf5; padding: 15px; border-radius: 8px; border-left: 4px solid #059669;"><strong>🚀 Instant Activation:</strong> Your data bundle is being processed! If it doesn't arrive within 5 minutes, please WhatsApp your M-Pesa code to +254 754 427 226.</p>` : 
+        `<p>Thank you for your purchase! For physical products, our team will contact you within 24 hours to arrange delivery.</p>`;
+
     const mailOptions = {
         from: `"SwiftMart" <${process.env.EMAIL_USER}>`,
         to: customerEmail,
@@ -51,8 +59,7 @@ async function sendOrderEmail(customerEmail, productName, amount, paymentMethod,
                 </div>
                 <div style="padding: 30px;">
                     <h2 style="color: #0f172a;">Thank you for your purchase!</h2>
-                    <p>Hi there,</p>
-                    <p>Thank you for your purchase! <strong>If you purchased a data bundle, you will receive an activation SMS from Safaricom within 5 to 15 minutes.</strong> For other digital services, our team will contact you within 24 hours via the email or phone number you provided.</p>
+                    ${bundleInstructions}
                     <p>Here are your order details:</p>
                     <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
                         <tr style="background: #f8fafc;">
@@ -72,7 +79,22 @@ async function sendOrderEmail(customerEmail, productName, amount, paymentMethod,
                             <td style="padding: 12px; border: 1px solid #e2e8f0; color: green; font-weight: bold;">${status.toUpperCase()}</td>
                         </tr>
                     </table>
-                    <p>Best regards,<br><strong>The SwiftMart Team</strong></p>
+                    
+                    <!-- NEW CROSS-SELL BLOCK -->
+                    <div style="margin-top: 30px; padding: 20px; border-top: 2px dashed #e2e8f0; background: #f8fafc; border-radius: 8px;">
+                        <p style="margin: 0 0 10px 0; font-size: 1.1rem; color: #2563eb; font-weight: bold;">💡 Growing your business?</p>
+                        <p style="margin: 0 0 15px 0; font-size: 0.95rem; color: #475569;">As a valued SwiftMart customer, you are eligible for <strong>15% OFF</strong> our Professional Web Design, SEO, or Social Media Management packages!</p>
+                        <p style="margin: 0; font-size: 0.95rem; color: #475569;">
+                            Simply reply to this email or 
+                            <a href="https://wa.me/254754427226?text=Hi%20SwiftMart,%20I%20just%20bought%20a%20product%20and%20I'm%20interested%20in%20the%2015%25%20discount%20on%20digital%20services!" 
+                               style="color: #25d366; font-weight: bold; text-decoration: none;">
+                               click here to claim your discount on WhatsApp 💬
+                            </a>
+                        </p>
+                    </div>
+                    <!-- END CROSS-SELL BLOCK -->
+
+                    <p style="margin-top: 20px;">Best regards,<br><strong>The SwiftMart Team</strong></p>
                 </div>
             </div>
         `
@@ -91,86 +113,82 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/mpesa-eco
     .catch(err => console.error('❌ MongoDB Connection Error:', err));
 
 // --- MIDDLEWARE ---
-app.use(cors());
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+
+// 1. Security Headers (Helmet)
+app.use(helmet({
+    crossOriginResourcePolicy: { policy: "cross-origin" },
+    contentSecurityPolicy: {
+        directives: {
+            defaultSrc: ["'self'"],
+            imgSrc: ["'self'", "data:", "https:", "http:"],
+            scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'", "https://cdnjs.cloudflare.com"],
+            styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com", "https://cdnjs.cloudflare.com"],
+            fontSrc: ["'self'", "https://fonts.gstatic.com", "https://cdnjs.cloudflare.com"],
+            connectSrc: ["'self'", "https://api.paystack.co", "https://accounts.google.com"],
+            scriptSrcAttr: ["'self'", "'unsafe-inline'"], 
+        },
+    },
+}));
+
+// 2. Rate Limiting
+const apiLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000,
+    max: 100,
+    message: { error: 'Too many requests from this IP, please try again later.' }
+});
+app.use('/api/', apiLimiter);
+
+// 3. Standard Parsers
+app.use(cors({
+    origin: process.env.NODE_ENV === 'production' ? 'https://swiftmartkenya.co.ke' : 'http://localhost:3000',
+    credentials: true
+}));
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 app.use(cookieParser());
 
-// Reliable Session Configuration
+// 4. Reliable Session Configuration
 app.use(session({
     secret: process.env.SESSION_SECRET || 'super-secret-key-change-this-later',
     resave: false,
     saveUninitialized: false,
     cookie: {
         secure: process.env.NODE_ENV === 'production',
-        maxAge: 24 * 60 * 60 * 1000 // 24 hours
+        httpOnly: true,
+        maxAge: 24 * 60 * 60 * 1000
     }
 }));
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'frontend')));
 
-// M-Pesa Configuration
-const CONSUMER_KEY = process.env.CONSUMER_KEY;
-const CONSUMER_SECRET = process.env.CONSUMER_SECRET;
-const SHORTCODE = process.env.SHORTCODE;
-const PASSKEY = process.env.PASSKEY;
-const CALLBACK_URL = process.env.CALLBACK_URL;
-
-async function getAccessToken() {
-    const auth = Buffer.from(`${CONSUMER_KEY}:${CONSUMER_SECRET}`).toString('base64');
-    try {
-        const response = await axios.get(
-            'https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials',
-            { headers: { Authorization: `Basic ${auth}` } }
-        );
-        return response.data.access_token;
-    } catch (error) {
-        console.error('Error getting access token:', error.message);
-        return null;
-    }
-}
-
-// ================= FIX: UPDATED requireAuth MIDDLEWARE =================
+// ================= AUTH MIDDLEWARE =================
 const requireAuth = (req, res, next) => {
-    // 1. Check session first
     if (req.session.userId) {
         return next();
     }
-    // 2. Fallback to JWT cookie if session is missing (prevents redirect loops)
     if (req.cookies.token) {
         try {
             const decoded = jwt.verify(req.cookies.token, JWT_SECRET);
-            req.session.userId = decoded.userId; // Restore session
+            req.session.userId = decoded.userId;
             return next();
         } catch (err) {
             // Invalid token, fall through to 401
         }
     }
-    // 3. If neither is valid, reject
     res.status(401).json({ error: 'Please log in to continue' });
 };
 
 // ================= AUTH ROUTES =================
-
-// REGISTER
 app.post('/api/auth/register', async (req, res) => {
     try {
         const { name, email, phone, password } = req.body;
-        if (!name || !email || !phone || !password) {
-            return res.status(400).json({ error: 'All fields are required' });
-        }
-
+        if (!name || !email || !phone || !password) return res.status(400).json({ error: 'All fields are required' });
         const existingUser = await User.findOne({ email });
         if (existingUser) return res.status(400).json({ error: 'Email already registered' });
         
         const verificationToken = crypto.randomBytes(32).toString('hex');
-        
-        const user = new User({ 
-            name, email, phone, password, 
-            emailVerificationToken: verificationToken,
-            emailVerified: false
-        });
+        const user = new User({ name, email, phone, password, emailVerificationToken: verificationToken, emailVerified: false });
         await user.save();
         
         const verificationUrl = `${process.env.BASE_URL || 'https://swiftmartkenya.co.ke'}/api/auth/verify-email?token=${verificationToken}`;
@@ -184,7 +202,6 @@ app.post('/api/auth/register', async (req, res) => {
         } catch (emailError) {
             console.error('Email send error:', emailError);
         }
-        
         res.status(201).json({ success: true, message: 'Registration successful! Please check your email to verify.', user: { name: user.name, email: user.email } });
     } catch (error) {
         console.error('Register error:', error);
@@ -192,30 +209,18 @@ app.post('/api/auth/register', async (req, res) => {
     }
 });
 
-// LOGIN
 app.post('/api/auth/login', async (req, res) => {
     try {
         const { email, password, rememberMe } = req.body;
         if (!email || !password) return res.status(400).json({ error: 'Email and password are required' });
-
         const user = await User.findOne({ email });
         if (!user) return res.status(401).json({ error: 'Invalid email or password' });
-        
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) return res.status(401).json({ error: 'Invalid email or password' });
-        
-        if (!user.emailVerified) {
-            return res.status(403).json({ error: 'Please verify your email before logging in. Check your inbox.' });
-        }
+        if (!user.emailVerified) return res.status(403).json({ error: 'Please verify your email before logging in.' });
         
         const token = jwt.sign({ userId: user._id, email: user.email }, JWT_SECRET, { expiresIn: rememberMe ? '30d' : '1d' });
-        
-        res.cookie('token', token, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
-            maxAge: rememberMe ? 30 * 24 * 60 * 60 * 1000 : 24 * 60 * 60 * 1000
-        });
-        
+        res.cookie('token', token, { httpOnly: true, secure: process.env.NODE_ENV === 'production', maxAge: rememberMe ? 30 * 24 * 60 * 60 * 1000 : 24 * 60 * 60 * 1000 });
         req.session.userId = user._id;
         res.json({ success: true, user: { name: user.name, email: user.email } });
     } catch (error) {
@@ -224,18 +229,15 @@ app.post('/api/auth/login', async (req, res) => {
     }
 });
 
-// FORGOT PASSWORD
 app.post('/api/auth/forgot-password', async (req, res) => {
     try {
         const { email } = req.body;
         const user = await User.findOne({ email });
         if (!user) return res.json({ message: 'If an account exists, a reset link has been sent.' });
-        
         const resetToken = crypto.randomBytes(32).toString('hex');
         user.resetToken = resetToken;
         user.resetTokenExpiry = Date.now() + 3600000;
         await user.save();
-        
         const resetUrl = `${process.env.BASE_URL || 'https://swiftmartkenya.co.ke'}/reset-password?token=${resetToken}`;
         try {
             await transporter.sendMail({
@@ -253,13 +255,11 @@ app.post('/api/auth/forgot-password', async (req, res) => {
     }
 });
 
-// RESET PASSWORD
 app.post('/api/auth/reset-password', async (req, res) => {
     try {
         const { token, newPassword } = req.body;
         const user = await User.findOne({ resetToken: token, resetTokenExpiry: { $gt: Date.now() } });
         if (!user) return res.status(400).json({ message: 'Invalid or expired reset token' });
-        
         user.password = newPassword;
         user.resetToken = undefined;
         user.resetTokenExpiry = undefined;
@@ -270,13 +270,11 @@ app.post('/api/auth/reset-password', async (req, res) => {
     }
 });
 
-// VERIFY EMAIL
 app.get('/api/auth/verify-email', async (req, res) => {
     try {
         const { token } = req.query;
         const user = await User.findOne({ emailVerificationToken: token });
         if (!user) return res.status(400).json({ message: 'Invalid verification token' });
-        
         user.emailVerified = true;
         user.emailVerificationToken = undefined;
         await user.save();
@@ -286,44 +284,33 @@ app.get('/api/auth/verify-email', async (req, res) => {
     }
 });
 
-// RESEND VERIFICATION EMAIL
 app.post('/api/auth/resend-verification', async (req, res) => {
     try {
         const { email } = req.body;
         const user = await User.findOne({ email, emailVerified: false });
-        
-        if (!user) {
-            return res.status(400).json({ message: 'User not found or already verified.' });
-        }
-        
+        if (!user) return res.status(400).json({ message: 'User not found or already verified.' });
         const verificationToken = crypto.randomBytes(32).toString('hex');
         user.emailVerificationToken = verificationToken;
         await user.save();
-        
         const verificationUrl = `${process.env.BASE_URL || 'https://swiftmartkenya.co.ke'}/api/auth/verify-email?token=${verificationToken}`;
-        
         await transporter.sendMail({
             from: `"SwiftMart" <${process.env.EMAIL_USER}>`,
             to: email,
             subject: 'Verify Your SwiftMart Account (New Request)',
             html: `<h2>Welcome to SwiftMart! 👋</h2><p>Please click below to verify your email:</p><a href="${verificationUrl}" style="display:inline-block; padding:12px 24px; background:#2563eb; color:white; text-decoration:none; border-radius:6px;">Verify Email</a><p>Link expires in 24 hours.</p>`
         });
-        
         res.json({ message: 'Verification email sent!' });
     } catch (error) {
-        console.error('Resend verification error:', error);
         res.status(500).json({ message: 'Failed to send verification email' });
     }
 });
 
-// LOGOUT
 app.post('/api/auth/logout', (req, res) => {
     res.clearCookie('token');
     req.session.destroy();
     res.json({ success: true });
 });
 
-// GET CURRENT USER
 app.get('/api/auth/me', async (req, res) => {
     let userId = req.session.userId;
     if (!userId && req.cookies.token) {
@@ -343,7 +330,6 @@ app.get('/api/auth/google', (req, res) => {
     const redirectUri = process.env.NODE_ENV === 'production' 
         ? 'https://swiftmartkenya.co.ke/api/auth/google/callback' 
         : 'http://localhost:3000/api/auth/google/callback';
-        
     const url = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${process.env.GOOGLE_CLIENT_ID}&redirect_uri=${redirectUri}&response_type=code&scope=profile email`;
     res.redirect(url);
 });
@@ -354,36 +340,26 @@ app.get('/api/auth/google/callback', async (req, res) => {
         const redirectUri = process.env.NODE_ENV === 'production' 
             ? 'https://swiftmartkenya.co.ke/api/auth/google/callback' 
             : 'http://localhost:3000/api/auth/google/callback';
-
         const tokenRes = await axios.post('https://oauth2.googleapis.com/token', {
-            code,
-            client_id: process.env.GOOGLE_CLIENT_ID,
-            client_secret: process.env.GOOGLE_CLIENT_SECRET,
-            redirect_uri: redirectUri,
-            grant_type: 'authorization_code'
+            code, client_id: process.env.GOOGLE_CLIENT_ID, client_secret: process.env.GOOGLE_CLIENT_SECRET,
+            redirect_uri: redirectUri, grant_type: 'authorization_code'
         });
-
         const userRes = await axios.get('https://www.googleapis.com/oauth2/v2/userinfo', {
             headers: { Authorization: `Bearer ${tokenRes.data.access_token}` }
         });
         const googleUser = userRes.data;
-
         let user = await User.findOne({ email: googleUser.email });
         if (!user) {
             user = new User({
-                name: googleUser.name,
-                email: googleUser.email,
-                phone: 'N/A',
+                name: googleUser.name, email: googleUser.email, phone: 'N/A',
                 password: await bcrypt.hash(Math.random().toString(36).slice(-8), 10),
                 emailVerified: true
             });
             await user.save();
         }
-
         const token = jwt.sign({ userId: user._id, email: user.email }, JWT_SECRET, { expiresIn: '30d' });
         res.cookie('token', token, { httpOnly: true, secure: process.env.NODE_ENV === 'production', maxAge: 30 * 24 * 60 * 60 * 1000 });
         req.session.userId = user._id;
-        
         res.redirect('/dashboard');
     } catch (error) {
         console.error('Google Auth Error:', error);
@@ -391,112 +367,21 @@ app.get('/api/auth/google/callback', async (req, res) => {
     }
 });
 
-// ================= M-PESA & ORDER ROUTES =================
-app.post('/api/stkpush', requireAuth, async (req, res) => {
-    try {
-        const { phoneNumber, amount, productName } = req.body;
-        const accessToken = await getAccessToken();
-        if (!accessToken) return res.status(500).json({ error: 'Failed to authenticate with M-Pesa' });
-
-        const timestamp = new Date().toISOString().replace(/[^0-9]/g, '').slice(0, -3);
-        const password = Buffer.from(`${SHORTCODE}${PASSKEY}${timestamp}`).toString('base64');
-        const safeReference = "SWIFTMART"; 
-
-        const stkPushData = {
-            BusinessShortCode: SHORTCODE,
-            Password: password,
-            Timestamp: timestamp,
-            TransactionType: "CustomerPayBillOnline",
-            Amount: amount,
-            PartyA: phoneNumber,
-            PartyB: SHORTCODE,
-            PhoneNumber: phoneNumber,
-            CallBackURL: CALLBACK_URL,
-            AccountReference: safeReference,
-            TransactionDesc: "Payment"
-        };
-
-        const response = await axios.post(
-            'https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest',
-            stkPushData,
-            { headers: { Authorization: `Bearer ${accessToken}`, 'Content-Type': 'application/json' } }
-        );
-        
-        const checkoutRequestId = response.data.CheckoutRequestID;
-
-        const order = new Order({
-            user: req.session.userId,
-            checkoutRequestId,
-            product: productName || 'Item',
-            amount,
-            phone: phoneNumber,
-            paymentMethod: 'M-Pesa',
-            status: 'pending'
-        });
-        await order.save();
-
-        res.json(response.data);
-    } catch (error) {
-        const safaricomError = error.response ? error.response.data : error.message;
-        console.error('STK Push Error:', safaricomError);
-        res.status(500).json({ error: safaricomError });
-    }
-});
-
-app.post('/api/callback', async (req, res) => {
-    try {
-        const callbackData = req.body;
-        console.log('--- M-Pesa Callback Received ---');
-        const { Body } = callbackData;
-        if (Body && Body.stkCallback) {
-            const { CheckoutRequestID, ResultCode, CallbackMetadata } = Body.stkCallback;
-            const order = await Order.findOne({ checkoutRequestId: CheckoutRequestID });
-            if (order) {
-                order.status = ResultCode === 0 ? 'success' : 'failed';
-                if (ResultCode === 0 && CallbackMetadata && CallbackMetadata.Item) {
-                    const receiptItem = CallbackMetadata.Item.find(i => i.Name === 'MpesaReceiptNumber');
-                    if (receiptItem) order.mpesaReceiptNumber = receiptItem.Value;
-                }
-                await order.save();
-                console.log(`Order updated: ${order.status}`);
-            }
-        }
-        res.json({ ResultCode: 0, ResultDesc: 'Accepted' });
-    } catch (error) {
-        console.error('Callback error:', error);
-        res.json({ ResultCode: 0, ResultDesc: 'Accepted' });
-    }
-});
-
-app.get('/api/status/:id', async (req, res) => {
-    try {
-        const order = await Order.findOne({ checkoutRequestId: req.params.id });
-        if (!order) return res.status(404).json({ error: 'Transaction not found' });
-        res.json(order);
-    } catch (error) {
-        res.status(500).json({ error: 'Failed to get status' });
-    }
-});
-
-app.get('/api/orders', requireAuth, async (req, res) => {
-    try {
-        const orders = await Order.find({ user: req.session.userId }).sort({ createdAt: -1 });
-        res.json({ orders });
-    } catch (error) {
-        res.status(500).json({ error: 'Failed to get orders' });
-    }
-});
-
-// ================= PAYSTACK GLOBAL PAYMENT ROUTES =================
+// ================= PAYSTACK PAYMENT ROUTES (M-Pesa, Card, PayPal) =================
 app.post('/api/paystack/initialize', async (req, res) => {
     try {
-        const { email, amount, productName } = req.body;
+        const { email, amount, productName, phone } = req.body;
         const amountInCents = amount * 100; 
         const response = await paystack.transaction.initialize({
             email: email,
             amount: amountInCents,
             reference: 'SWIFTMART_' + Math.floor(Math.random() * 1000000000),
-            metadata: { custom_fields: [{ display_name: "Product", variable_name: "product", value: productName }] }
+            metadata: { 
+                custom_fields: [
+                    { display_name: "Product", variable_name: "product", value: productName },
+                    { display_name: "Phone", variable_name: "phone", value: phone || 'N/A' }
+                ] 
+            }
         });
         res.json(response.data);
     } catch (error) {
@@ -511,19 +396,26 @@ app.get('/api/paystack/verify/:reference', async (req, res) => {
         if (response.data.status === 'success') {
             const customerEmail = response.data.customer.email;
             const amount = response.data.amount / 100;
-            const product = response.data.metadata.custom_fields[0].value;
+            const product = response.data.metadata?.custom_fields?.[0]?.value || 'Unknown Product';
+            const phone = response.data.metadata?.custom_fields?.[1]?.value || 'N/A';
             
             const newOrder = new Order({
                 user: req.session.userId || null,
                 product: product,
                 amount: amount,
-                phone: 'N/A',
+                phone: phone,
                 email: customerEmail,
                 paymentMethod: 'Paystack',
                 status: 'success'
             });
             await newOrder.save();
-            sendOrderEmail(customerEmail, product, amount, 'Paystack (Card/PayPal)', 'success');
+
+            // Log bundle purchase for manual/automated activation
+            if (product.toLowerCase().includes('bundle')) {
+                console.log(`🚀 Bundle purchased: ${product} for phone ${phone}`);
+            }
+
+            sendOrderEmail(customerEmail, product, amount, 'Paystack (M-Pesa/Card/PayPal)', 'success');
             res.json({ status: 'success', message: 'Payment verified!' });
         } else {
             res.json({ status: 'failed' });
@@ -538,9 +430,7 @@ app.get('/api/paystack/verify/:reference', async (req, res) => {
 app.get('/api/admin/orders', requireAuth, async (req, res) => {
     try {
         const user = await User.findById(req.session.userId);
-        if (!user || user.email !== 'neutralizernoahkipkoech@gmail.com') {
-            return res.status(403).json({ error: 'Access denied' });
-        }
+        if (!user || user.email !== 'neutralizernoahkipkoech@gmail.com') return res.status(403).json({ error: 'Access denied' });
         const orders = await Order.find().sort({ createdAt: -1 });
         res.json({ orders });
     } catch (error) {
@@ -562,9 +452,7 @@ app.get('/api/products', async (req, res) => {
 app.put('/api/admin/products/:id/stock', requireAuth, async (req, res) => {
     try {
         const user = await User.findById(req.session.userId);
-        if (!user || user.email !== 'neutralizernoahkipkoech@gmail.com') {
-            return res.status(403).json({ error: 'Access denied' });
-        }
+        if (!user || user.email !== 'neutralizernoahkipkoech@gmail.com') return res.status(403).json({ error: 'Access denied' });
         const { stock } = req.body;
         const product = await Product.findByIdAndUpdate(req.params.id, { stock }, { returnDocument: 'after' });
         if (!product) return res.status(404).json({ error: 'Product not found' });
@@ -578,7 +466,6 @@ app.put('/api/admin/products/:id/stock', requireAuth, async (req, res) => {
 app.get('/api/seed-products', async (req, res) => {
     try {
         const initialProducts = [
-            // Services & Web Dev
             { name: 'E-commerce Store Setup', category: 'webdev', price: 25000, stock: 99 },
             { name: 'Website Maintenance & Support', category: 'webdev', price: 3000, stock: 99 },
             { name: 'Domain & Hosting Setup', category: 'webdev', price: 2500, stock: 99 },
@@ -589,39 +476,32 @@ app.get('/api/seed-products', async (req, res) => {
             { name: 'Social Media Page Setup', category: 'socialmedia', price: 6000, stock: 99 },
             { name: 'Monthly Social Media Management', category: 'socialmedia', price: 12000, stock: 99 },
             { name: 'Custom Social Media Graphics (10 Posts)', category: 'socialmedia', price: 8000, stock: 99 },
-            // Smartphones & Tablets
             { name: 'iPhone 13 Pro', category: 'smartphones', price: 95000, stock: 5 },
             { name: 'Samsung Galaxy S22', category: 'smartphones', price: 78000, stock: 8 },
-            { name: 'iPad Air 5th Gen', category: 'tablets', price: 65000, stock: 10 }, // NEW
-            // Laptops
+            { name: 'iPad Air 5th Gen', category: 'tablets', price: 65000, stock: 10 },
             { name: 'MacBook Air M2', category: 'laptops', price: 115000, stock: 3 },
             { name: 'Dell XPS 13', category: 'laptops', price: 98000, stock: 4 },
             { name: 'HP Pavilion 15', category: 'laptops', price: 52000, stock: 10 },
-            // Audio & PC Speakers
             { name: 'Sony WH-1000XM5', category: 'audio', price: 32000, stock: 15 },
             { name: 'AirPods Pro 2', category: 'audio', price: 24000, stock: 20 },
             { name: 'JBL Flip 6', category: 'audio', price: 12000, stock: 25 },
-            { name: 'Desktop Speaker System', category: 'pcspeakers', price: 4500, stock: 20 }, // NEW
-            // Accessories
+            { name: 'Desktop Speaker System', category: 'pcspeakers', price: 4500, stock: 20 },
             { name: 'Logitech MX Master 3', category: 'accessories', price: 8500, stock: 30 },
             { name: 'Mechanical Keyboard', category: 'accessories', price: 7200, stock: 20 },
             { name: 'Logitech C920', category: 'accessories', price: 9500, stock: 15 },
             { name: '27-inch 4K Monitor', category: 'accessories', price: 35000, stock: 7 },
-            // Fashion & Watches
-            { name: 'Classic Leather Watch', category: 'watches', price: 3500, stock: 50 }, // UPDATED CATEGORY
-            { name: 'Smart Watch Series 7', category: 'watches', price: 15000, stock: 15 }, // NEW
+            { name: 'Classic Leather Watch', category: 'watches', price: 3500, stock: 50 },
+            { name: 'Smart Watch Series 7', category: 'watches', price: 15000, stock: 15 },
             { name: 'Nike Air Max', category: 'fashion', price: 8500, stock: 40 },
             { name: 'Leather Backpack', category: 'fashion', price: 4500, stock: 35 },
             { name: 'Polarized Sunglasses', category: 'fashion', price: 1800, stock: 60 },
-            // Home
             { name: 'Electric Blender', category: 'home', price: 4200, stock: 25 },
             { name: 'Coffee Maker', category: 'home', price: 6500, stock: 18 },
             { name: 'LED Desk Lamp', category: 'home', price: 2200, stock: 40 },
-            // Beauty & Health Care
             { name: 'Hair Dryer', category: 'beauty', price: 3800, stock: 30 },
             { name: 'Electric Toothbrush', category: 'beauty', price: 2900, stock: 45 },
-            { name: 'Fitness Tracker', category: 'healthcare', price: 3200, stock: 35 }, // UPDATED CATEGORY
-            { name: 'Health Monitor', category: 'healthcare', price: 5000, stock: 25 } // NEW
+            { name: 'Fitness Tracker', category: 'healthcare', price: 3200, stock: 35 },
+            { name: 'Health Monitor', category: 'healthcare', price: 5000, stock: 25 }
         ];
         await Product.deleteMany({});
         await Product.insertMany(initialProducts);
@@ -637,7 +517,6 @@ app.get('/api/reviews', async (req, res) => {
         const reviews = await Review.find({ approved: true }).sort({ createdAt: -1 }).limit(10);
         res.json({ reviews });
     } catch (error) {
-        console.error('Get reviews error:', error);
         res.status(500).json({ error: 'Failed to get reviews' });
     }
 });
@@ -649,7 +528,6 @@ app.post('/api/reviews', async (req, res) => {
         await newReview.save();
         res.json({ success: true, message: 'Review submitted! It will appear once approved.' });
     } catch (error) {
-        console.error('Submit review error:', error);
         res.status(500).json({ error: 'Failed to submit review' });
     }
 });
@@ -666,9 +544,7 @@ app.get('/api/reviews/:productName', async (req, res) => {
 app.get('/api/admin/reviews', requireAuth, async (req, res) => {
     try {
         const user = await User.findById(req.session.userId);
-        if (!user || user.email !== 'neutralizernoahkipkoech@gmail.com') {
-            return res.status(403).json({ error: 'Access denied' });
-        }
+        if (!user || user.email !== 'neutralizernoahkipkoech@gmail.com') return res.status(403).json({ error: 'Access denied' });
         const reviews = await Review.find().sort({ createdAt: -1 });
         res.json({ reviews });
     } catch (error) {
@@ -679,9 +555,7 @@ app.get('/api/admin/reviews', requireAuth, async (req, res) => {
 app.put('/api/admin/reviews/:id/approve', requireAuth, async (req, res) => {
     try {
         const user = await User.findById(req.session.userId);
-        if (!user || user.email !== 'neutralizernoahkipkoech@gmail.com') {
-            return res.status(403).json({ error: 'Access denied' });
-        }
+        if (!user || user.email !== 'neutralizernoahkipkoech@gmail.com') return res.status(403).json({ error: 'Access denied' });
         await Review.findByIdAndUpdate(req.params.id, { approved: true });
         res.json({ success: true });
     } catch (error) {
@@ -692,13 +566,22 @@ app.put('/api/admin/reviews/:id/approve', requireAuth, async (req, res) => {
 app.delete('/api/admin/reviews/:id', requireAuth, async (req, res) => {
     try {
         const user = await User.findById(req.session.userId);
-        if (!user || user.email !== 'neutralizernoahkipkoech@gmail.com') {
-            return res.status(403).json({ error: 'Access denied' });
-        }
+        if (!user || user.email !== 'neutralizernoahkipkoech@gmail.com') return res.status(403).json({ error: 'Access denied' });
         await Review.findByIdAndDelete(req.params.id);
         res.json({ success: true });
     } catch (error) {
         res.status(500).json({ error: 'Failed to delete review' });
+    }
+});
+
+// ================= NEWSLETTER ROUTE =================
+app.post('/api/newsletter/subscribe', (req, res) => {
+    try {
+        const { email } = req.body;
+        console.log(`✅ Newsletter subscription received for: ${email}`);
+        res.status(200).json({ success: true, message: 'Successfully subscribed!' });
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to subscribe' });
     }
 });
 
@@ -710,9 +593,7 @@ app.get('/reset-password', (req, res) => res.sendFile(path.join(__dirname, 'fron
 app.get('/dashboard', (req, res) => res.sendFile(path.join(__dirname, 'frontend', 'dashboard.html')));
 app.get('/receipt.html', (req, res) => res.sendFile(path.join(__dirname, 'frontend', 'receipt.html')));
 
-// SECURE ADMIN ROUTE: ONLY YOU CAN ACCESS THIS
 app.get('/admin', async (req, res) => {
-    // Check session first, then fall back to JWT cookie (prevents race condition on redirect)
     let userId = req.session.userId;
     if (!userId && req.cookies.token) {
         try {
@@ -721,15 +602,10 @@ app.get('/admin', async (req, res) => {
             req.session.userId = userId;
         } catch (err) { /* Invalid token */ }
     }
-    
-    if (!userId) {
-        return res.redirect('/login?redirect=/admin');
-    }
+    if (!userId) return res.redirect('/login?redirect=/admin');
     try {
         const user = await User.findById(userId);
-        if (!user || user.email !== 'neutralizernoahkipkoech@gmail.com') {
-            return res.redirect('/'); 
-        }
+        if (!user || user.email !== 'neutralizernoahkipkoech@gmail.com') return res.redirect('/'); 
         res.sendFile(path.join(__dirname, 'frontend', 'admin.html'));
     } catch (error) {
         console.error('Admin route error:', error);

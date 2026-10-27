@@ -18,6 +18,7 @@
             --success: #10b981;
             --failed: #ef4444;
             --pending: #f59e0b;
+            --chat-bg: #f1f5f9;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
@@ -239,16 +240,41 @@
         }
         @keyframes spin { to { transform: rotate(360deg); } }
 
-        /* --- Chatbot Styles (Handled by app.js) --- */
+        /* --- Chatbot Styles (Required for new app.js chatbot) --- */
         .support-float { position: fixed; bottom: 30px; right: 30px; background: linear-gradient(135deg, #2563eb, #7c3aed); color: white; width: 68px; height: 68px; border-radius: 50%; border: none; display: flex; align-items: center; justify-content: center; box-shadow: 0 6px 24px rgba(37, 99, 235, 0.5); z-index: 1000; cursor: pointer; transition: transform 0.3s ease; font-size: 1.8rem; animation: pulseSupport 2s infinite; }
         .support-float:hover { transform: scale(1.1) rotate(10deg); }
         .support-badge { position: absolute; top: -4px; right: -4px; background: #ef4444; color: white; font-size: 0.7rem; font-weight: 700; padding: 3px 7px; border-radius: 10px; border: 2px solid white; animation: bounce 1.5s infinite; }
-        .chat-window { position: fixed; bottom: 110px; right: 30px; width: 380px; max-width: calc(100vw - 40px); height: 560px; max-height: calc(100vh - 140px); background: white; border-radius: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.25); z-index: 1001; display: none; flex-direction: column; overflow: hidden; font-family: 'Inter', sans-serif; }
+        .chat-window { position: fixed; bottom: 110px; right: 30px; width: 380px; max-width: calc(100vw - 40px); height: 560px; max-height: calc(100vh - 140px); background: white; border-radius: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.25); z-index: 1001; display: none; flex-direction: column; overflow: hidden; font-family: 'Inter', sans-serif; animation: slideUpChat 0.3s ease; }
+        @keyframes slideUpChat { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         .chat-header { background: linear-gradient(135deg, #2563eb, #7c3aed); color: white; padding: 18px 20px; display: flex; align-items: center; gap: 12px; }
-        .chat-messages { flex-grow: 1; overflow-y: auto; padding: 20px; background: #f1f5f9; display: flex; flex-direction: column; gap: 12px; }
-        .chat-input-area { padding: 14px 20px; background: white; border-top: 1px solid #e2e8f0; display: flex; gap: 10px; align-items: center; }
-        .chat-input { flex-grow: 1; padding: 12px 16px; border: 1px solid #e2e8f0; border-radius: 24px; font-size: 0.9rem; outline: none; }
+        .chat-agent-avatar { width: 44px; height: 44px; border-radius: 50%; background: rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; font-size: 1.3rem; border: 2px solid rgba(255,255,255,0.4); }
+        .chat-agent-info { flex-grow: 1; }
+        .chat-agent-name { font-weight: 700; font-size: 1rem; }
+        .chat-agent-status { font-size: 0.75rem; opacity: 0.9; display: flex; align-items: center; gap: 5px; }
+        .chat-agent-status::before { content: ''; width: 7px; height: 7px; background: #10b981; border-radius: 50%; }
+        .chat-close { background: rgba(255,255,255,0.2); border: none; color: white; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-size: 1rem; transition: background 0.2s; }
+        .chat-close:hover { background: rgba(255,255,255,0.3); }
+        .chat-messages { flex-grow: 1; overflow-y: auto; padding: 20px; background: var(--chat-bg); display: flex; flex-direction: column; gap: 12px; }
+        .chat-message { max-width: 85%; padding: 12px 16px; border-radius: 16px; font-size: 0.9rem; line-height: 1.5; animation: msgFade 0.3s ease; }
+        @keyframes msgFade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+        .chat-message.bot { background: white; color: var(--text-main); align-self: flex-start; border-bottom-left-radius: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+        .chat-message.user { background: var(--brand-primary); color: white; align-self: flex-end; border-bottom-right-radius: 4px; }
+        .chat-message .msg-time { font-size: 0.7rem; opacity: 0.7; margin-top: 4px; display: block; }
+        .chat-message.bot .msg-sender { font-size: 0.75rem; color: var(--brand-primary); font-weight: 600; margin-bottom: 4px; display: block; }
+        .typing-indicator { background: white; padding: 12px 16px; border-radius: 16px; border-bottom-left-radius: 4px; align-self: flex-start; display: none; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+        .typing-indicator.active, .typing-indicator[style*="flex"] { display: flex; gap: 4px; }
+        .typing-dot { width: 7px; height: 7px; background: var(--text-muted); border-radius: 50%; animation: typingBounce 1.4s infinite; }
+        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes typingBounce { 0%, 60%, 100% { transform: translateY(0); } 30% { transform: translateY(-6px); } }
+        .chat-quick-actions { padding: 12px 20px; background: white; border-top: 1px solid var(--border-color); display: flex; gap: 8px; overflow-x: auto; flex-shrink: 0; }
+        .quick-action-btn { background: #eff6ff; color: var(--brand-primary); border: 1px solid #bfdbfe; padding: 8px 14px; border-radius: 20px; font-size: 0.8rem; font-weight: 500; cursor: pointer; white-space: nowrap; transition: all 0.2s; }
+        .quick-action-btn:hover { background: var(--brand-primary); color: white; }
+        .chat-input-area { padding: 14px 20px; background: white; border-top: 1px solid var(--border-color); display: flex; gap: 10px; align-items: center; flex-shrink: 0; }
+        .chat-input { flex-grow: 1; padding: 12px 16px; border: 1px solid var(--border-color); border-radius: 24px; font-size: 0.9rem; outline: none; transition: border 0.2s; }
         .chat-input:focus { border-color: var(--brand-primary); }
+        .chat-send { background: var(--brand-primary); color: white; border: none; width: 42px; height: 42px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s; font-size: 1rem; }
+        .chat-send:hover { background: var(--brand-secondary); }
         @keyframes pulseSupport { 0% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.7); } 70% { box-shadow: 0 0 0 18px rgba(37, 99, 235, 0); } 100% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0); } }
         @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
 
@@ -334,27 +360,39 @@
         </div>
     </div>
 
-    <!-- AI Support Chatbot (Logic handled by app.js) -->
+    <!-- AI Chatbot Window (Updated for Professional Human-Like Responses) -->
+    <div class="chat-window" id="chatWindow">
+        <div class="chat-header">
+            <div class="chat-agent-avatar" id="chatAvatar">🤖</div>
+            <div class="chat-agent-info">
+                <div class="chat-agent-name" id="chatAgentName">SwiftMart AI</div>
+                <div class="chat-agent-status">Online • Ready to help</div>
+            </div>
+            <button class="chat-close" onclick="toggleChat()"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="chat-messages" id="chatMessages"></div>
+        <div class="typing-indicator" id="typingIndicator">
+            <div class="typing-dot"></div>
+            <div class="typing-dot"></div>
+            <div class="typing-dot"></div>
+        </div>
+        <div class="chat-quick-actions">
+            <button class="quick-action-btn" onclick="sendQuickMessage('Track my order')">📦 Track Order</button>
+            <button class="quick-action-btn" onclick="sendQuickMessage('Data bundle help')">📶 Bundles</button>
+            <button class="quick-action-btn" onclick="sendQuickMessage('Payment issue')">💳 Payment</button>
+            <button class="quick-action-btn" onclick="sendQuickMessage('Shipping info')">🚚 Shipping</button>
+        </div>
+        <div class="chat-input-area">
+            <input type="text" class="chat-input" id="chatInput" placeholder="Type your message..." onkeypress="handleChatKeyPress(event)">
+            <button class="chat-send" onclick="sendChatMessage()"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
+
+    <!-- AI Support Chatbot Button -->
     <button class="support-float" onclick="toggleChat()" aria-label="AI Support Assistant">
         <i class="fas fa-headset"></i>
         <span class="support-badge">1</span>
     </button>
-
-    <div class="chat-window" id="chatWindow">
-        <div class="chat-header">
-            <div style="width: 44px; height: 44px; border-radius: 50%; background: rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; font-size: 1.3rem;">🤖</div>
-            <div style="flex-grow: 1;">
-                <div style="font-weight: 700; font-size: 1rem;">SwiftMart AI</div>
-                <div style="font-size: 0.75rem; opacity: 0.9; display: flex; align-items: center; gap: 5px;"><span style="width: 7px; height: 7px; background: #10b981; border-radius: 50%;"></span> Online • Ready to help</div>
-            </div>
-            <button onclick="toggleChat()" style="background: rgba(255,255,255,0.2); border: none; color: white; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-size: 1rem;">×</button>
-        </div>
-        <div class="chat-messages" id="chatMessages"></div>
-        <div class="chat-input-area">
-            <input type="text" class="chat-input" id="chatInput" placeholder="Type your message..." onkeypress="handleChatKeyPress(event)">
-            <button onclick="sendChatMessage()" style="background: #2563eb; color: white; border: none; width: 42px; height: 42px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center;"><i class="fas fa-paper-plane"></i></button>
-        </div>
-    </div>
 
     <!-- Load centralized App.js (Handles Chatbot, Cart, Auth) -->
     <script src="/js/app.js"></script>

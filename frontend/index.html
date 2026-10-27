@@ -4,8 +4,34 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SwiftMart | Professional Services & Quality Products</title>
+
+<!-- SEO & Social Media Meta Tags -->
+<meta name="description" content="SwiftMart Kenya: Instant Safaricom Data Bundles, Professional Web Design, SEO, and Premium Electronics. Fast, secure, and reliable.">
+<meta name="keywords" content="Safaricom data bundles, web design Kenya, SEO services, buy laptops Kenya, SwiftMart">
+
+<!-- WhatsApp & Facebook Share Preview -->
+<meta property="og:title" content="SwiftMart | Instant Bundles & Pro Services">
+<meta property="og:description" content="Get instant Safaricom data bundles, professional web design, and premium electronics. Fast, secure, and reliable.">
+<meta property="og:image" content="https://swiftmartkenya.co.ke/images/og-share-image.jpg">
+<meta property="og:url" content="https://swiftmartkenya.co.ke">
+<meta property="og:type" content="website">
+
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-TS9CVH5VYG"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-TS9CVH5VYG');
+</script>
+
+<!-- Favicon (Lightning Bolt Icon) -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+
 <style>
 :root {
 --brand-primary: #2563eb;
@@ -43,7 +69,7 @@ nav { background: white; padding: 12px 0; border-bottom: 1px solid var(--border-
 @keyframes colorChange { 0% { color: #ffffff; text-shadow: 2px 2px 4px rgba(255,255,255,0.3); } 25% { color: #ffd700; text-shadow: 2px 2px 8px rgba(255,215,0,0.5); } 50% { color: #00ff88; text-shadow: 2px 2px 8px rgba(0,255,136,0.5); } 75% { color: #ff6b9d; text-shadow: 2px 2px 8px rgba(255,107,157,0.5); } 100% { color: #ffffff; text-shadow: 2px 2px 4px rgba(255,255,255,0.3); } }
 .animated-banner:hover .banner-content { animation-play-state: paused; }
 @media (max-width: 768px) { .banner-text { font-size: 0.9rem; } .animated-banner { padding: 10px 0; } }
-.hero { background: linear-gradient(135deg, #1e40af 0%, #2563eb 100%); color: white; padding: 80px 20px; text-align: center; margin-bottom: 60px; }
+.hero { background: linear-gradient(135deg, #1e40af 0%, #2563eb 100%); color: white; padding: 80px 20px; text-align: center; margin-bottom: 40px; }
 .hero h1 { font-size: 2.5rem; font-weight: 800; margin-bottom: 16px; }
 .hero p { font-size: 1.2rem; opacity: 0.9; max-width: 600px; margin: 0 auto; }
 .trust-badges { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 32px; margin-bottom: 60px; text-align: center; }
@@ -149,7 +175,7 @@ nav { background: white; padding: 12px 0; border-bottom: 1px solid var(--border-
 .chat-message .msg-time { font-size: 0.7rem; opacity: 0.7; margin-top: 4px; display: block; }
 .chat-message.bot .msg-sender { font-size: 0.75rem; color: var(--brand-primary); font-weight: 600; margin-bottom: 4px; display: block; }
 .typing-indicator { background: white; padding: 12px 16px; border-radius: 16px; border-bottom-left-radius: 4px; align-self: flex-start; display: none; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
-.typing-indicator.active { display: flex; gap: 4px; }
+.typing-indicator.active, .typing-indicator[style*="flex"] { display: flex; gap: 4px; }
 .typing-dot { width: 7px; height: 7px; background: var(--text-muted); border-radius: 50%; animation: typingBounce 1.4s infinite; }
 .typing-dot:nth-child(2) { animation-delay: 0.2s; }
 .typing-dot:nth-child(3) { animation-delay: 0.4s; }
@@ -212,6 +238,228 @@ nav { background: white; padding: 12px 0; border-bottom: 1px solid var(--border-
 .filter-box select { padding: 12px 16px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 1rem; outline: none; min-width: 200px; cursor: pointer; }
 .filter-box select:focus { border-color: var(--brand-primary); }
 .no-results { text-align: center; padding: 40px; color: var(--text-muted); font-size: 1.1rem; display: none; }
+
+/* ========================================== */
+/* ENHANCED BUNDLE CARDS (Bingwa Sokoni Style) */
+/* ========================================== */
+.bundle-card {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 2px solid #e2e8f0;
+    transition: all 0.3s ease;
+    position: relative;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    display: flex;
+    flex-direction: column;
+}
+.bundle-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(37, 99, 235, 0.15);
+    border-color: var(--brand-primary);
+}
+.bundle-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: linear-gradient(135deg, #f59e0b, #ef4444);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4);
+    z-index: 10;
+}
+.bundle-badge.popular {
+    background: linear-gradient(135deg, #8b5cf6, #ec4899);
+    box-shadow: 0 4px 12px rgba(139, 92, 246, 0.4);
+}
+.bundle-badge.best-value {
+    background: linear-gradient(135deg, #10b981, #059669);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+}
+.bundle-image-container {
+    position: relative;
+    height: 180px;
+    overflow: hidden;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+.bundle-image-container.daily { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+.bundle-image-container.weekly { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
+.bundle-image-container.monthly { background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); }
+.bundle-image-container.special { background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); }
+.bundle-image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.85;
+    transition: transform 0.5s ease;
+}
+.bundle-card:hover .bundle-image-container img {
+    transform: scale(1.05);
+}
+.bundle-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 3.5rem;
+    color: white;
+    text-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    z-index: 2;
+}
+.bundle-validity {
+    position: absolute;
+    bottom: 12px;
+    left: 12px;
+    background: rgba(255,255,255,0.95);
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #0f172a;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    z-index: 2;
+}
+.bundle-body {
+    padding: 24px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+.bundle-name {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 8px;
+}
+.bundle-description {
+    font-size: 0.9rem;
+    color: #64748b;
+    line-height: 1.6;
+    margin-bottom: 16px;
+}
+.bundle-price-container {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+.bundle-price {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--brand-primary);
+}
+.bundle-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: auto;
+}
+.bundle-btn {
+    width: 100%;
+    padding: 14px 20px;
+    border: none;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+.bundle-add-to-cart {
+    background: var(--brand-primary);
+    color: white;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+.bundle-add-to-cart:hover {
+    background: var(--brand-secondary);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4);
+}
+.bundle-quick-buy {
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: white;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+.bundle-quick-buy:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4);
+}
+.bundle-features {
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid #e2e8f0;
+}
+.bundle-feature {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+    color: #475569;
+    margin-bottom: 6px;
+}
+.bundle-feature i {
+    color: #10b981;
+    font-size: 0.9rem;
+}
+
+/* Enhanced WhatsApp Float Button */
+.whatsapp-float {
+    position: fixed;
+    bottom: 30px;
+    left: 30px;
+    background-color: #25d366;
+    color: white;
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
+    z-index: 1000;
+    text-decoration: none;
+    animation: pulse-whatsapp 2s infinite;
+    transition: transform 0.3s ease;
+}
+.whatsapp-float:hover {
+    transform: scale(1.1);
+    color: white;
+}
+@keyframes pulse-whatsapp {
+    0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
+    70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+}
+/* Tooltip for WhatsApp */
+.whatsapp-float::after {
+    content: "Chat with us on WhatsApp!";
+    position: absolute;
+    left: 80px;
+    background: #333;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+}
+.whatsapp-float:hover::after {
+    opacity: 1;
+}
 </style>
 </head>
 <body>
@@ -290,6 +538,19 @@ nav { background: white; padding: 12px 0; border-bottom: 1px solid var(--border-
 <p>Welcome to SwiftMart. We provide top-tier digital services and premium products.</p>
 </div>
 </div>
+
+<!-- NEW: IMPROVED INSTANT ACTIVATION HIGHLIGHT BANNER (TWO BUTTONS) -->
+<div class="container" style="margin-bottom: 40px;">
+    <div style="background: linear-gradient(135deg, #2563eb, #1e40af); color: white; padding: 30px; border-radius: 16px; text-align: center; box-shadow: 0 10px 25px rgba(37, 99, 235, 0.2);">
+        <h2 style="margin-bottom: 10px; font-size: 1.8rem;"> Instant Activation Services</h2>
+        <p style="margin-bottom: 25px; opacity: 0.9; font-size: 1.1rem;">Get your Data Bundles, Web Hosting, and Digital Services delivered to your phone/email in minutes!</p>
+        <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+            <a href="#grid-databundles" style="background: white; color: #2563eb; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: bold; display: inline-block; transition: transform 0.2s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">📱 Shop Data Bundles</a>
+            <a href="#grid-services" style="background: rgba(255,255,255,0.2); color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: bold; display: inline-block; border: 2px solid white; transition: transform 0.2s;" onmouseover="this.style.transform='translateY(-2px)'; this.style.background='white'; this.style.color='#2563eb'" onmouseout="this.style.transform='translateY(0)'; this.style.background='rgba(255,255,255,0.2)'; this.style.color='white'">💼 Professional Services</a>
+        </div>
+    </div>
+</div>
+
 <div class="container">
 <div class="trust-badges">
 <div class="badge">
@@ -391,7 +652,7 @@ nav { background: white; padding: 12px 0; border-bottom: 1px solid var(--border-
 </div>
 </div>
 
-<!-- SMARTPHONES (Jumia Affiliate Only - No Prices) -->
+<!-- SMARTPHONES -->
 <div class="section-header" data-section="smartphones"><div class="section-divider"></div><h2>Smartphones</h2><p>Latest mobile devices</p></div>
 <div class="grid" id="grid-smartphones">
 <div class="card" data-category="smartphones">
@@ -404,7 +665,7 @@ nav { background: white; padding: 12px 0; border-bottom: 1px solid var(--border-
 </div>
 </div>
 
-<!-- TABLETS (Jumia Affiliate Only - No Prices) -->
+<!-- TABLETS -->
 <div class="section-header" data-section="tablets"><div class="section-divider"></div><h2>Computer Tablets</h2><p>iPads and Android Tablets</p></div>
 <div class="grid" id="grid-tablets">
 <div class="card" data-category="tablets">
@@ -413,7 +674,7 @@ nav { background: white; padding: 12px 0; border-bottom: 1px solid var(--border-
 </div>
 </div>
 
-<!-- LAPTOPS (Jumia Affiliate Only - No Prices) -->
+<!-- LAPTOPS -->
 <div class="section-header" data-section="laptops"><div class="section-divider"></div><h2>Laptops & Computers</h2><p>Powerful computing devices</p></div>
 <div class="grid" id="grid-laptops">
 <div class="card" data-category="laptops">
@@ -430,7 +691,7 @@ nav { background: white; padding: 12px 0; border-bottom: 1px solid var(--border-
 </div>
 </div>
 
-<!-- AUDIO (Jumia Affiliate Only - No Prices) -->
+<!-- AUDIO -->
 <div class="section-header" data-section="audio"><div class="section-divider"></div><h2>Audio & Headphones</h2><p>Premium sound quality</p></div>
 <div class="grid" id="grid-audio">
 <div class="card" data-category="audio">
@@ -443,7 +704,7 @@ nav { background: white; padding: 12px 0; border-bottom: 1px solid var(--border-
 </div>
 </div>
 
-<!-- PC SPEAKERS (Jumia Affiliate Only - No Prices) -->
+<!-- PC SPEAKERS -->
 <div class="section-header" data-section="pcspeakers"><div class="section-divider"></div><h2>PC Speakers</h2><p>Desktop Audio Systems</p></div>
 <div class="grid" id="grid-pcspeakers">
 <div class="card" data-category="pcspeakers">
@@ -452,7 +713,7 @@ nav { background: white; padding: 12px 0; border-bottom: 1px solid var(--border-
 </div>
 </div>
 
-<!-- ACCESSORIES (Jumia Affiliate Only - No Prices) -->
+<!-- ACCESSORIES -->
 <div class="section-header" data-section="accessories"><div class="section-divider"></div><h2>Computer Accessories</h2><p>Essential accessories</p></div>
 <div class="grid" id="grid-accessories">
 <div class="card" data-category="accessories">
@@ -473,7 +734,7 @@ nav { background: white; padding: 12px 0; border-bottom: 1px solid var(--border-
 </div>
 </div>
 
-<!-- FASHION (Jumia Affiliate Only - No Prices) -->
+<!-- FASHION -->
 <div class="section-header" data-section="fashion"><div class="section-divider"></div><h2>Fashion</h2><p>Style and comfort</p></div>
 <div class="grid" id="grid-fashion">
 <div class="card" data-category="fashion">
@@ -490,7 +751,7 @@ nav { background: white; padding: 12px 0; border-bottom: 1px solid var(--border-
 </div>
 </div>
 
-<!-- WATCHES (Jumia Affiliate Only - No Prices) -->
+<!-- WATCHES -->
 <div class="section-header" data-section="watches">
     <div class="section-divider"></div>
     <h2>Watches</h2>
@@ -506,7 +767,7 @@ nav { background: white; padding: 12px 0; border-bottom: 1px solid var(--border-
     </div>
 </div>
 
-<!-- HOME & KITCHEN (Jumia Affiliate Only - No Prices) -->
+<!-- HOME & KITCHEN -->
 <div class="section-header" data-section="home"><div class="section-divider"></div><h2>Home & Kitchen</h2><p>Enhance your living space</p></div>
 <div class="grid" id="grid-home">
 <div class="card" data-category="home">
@@ -523,7 +784,7 @@ nav { background: white; padding: 12px 0; border-bottom: 1px solid var(--border-
 </div>
 </div>
 
-<!-- BEAUTY (Jumia Affiliate Only - No Prices) -->
+<!-- BEAUTY -->
 <div class="section-header" data-section="beauty"><div class="section-divider"></div><h2>Beauty</h2><p>Look and feel your best</p></div>
 <div class="grid" id="grid-beauty">
 <div class="card" data-category="beauty">
@@ -536,7 +797,7 @@ nav { background: white; padding: 12px 0; border-bottom: 1px solid var(--border-
 </div>
 </div>
 
-<!-- HEALTH CARE (Jumia Affiliate Only - No Prices) -->
+<!-- HEALTH CARE -->
 <div class="section-header" data-section="healthcare"><div class="section-divider"></div><h2>Health Care</h2><p>Personal Health & Wellness</p></div>
 <div class="grid" id="grid-healthcare">
 <div class="card" data-category="healthcare">
@@ -545,113 +806,329 @@ nav { background: white; padding: 12px 0; border-bottom: 1px solid var(--border-
 </div>
 </div>
 
-<!-- DATA BUNDLES (Add to Cart + Quick Buy kept) -->
+<!-- DATA BUNDLES (ENHANCED BINGWA SOKONI STYLE) -->
 <div class="section-header" data-section="databundles">
-<div class="section-divider"></div>
-<h2>Exclusive Data Bundles & Offers</h2>
-<p>Stay connected with our favorable, high-speed data packages - Instant activation!</p>
+    <div class="section-divider"></div>
+    <h2>📱 Data Bundles & Offers</h2>
+    <p>Stay connected with our favorable, high-speed data packages - Instant activation!</p>
 </div>
-<div class="grid" id="grid-databundles">
-<div class="card" data-category="databundles">
-<img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=400&h=300&q=80" alt="500MB Weekly" class="card-image">
-<div class="card-body">
-<div class="card-name">500MB Weekly Bundle</div>
-<div class="card-description">Valid for 7 days. Perfect for light browsing and WhatsApp.</div>
-<div class="card-price">KES 30</div>
-<button class="action-btn" onclick="addToCart('500MB Weekly Bundle', 30)">Add to Cart</button>
-<button class="quick-buy-btn" onclick="quickBuyBundle('500MB Weekly Bundle', 30)">⚡ Quick Buy</button>
-</div>
-</div>
-<div class="card" data-category="databundles">
-<img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=400&h=300&q=80" alt="1GB Daily" class="card-image">
-<div class="card-body">
-<div class="card-name">1GB Daily Bundle</div>
-<div class="card-description">Valid for 24 hours. Perfect for quick browsing and social media.</div>
-<div class="card-price">KES 50</div>
-<button class="action-btn" onclick="addToCart('1GB Daily Bundle', 50)">Add to Cart</button>
-<button class="quick-buy-btn" onclick="quickBuyBundle('1GB Daily Bundle', 50)"> Quick Buy</button>
-</div>
-</div>
-<div class="card" data-category="databundles">
-<img src="https://images.unsplash.com/photo-1522869635100-9f4c5e86aa37?auto=format&fit=crop&w=400&h=300&q=80" alt="2GB Monthly" class="card-image">
-<div class="card-body">
-<div class="card-name">2GB Monthly Bundle</div>
-<div class="card-description">Valid for 30 days. Great for casual browsing and emails.</div>
-<div class="card-price">KES 250</div>
-<button class="action-btn" onclick="addToCart('2GB Monthly Bundle', 250)">Add to Cart</button>
-<button class="quick-buy-btn" onclick="quickBuyBundle('2GB Monthly Bundle', 250)">⚡ Quick Buy</button>
-</div>
-</div>
-<div class="card" data-category="databundles">
-<img src="https://images.unsplash.com/photo-1522869635100-9f4c5e86aa37?auto=format&fit=crop&w=400&h=300&q=80" alt="5GB Monthly" class="card-image">
-<div class="card-body">
-<div class="card-name">5GB Monthly Bundle</div>
-<div class="card-description">Valid for 30 days. Great for streaming and remote work.</div>
-<div class="card-price">KES 500</div>
-<button class="action-btn" onclick="addToCart('5GB Monthly Bundle', 500)">Add to Cart</button>
-<button class="quick-buy-btn" onclick="quickBuyBundle('5GB Monthly Bundle', 500)">⚡ Quick Buy</button>
-</div>
-</div>
-<div class="card" data-category="databundles">
-<img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=400&h=300&q=80" alt="10GB Monthly" class="card-image">
-<div class="card-body">
-<div class="card-name">10GB Monthly Bundle</div>
-<div class="card-description">Valid for 30 days. Heavy usage, downloads, and HD streaming.</div>
-<div class="card-price">KES 1,000</div>
-<button class="action-btn" onclick="addToCart('10GB Monthly Bundle', 1000)">Add to Cart</button>
-<button class="quick-buy-btn" onclick="quickBuyBundle('10GB Monthly Bundle', 1000)">⚡ Quick Buy</button>
-</div>
-</div>
-<div class="card" data-category="databundles">
-<img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=400&h=300&q=80" alt="20GB Monthly" class="card-image">
-<div class="card-body">
-<div class="card-name">20GB Monthly Bundle</div>
-<div class="card-description">Valid for 30 days. Power users, 4K streaming, large downloads.</div>
-<div class="card-price">KES 2,000</div>
-<button class="action-btn" onclick="addToCart('20GB Monthly Bundle', 2000)">Add to Cart</button>
-<button class="quick-buy-btn" onclick="quickBuyBundle('20GB Monthly Bundle', 2000)">⚡ Quick Buy</button>
-</div>
-</div>
-<div class="card" data-category="databundles">
-<img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=400&h=300&q=80" alt="Unlimited Weekend" class="card-image">
-<div class="card-body">
-<div class="card-name">Unlimited Weekend</div>
-<div class="card-description">Valid Friday 11 PM to Sunday 11:59 PM. Non-stop entertainment!</div>
-<div class="card-price">KES 150</div>
-<button class="action-btn" onclick="addToCart('Unlimited Weekend Bundle', 150)">Add to Cart</button>
-<button class="quick-buy-btn" onclick="quickBuyBundle('Unlimited Weekend Bundle', 150)">⚡ Quick Buy</button>
-</div>
-</div>
-<div class="card" data-category="databundles">
-<img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=400&h=300&q=80" alt="Midnight Bundle" class="card-image">
-<div class="card-body">
-<div class="card-name">Midnight Bundle (12AM-5AM)</div>
-<div class="card-description">5GB valid for 30 days, usable only between midnight and 5am.</div>
-<div class="card-price">KES 100</div>
-<button class="action-btn" onclick="addToCart('Midnight Bundle', 100)">Add to Cart</button>
-<button class="quick-buy-btn" onclick="quickBuyBundle('Midnight Bundle', 100)">⚡ Quick Buy</button>
-</div>
-</div>
-<div class="card" data-category="databundles">
-<img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=400&h=300&q=80" alt="Social Media Bundle" class="card-image">
-<div class="card-body">
-<div class="card-name">Social Media Bundle</div>
-<div class="card-description">Unlimited WhatsApp, Facebook & Instagram for 30 days.</div>
-<div class="card-price">KES 200</div>
-<button class="action-btn" onclick="addToCart('Social Media Bundle', 200)">Add to Cart</button>
-<button class="quick-buy-btn" onclick="quickBuyBundle('Social Media Bundle', 200)">⚡ Quick Buy</button>
-</div>
-</div>
-<div class="card" data-category="databundles">
-<img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=400&h=300&q=80" alt="Student Bundle" class="card-image">
-<div class="card-body">
-<div class="card-name">Student Bundle</div>
-<div class="card-description">15GB for online classes, valid for 30 days. Student ID required.</div>
-<div class="card-price">KES 800</div>
-<button class="action-btn" onclick="addToCart('Student Bundle', 800)">Add to Cart</button>
-<button class="quick-buy-btn" onclick="quickBuyBundle('Student Bundle', 800)">⚡ Quick Buy</button>
-</div>
-</div>
+<div class="grid" id="grid-databundles" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 32px;">
+    
+    <!-- KES 10 - Hourly Bundle -->
+    <div class="bundle-card">
+        <div class="bundle-image-container daily">
+            <img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=400&h=300&q=80" alt="Hourly Bundle">
+            <span class="bundle-icon">⏱️</span>
+            <div class="bundle-validity">
+                <i class="fas fa-clock"></i>
+                <span>1 Hour Validity</span>
+            </div>
+        </div>
+        <div class="bundle-body">
+            <h3 class="bundle-name">50MB Hourly Bundle</h3>
+            <p class="bundle-description">Quick browsing and urgent messages</p>
+            <div class="bundle-price-container">
+                <span class="bundle-price">KES 10</span>
+            </div>
+            <div class="bundle-actions">
+                <button class="bundle-btn bundle-add-to-cart" onclick="addToCart('50MB Hourly Bundle', 10)">
+                    <i class="fas fa-shopping-cart"></i> Add to Cart
+                </button>
+                <button class="bundle-btn bundle-quick-buy" onclick="quickBuyBundle('50MB Hourly Bundle', 10)">
+                    <i class="fas fa-bolt"></i> Quick Buy
+                </button>
+            </div>
+            <div class="bundle-features">
+                <div class="bundle-feature"><i class="fas fa-check-circle"></i> Instant Activation</div>
+                <div class="bundle-feature"><i class="fas fa-check-circle"></i> Perfect for Emergencies</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- KES 19 - Social Lite -->
+    <div class="bundle-card">
+        <div class="bundle-image-container" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+            <img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=400&h=300&q=80" alt="Social Lite">
+            <span class="bundle-icon">💬</span>
+            <div class="bundle-validity">
+                <i class="fas fa-clock"></i>
+                <span>3 Hours Validity</span>
+            </div>
+        </div>
+        <div class="bundle-body">
+            <h3 class="bundle-name">Social Lite Bundle</h3>
+            <p class="bundle-description">WhatsApp and light social media</p>
+            <div class="bundle-price-container">
+                <span class="bundle-price">KES 19</span>
+            </div>
+            <div class="bundle-actions">
+                <button class="bundle-btn bundle-add-to-cart" onclick="addToCart('Social Lite Bundle', 19)">
+                    <i class="fas fa-shopping-cart"></i> Add to Cart
+                </button>
+                <button class="bundle-btn bundle-quick-buy" onclick="quickBuyBundle('Social Lite Bundle', 19)">
+                    <i class="fas fa-bolt"></i> Quick Buy
+                </button>
+            </div>
+            <div class="bundle-features">
+                <div class="bundle-feature"><i class="fas fa-check-circle"></i> WhatsApp Only</div>
+                <div class="bundle-feature"><i class="fas fa-check-circle"></i> 3 Hours Access</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- KES 30 - 500MB Weekly -->
+    <div class="bundle-card">
+        <div class="bundle-image-container weekly">
+            <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=400&h=300&q=80" alt="Weekly Bundle">
+            <span class="bundle-icon">📶</span>
+            <div class="bundle-validity">
+                <i class="fas fa-clock"></i>
+                <span>7 Days Validity</span>
+            </div>
+        </div>
+        <div class="bundle-body">
+            <h3 class="bundle-name">500MB Weekly Bundle</h3>
+            <p class="bundle-description">Perfect for light browsing and WhatsApp</p>
+            <div class="bundle-price-container">
+                <span class="bundle-price">KES 30</span>
+            </div>
+            <div class="bundle-actions">
+                <button class="bundle-btn bundle-add-to-cart" onclick="addToCart('500MB Weekly Bundle', 30)">
+                    <i class="fas fa-shopping-cart"></i> Add to Cart
+                </button>
+                <button class="bundle-btn bundle-quick-buy" onclick="quickBuyBundle('500MB Weekly Bundle', 30)">
+                    <i class="fas fa-bolt"></i> Quick Buy
+                </button>
+            </div>
+            <div class="bundle-features">
+                <div class="bundle-feature"><i class="fas fa-check-circle"></i> Instant Activation</div>
+                <div class="bundle-feature"><i class="fas fa-check-circle"></i> 24/7 Support</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- KES 50 - 1GB Daily -->
+    <div class="bundle-card">
+        <div class="bundle-image-container daily">
+            <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=400&h=300&q=80" alt="Daily Bundle">
+            <span class="bundle-icon">⚡</span>
+            <div class="bundle-validity">
+                <i class="fas fa-clock"></i>
+                <span>24 Hours Validity</span>
+            </div>
+        </div>
+        <div class="bundle-body">
+            <h3 class="bundle-name">1GB Daily Bundle</h3>
+            <p class="bundle-description">Perfect for quick browsing and social media</p>
+            <div class="bundle-price-container">
+                <span class="bundle-price">KES 50</span>
+            </div>
+            <div class="bundle-actions">
+                <button class="bundle-btn bundle-add-to-cart" onclick="addToCart('1GB Daily Bundle', 50)">
+                    <i class="fas fa-shopping-cart"></i> Add to Cart
+                </button>
+                <button class="bundle-btn bundle-quick-buy" onclick="quickBuyBundle('1GB Daily Bundle', 50)">
+                    <i class="fas fa-bolt"></i> Quick Buy
+                </button>
+            </div>
+            <div class="bundle-features">
+                <div class="bundle-feature"><i class="fas fa-check-circle"></i> Instant Activation</div>
+                <div class="bundle-feature"><i class="fas fa-check-circle"></i> High Speed 4G</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- KES 100 - Midnight Bundle -->
+    <div class="bundle-card">
+        <div class="bundle-image-container" style="background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);">
+            <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=400&h=300&q=80" alt="Midnight Bundle">
+            <span class="bundle-icon">🌙</span>
+            <div class="bundle-validity">
+                <i class="fas fa-moon"></i>
+                <span>12AM - 5AM Daily</span>
+            </div>
+        </div>
+        <div class="bundle-body">
+            <h3 class="bundle-name">5GB Midnight Bundle</h3>
+            <p class="bundle-description">Download and stream during night hours</p>
+            <div class="bundle-price-container">
+                <span class="bundle-price">KES 100</span>
+            </div>
+            <div class="bundle-actions">
+                <button class="bundle-btn bundle-add-to-cart" onclick="addToCart('5GB Midnight Bundle', 100)">
+                    <i class="fas fa-shopping-cart"></i> Add to Cart
+                </button>
+                <button class="bundle-btn bundle-quick-buy" onclick="quickBuyBundle('5GB Midnight Bundle', 100)">
+                    <i class="fas fa-bolt"></i> Quick Buy
+                </button>
+            </div>
+            <div class="bundle-features">
+                <div class="bundle-feature"><i class="fas fa-check-circle"></i> Valid for 30 Days</div>
+                <div class="bundle-feature"><i class="fas fa-check-circle"></i> Night Owl Special</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- KES 150 - Unlimited Weekend -->
+    <div class="bundle-card">
+        <span class="bundle-badge popular">Popular</span>
+        <div class="bundle-image-container special">
+            <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=400&h=300&q=80" alt="Weekend Bundle">
+            <span class="bundle-icon"></span>
+            <div class="bundle-validity">
+                <i class="fas fa-calendar-weekend"></i>
+                <span>Fri 11PM - Sun 11:59PM</span>
+            </div>
+        </div>
+        <div class="bundle-body">
+            <h3 class="bundle-name">Unlimited Weekend</h3>
+            <p class="bundle-description">Non-stop entertainment all weekend!</p>
+            <div class="bundle-price-container">
+                <span class="bundle-price">KES 150</span>
+            </div>
+            <div class="bundle-actions">
+                <button class="bundle-btn bundle-add-to-cart" onclick="addToCart('Unlimited Weekend Bundle', 150)">
+                    <i class="fas fa-shopping-cart"></i> Add to Cart
+                </button>
+                <button class="bundle-btn bundle-quick-buy" onclick="quickBuyBundle('Unlimited Weekend Bundle', 150)">
+                    <i class="fas fa-bolt"></i> Quick Buy
+                </button>
+            </div>
+            <div class="bundle-features">
+                <div class="bundle-feature"><i class="fas fa-check-circle"></i> Unlimited Data</div>
+                <div class="bundle-feature"><i class="fas fa-check-circle"></i> All Networks</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- KES 200 - Social Media Bundle -->
+    <div class="bundle-card">
+        <div class="bundle-image-container" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+            <img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=400&h=300&q=80" alt="Social Media Bundle">
+            <span class="bundle-icon">📱</span>
+            <div class="bundle-validity">
+                <i class="fas fa-clock"></i>
+                <span>30 Days Validity</span>
+            </div>
+        </div>
+        <div class="bundle-body">
+            <h3 class="bundle-name">Social Media Bundle</h3>
+            <p class="bundle-description">Unlimited WhatsApp, Facebook & Instagram</p>
+            <div class="bundle-price-container">
+                <span class="bundle-price">KES 200</span>
+            </div>
+            <div class="bundle-actions">
+                <button class="bundle-btn bundle-add-to-cart" onclick="addToCart('Social Media Bundle', 200)">
+                    <i class="fas fa-shopping-cart"></i> Add to Cart
+                </button>
+                <button class="bundle-btn bundle-quick-buy" onclick="quickBuyBundle('Social Media Bundle', 200)">
+                    <i class="fas fa-bolt"></i> Quick Buy
+                </button>
+            </div>
+            <div class="bundle-features">
+                <div class="bundle-feature"><i class="fas fa-check-circle"></i> Unlimited Social Apps</div>
+                <div class="bundle-feature"><i class="fas fa-check-circle"></i> No Data Deduction</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- KES 250 - 2GB Monthly -->
+    <div class="bundle-card">
+        <div class="bundle-image-container monthly">
+            <img src="https://images.unsplash.com/photo-1522869635100-9f4c5e86aa37?auto=format&fit=crop&w=400&h=300&q=80" alt="Monthly Bundle">
+            <span class="bundle-icon">📅</span>
+            <div class="bundle-validity">
+                <i class="fas fa-clock"></i>
+                <span>30 Days Validity</span>
+            </div>
+        </div>
+        <div class="bundle-body">
+            <h3 class="bundle-name">2GB Monthly Bundle</h3>
+            <p class="bundle-description">Great for casual browsing and emails</p>
+            <div class="bundle-price-container">
+                <span class="bundle-price">KES 250</span>
+            </div>
+            <div class="bundle-actions">
+                <button class="bundle-btn bundle-add-to-cart" onclick="addToCart('2GB Monthly Bundle', 250)">
+                    <i class="fas fa-shopping-cart"></i> Add to Cart
+                </button>
+                <button class="bundle-btn bundle-quick-buy" onclick="quickBuyBundle('2GB Monthly Bundle', 250)">
+                    <i class="fas fa-bolt"></i> Quick Buy
+                </button>
+            </div>
+            <div class="bundle-features">
+                <div class="bundle-feature"><i class="fas fa-check-circle"></i> Monthly Validity</div>
+                <div class="bundle-feature"><i class="fas fa-check-circle"></i> Email Friendly</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- KES 500 - 5GB Monthly (BEST VALUE) -->
+    <div class="bundle-card">
+        <span class="bundle-badge best-value">Best Value</span>
+        <div class="bundle-image-container monthly">
+            <img src="https://images.unsplash.com/photo-1522869635100-9f4c5e86aa37?auto=format&fit=crop&w=400&h=300&q=80" alt="Monthly Bundle">
+            <span class="bundle-icon"></span>
+            <div class="bundle-validity">
+                <i class="fas fa-clock"></i>
+                <span>30 Days Validity</span>
+            </div>
+        </div>
+        <div class="bundle-body">
+            <h3 class="bundle-name">5GB Monthly Bundle</h3>
+            <p class="bundle-description">Great for streaming and remote work</p>
+            <div class="bundle-price-container">
+                <span class="bundle-price">KES 500</span>
+                <!-- NEW: Urgency Badge with Discount -->
+                <span style="text-decoration: line-through; color: #94a3b8; font-size: 0.9rem; margin-left: 8px;">KES 650</span>
+            </div>
+            <div class="bundle-actions">
+                <button class="bundle-btn bundle-add-to-cart" onclick="addToCart('5GB Monthly Bundle', 500)">
+                    <i class="fas fa-shopping-cart"></i> Add to Cart
+                </button>
+                <button class="bundle-btn bundle-quick-buy" onclick="quickBuyBundle('5GB Monthly Bundle', 500)">
+                    <i class="fas fa-bolt"></i> Quick Buy
+                </button>
+            </div>
+            <div class="bundle-features">
+                <div class="bundle-feature"><i class="fas fa-check-circle"></i> Best Value for Money</div>
+                <div class="bundle-feature"><i class="fas fa-check-circle"></i> HD Streaming Ready</div>
+                <div class="bundle-feature"><i class="fas fa-check-circle"></i> Unlimited Night Data</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- KES 1000 - 10GB Monthly -->
+    <div class="bundle-card">
+        <div class="bundle-image-container monthly">
+            <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=400&h=300&q=80" alt="10GB Bundle">
+            <span class="bundle-icon">💎</span>
+            <div class="bundle-validity">
+                <i class="fas fa-clock"></i>
+                <span>30 Days Validity</span>
+            </div>
+        </div>
+        <div class="bundle-body">
+            <h3 class="bundle-name">10GB Monthly Bundle</h3>
+            <p class="bundle-description">Heavy usage, downloads, and HD streaming</p>
+            <div class="bundle-price-container">
+                <span class="bundle-price">KES 1,000</span>
+            </div>
+            <div class="bundle-actions">
+                <button class="bundle-btn bundle-add-to-cart" onclick="addToCart('10GB Monthly Bundle', 1000)">
+                    <i class="fas fa-shopping-cart"></i> Add to Cart
+                </button>
+                <button class="bundle-btn bundle-quick-buy" onclick="quickBuyBundle('10GB Monthly Bundle', 1000)">
+                    <i class="fas fa-bolt"></i> Quick Buy
+                </button>
+            </div>
+            <div class="bundle-features">
+                <div class="bundle-feature"><i class="fas fa-check-circle"></i> 4K Streaming Ready</div>
+                <div class="bundle-feature"><i class="fas fa-check-circle"></i> Large Downloads</div>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 <!-- Checkout Section -->
@@ -723,19 +1200,51 @@ nav { background: white; padding: 12px 0; border-bottom: 1px solid var(--border-
 </div>
 </div>
 
+<!-- Lead Capture Section -->
+<section style="background: linear-gradient(135deg, #1e40af 0%, #2563eb 100%); padding: 60px 20px; text-align: center; color: white;">
+    <div class="container" style="max-width: 600px;">
+        <h2 style="font-size: 1.8rem; margin-bottom: 12px;">Get 10% OFF Your First Order! 💸</h2>
+        <p style="margin-bottom: 24px; opacity: 0.9;">Join 500+ happy customers. Subscribe to our newsletter for exclusive discounts, new bundle alerts, and tech tips.</p>
+        <form id="leadCaptureForm" style="display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;">
+            <input type="email" placeholder="Enter your email address" required 
+                   style="flex: 1; min-width: 250px; padding: 14px; border-radius: 8px; border: none; font-size: 1rem;">
+            <button type="submit" 
+                    style="background: #f59e0b; color: #0f172a; padding: 14px 28px; border: none; border-radius: 8px; font-weight: 800; font-size: 1rem; cursor: pointer; transition: transform 0.2s;">
+                Claim My Discount
+            </button>
+        </form>
+        <p id="leadSuccessMsg" style="display: none; margin-top: 16px; color: #86efac; font-weight: 600;">✅ Success! Check your email for the discount code.</p>
+    </div>
+</section>
+
+<script>
+    // Simple Lead Capture Logic
+    document.getElementById('leadCaptureForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const email = this.querySelector('input[type="email"]').value;
+        
+        // Send to your existing newsletter endpoint
+        fetch('/api/newsletter/subscribe', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: email })
+        }).then(() => {
+            this.style.display = 'none';
+            document.getElementById('leadSuccessMsg').style.display = 'block';
+        });
+    });
+</script>
+
 <!-- MODERN FOOTER -->
 <footer class="modern-footer">
 <div class="footer-container">
 <div class="footer-section">
 <h3 class="footer-logo">SwiftMart</h3>
-<p class="footer-description">
-Your trusted destination for top-tier digital services and premium products. We deliver quality, speed, and excellence to every customer.
-</p>
+<p class="footer-description">Your trusted destination for top-tier digital services and premium products.</p>
 <div class="social-links">
 <a href="#" class="social-icon" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
 <a href="#" class="social-icon" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
 <a href="#" class="social-icon" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-<a href="#" class="social-icon" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
 </div>
 </div>
 <div class="footer-section">
@@ -746,7 +1255,6 @@ Your trusted destination for top-tier digital services and premium products. We 
 <li><a href="https://jforce.jumia.co.ke/s/HhGX6Ds" target="_blank" style="color: #f57c00; font-weight: bold;">🛒 Shop All on Jumia</a></li>
 <li><a href="#" onclick="openModal('about'); return false;">About Us</a></li>
 <li><a href="#" onclick="openModal('contact'); return false;">Contact</a></li>
-<li><a href="#" onclick="openModal('blog'); return false;">Blog</a></li>
 </ul>
 </div>
 <div class="footer-section">
@@ -764,41 +1272,13 @@ Your trusted destination for top-tier digital services and premium products. We 
 <h4>Contact Us</h4>
 <ul class="contact-info">
 <li><i class="fas fa-map-marker-alt"></i><span>Nairobi, Kenya</span></li>
-<li><i class="fas fa-phone"></i><span><a href="tel:+254754427226">+254 754 427 226</a></span></li>
+<li><i class="fab fa-whatsapp"></i><span><a href="https://wa.me/254754427226?text=Hello%20SwiftMart,%20I%20have%20a%20question%20about%20an%20order." target="_blank" style="color: #25d366; font-weight: bold;">Chat on WhatsApp 💬</a></span></li>
 <li><i class="fas fa-envelope"></i><span><a href="mailto:support@swiftmartkenya.co.ke">support@swiftmartkenya.co.ke</a></span></li>
-<li><i class="fas fa-clock"></i><span>Mon - Sat: 8:00 AM - 6:00 PM</span></li>
 </ul>
-</div>
-<div class="footer-section newsletter-section">
-<h4>Stay Updated</h4>
-<p class="newsletter-text">Subscribe to get special offers, free giveaways, and exclusive deals.</p>
-<form class="newsletter-form" id="newsletterForm">
-<input type="email" id="newsletterEmail" placeholder="Enter your email" required>
-<button type="submit">Subscribe</button>
-</form>
-</div>
-</div>
-
-<!-- AFFILIATE DISCLOSURE (Required by Jumia & Kenyan Law) -->
-<div style="max-width: 1200px; margin: 0 auto; padding: 20px; text-align: center; border-top: 1px solid rgba(255, 255, 255, 0.1);">
-    <p style="font-size: 0.8rem; color: #94a3b8; line-height: 1.5;">
-        <strong>Affiliate Disclosure:</strong> Swift Mart Kenya participates in the Jumia Affiliate Program. 
-        When you click on "Buy on Jumia" links and make a qualifying purchase, we may earn a small commission at no extra cost to you. 
-        This helps us keep our digital services affordable and our platform running. Thank you for your support!
-    </p>
-</div>
-
-<div class="payment-methods">
-<span>We Accept:</span>
-<div class="payment-icons">
-<i class="fab fa-cc-visa"></i>
-<i class="fab fa-cc-mastercard"></i>
-<i class="fab fa-cc-paypal"></i>
-<span class="mpesa-badge">M-Pesa</span>
 </div>
 </div>
 <div class="footer-bottom">
-<p>&copy; 2026 SwiftMart. All rights reserved. | Designed with <i class="fas fa-heart"></i> in Kenya</p>
+<p>&copy; 2026 SwiftMart. All rights reserved.</p>
 </div>
 </footer>
 
@@ -817,6 +1297,10 @@ Your trusted destination for top-tier digital services and premium products. We 
 <h2 id="bundleModalTitle">Activate Bundle</h2>
 <p class="bundle-desc" id="bundleModalDesc">Enter your Safaricom number for instant activation.</p>
 <div class="bundle-price-display" id="bundleModalPrice">KES 0</div>
+
+<!-- ADDED MESSAGE BOX FOR PAYMENT ERRORS/SUCCESS -->
+<div id="bundleMessageBox" class="message" style="display: none;"></div>
+
 <form id="bundleForm" onsubmit="processBundlePayment(event)">
 <div class="form-group">
 <label for="bundleEmail">Email Address</label>
@@ -825,232 +1309,48 @@ Your trusted destination for top-tier digital services and premium products. We 
 <div class="form-group">
 <label for="bundlePhone">Safaricom Number (e.g., 0712345678)</label>
 <input type="tel" id="bundlePhone" placeholder="0712345678" pattern="07[0-9]{8}" required>
-<small style="color: var(--text-muted); display: block; margin-top: 4px;">The bundle will be sent to this number.</small>
 </div>
-<button type="submit" class="pay-btn" id="bundlePayBtn">
-<i class="fas fa-lock"></i> Pay Securely via Paystack
-</button>
+<button type="submit" class="pay-btn" id="bundlePayBtn">Pay Securely via Paystack</button>
 </form>
-<div id="bundleMessageBox" class="message"></div>
 </div>
 </div>
 
 <!-- AI Chatbot Window -->
 <div class="chat-window" id="chatWindow">
-<div class="chat-header">
-<div class="chat-agent-avatar" id="chatAvatar">🤖</div>
-<div class="chat-agent-info">
-<div class="chat-agent-name" id="chatAgentName">SwiftMart AI</div>
-<div class="chat-agent-status">Online • Ready to help</div>
-</div>
-<button class="chat-close" onclick="toggleChat()"><i class="fas fa-times"></i></button>
-</div>
-<div class="chat-messages" id="chatMessages"></div>
-<div class="typing-indicator" id="typingIndicator">
-<div class="typing-dot"></div>
-<div class="typing-dot"></div>
-<div class="typing-dot"></div>
-</div>
-<div class="chat-quick-actions">
-<button class="quick-action-btn" onclick="sendQuickMessage('Track my order')">📦 Track Order</button>
-<button class="quick-action-btn" onclick="sendQuickMessage('Data bundle help')">📶 Bundles</button>
-<button class="quick-action-btn" onclick="sendQuickMessage('Payment issue')">💳 Payment</button>
-<button class="quick-action-btn" onclick="sendQuickMessage('Shipping info')">🚚 Shipping</button>
-</div>
-<div class="chat-input-area">
-<input type="text" class="chat-input" id="chatInput" placeholder="Type your message..." onkeypress="handleChatKeyPress(event)">
-<button class="chat-send" onclick="sendChatMessage()"><i class="fas fa-paper-plane"></i></button>
-</div>
+    <div class="chat-header">
+        <div class="chat-agent-avatar" id="chatAvatar">🤖</div>
+        <div class="chat-agent-info">
+            <div class="chat-agent-name" id="chatAgentName">SwiftMart AI</div>
+            <div class="chat-agent-status">Online • Ready to help</div>
+        </div>
+        <button class="chat-close" onclick="toggleChat()"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="chat-messages" id="chatMessages"></div>
+    <div class="typing-indicator" id="typingIndicator">
+        <div class="typing-dot"></div>
+        <div class="typing-dot"></div>
+        <div class="typing-dot"></div>
+    </div>
+    <div class="chat-quick-actions">
+        <button class="quick-action-btn" onclick="sendQuickMessage('Track my order')">📦 Track Order</button>
+        <button class="quick-action-btn" onclick="sendQuickMessage('Data bundle help')">📶 Bundles</button>
+        <button class="quick-action-btn" onclick="sendQuickMessage('Payment issue')">💳 Payment</button>
+    </div>
+    <div class="chat-input-area">
+        <input type="text" class="chat-input" id="chatInput" placeholder="Type your message..." onkeypress="handleChatKeyPress(event)">
+        <button class="chat-send" onclick="sendChatMessage()"><i class="fas fa-paper-plane"></i></button>
+    </div>
 </div>
 
-<!-- Load the centralized App.js (Cart, Chatbot, Auth, Jumia Links) -->
+<!-- WhatsApp Floating Button -->
+<a href="https://wa.me/254754427226?text=Hi%20SwiftMart,%20I'm%20interested%20in%20your%20services/products!" 
+   class="whatsapp-float" 
+   target="_blank" 
+   aria-label="Chat on WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+</a>
+
+<!-- Load the centralized App.js (Handles Cart, Modals, Chatbot, and Payments) -->
 <script src="/js/app.js"></script>
-
-<script>
-// --- SEARCH & FILTER LOGIC (Homepage Only) ---
-function filterProducts() {
-    const searchText = document.getElementById('searchInput').value.toLowerCase();
-    const selectedCategory = document.getElementById('categoryFilter').value;
-    const cards = document.querySelectorAll('.card');
-    const sectionHeaders = document.querySelectorAll('.section-header');
-    let visibleCount = 0;
-    cards.forEach(card => {
-        const cardCategory = card.getAttribute('data-category');
-        const cardName = card.querySelector('.card-name').textContent.toLowerCase();
-        const cardDesc = card.querySelector('.card-description').textContent.toLowerCase();
-        const matchesSearch = cardName.includes(searchText) || cardDesc.includes(searchText);
-        const matchesCategory = selectedCategory === 'all' || cardCategory === selectedCategory;
-        if (matchesSearch && matchesCategory) { card.style.display = 'flex'; visibleCount++; } 
-        else { card.style.display = 'none'; }
-    });
-    sectionHeaders.forEach(header => {
-        const sectionId = header.getAttribute('data-section');
-        const grid = document.getElementById('grid-' + sectionId);
-        if (grid) {
-            let hasVisible = false;
-            grid.querySelectorAll('.card').forEach(c => { if (c.style.display !== 'none') hasVisible = true; });
-            header.style.display = hasVisible ? 'block' : 'none';
-            grid.style.display = hasVisible ? 'grid' : 'none';
-        }
-    });
-    document.getElementById('noResults').style.display = visibleCount === 0 ? 'block' : 'none';
-}
-const navSearchInput = document.getElementById('navSearchInput');
-if (navSearchInput) {
-    navSearchInput.addEventListener('input', function() {
-        const mainSearchInput = document.getElementById('searchInput');
-        if (mainSearchInput) { mainSearchInput.value = this.value; }
-        filterProducts();
-    });
-}
-
-// --- PAYMENT LOGIC (Paystack Only) ---
-async function payWithPaystack() {
-    if (typeof cart === 'undefined' || cart.length === 0) return;
-    const email = document.getElementById('email').value;
-    const phone = document.getElementById('phone').value;
-    const amount = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
-    const product = cart.map(item => `${item.name} (x${item.qty})`).join(', ');
-    const messageBox = document.getElementById('messageBox');
-    if (!email) { messageBox.textContent = '❌ Please enter your email address.'; messageBox.className = 'message error'; messageBox.style.display = 'block'; return; }
-    if (!phone || phone.length !== 12 || !phone.startsWith('254')) { messageBox.textContent = '❌ Please enter a valid M-Pesa number (Format: 2547XXXXXXXX)'; messageBox.className = 'message error'; messageBox.style.display = 'block'; return; }
-    messageBox.style.display = 'none';
-    const btn = document.getElementById('globalPayBtn');
-    const originalText = btn.innerHTML;
-    btn.disabled = true; btn.innerHTML = '<div class="spinner" style="display: block;"></div> Processing...';
-    try {
-        const response = await fetch('/api/paystack/initialize', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email, amount, productName: product, phone }) });
-        const data = await response.json();
-        if (data.authorization_url) { window.location.href = data.authorization_url; } 
-        else { messageBox.textContent = '❌ Could not start payment. Please try again.'; messageBox.className = 'message error'; messageBox.style.display = 'block'; btn.disabled = false; btn.innerHTML = originalText; }
-    } catch (error) { console.error('Payment error:', error); messageBox.textContent = '❌ Network error. Please check your connection and try again.'; messageBox.className = 'message error'; messageBox.style.display = 'block'; btn.disabled = false; btn.innerHTML = originalText; }
-}
-
-// --- BUNDLE QUICK BUY LOGIC ---
-let currentBundle = { name: '', price: 0 };
-function quickBuyBundle(name, price) {
-    currentBundle = { name, price };
-    document.getElementById('bundleModalTitle').textContent = 'Activate: ' + name;
-    document.getElementById('bundleModalPrice').textContent = 'KES ' + price.toLocaleString();
-    document.getElementById('bundleMessageBox').style.display = 'none';
-    document.getElementById('bundleModal').classList.add('active');
-    document.body.style.overflow = 'hidden';
-}
-function closeBundleModal() { document.getElementById('bundleModal').classList.remove('active'); document.body.style.overflow = 'auto'; }
-async function processBundlePayment(e) {
-    e.preventDefault();
-    const email = document.getElementById('bundleEmail').value;
-    const phone = document.getElementById('bundlePhone').value;
-    const messageBox = document.getElementById('bundleMessageBox');
-    const btn = document.getElementById('bundlePayBtn');
-    let formattedPhone = phone;
-    if (phone.startsWith('0')) { formattedPhone = '254' + phone.substring(1); }
-    messageBox.style.display = 'none';
-    const originalText = btn.innerHTML;
-    btn.disabled = true; btn.innerHTML = '<div class="spinner" style="display: block;"></div> Processing...';
-    try {
-        const response = await fetch('/api/paystack/initialize', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email, amount: currentBundle.price, productName: currentBundle.name, phone: formattedPhone }) });
-        const data = await response.json();
-        if (data.authorization_url) { window.location.href = data.authorization_url; } 
-        else { messageBox.textContent = '❌ Could not start payment.'; messageBox.className = 'message error'; messageBox.style.display = 'block'; btn.disabled = false; btn.innerHTML = originalText; }
-    } catch (error) { console.error('Payment error:', error); messageBox.textContent = '❌ Network error.'; messageBox.className = 'message error'; messageBox.style.display = 'block'; btn.disabled = false; btn.innerHTML = originalText; }
-}
-
-// --- STOCK LEVELS CHECK ---
-async function checkStockLevels() {
-    try {
-        const res = await fetch('/api/products');
-        const data = await res.json();
-        if (data.products) {
-            data.products.forEach(dbProduct => {
-                const buttons = document.querySelectorAll('.action-btn');
-                buttons.forEach(btn => {
-                    if (btn.getAttribute('onclick') && btn.getAttribute('onclick').includes(`'${dbProduct.name}'`)) {
-                        if (dbProduct.stock <= 0) { btn.textContent = 'Out of Stock'; btn.disabled = true; btn.style.background = '#94a3b8'; btn.style.cursor = 'not-allowed'; } 
-                        else { btn.textContent = `Add to Cart (${dbProduct.stock} left)`; }
-                    }
-                });
-            });
-        }
-    } catch (error) { console.error('Stock check error:', error); }
-}
-checkStockLevels();
-
-// --- REVIEW LOGIC ---
-loadReviews();
-async function loadReviews() {
-    const list = document.getElementById('reviewsList');
-    try {
-        const res = await fetch('/api/reviews');
-        const data = await res.json();
-        if (data.reviews && data.reviews.length > 0) {
-            list.innerHTML = data.reviews.map(r => `<div style="border-bottom: 1px solid var(--border-color); padding: 12px 0;"><div style="display: flex; justify-content: space-between; margin-bottom: 4px;"><strong>${r.productName}</strong><span style="color: #f59e0b;">${'⭐'.repeat(r.rating)}</span></div><p style="font-size: 0.875rem; color: var(--text-main); margin-bottom: 4px; font-style: italic;">"${r.comment}"</p><small style="color: var(--text-muted);">- ${r.author}</small></div>`).join('');
-        } else { list.innerHTML = '<p style="color: var(--text-muted); text-align: center; padding: 20px;">No approved reviews yet. Be the first!</p>'; }
-    } catch (error) { list.innerHTML = '<p style="color: red; text-align: center; padding: 20px;">Failed to load reviews.</p>'; }
-}
-document.getElementById('reviewForm').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const msg = document.getElementById('reviewMessage');
-    msg.textContent = 'Submitting...'; msg.style.color = 'var(--text-muted)';
-    try {
-        const res = await fetch('/api/reviews', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ productName: document.getElementById('reviewProduct').value, author: document.getElementById('reviewAuthor').value, rating: parseInt(document.getElementById('reviewRating').value), comment: document.getElementById('reviewComment').value }) });
-        const data = await res.json();
-        if (data.success) { msg.textContent = '✅ ' + data.message; msg.style.color = '#065f46'; document.getElementById('reviewForm').reset(); } 
-        else { msg.textContent = ' Failed to submit.'; msg.style.color = '#991b1b'; }
-    } catch (error) { msg.textContent = '❌ Network error.'; msg.style.color = '#991b1b'; }
-});
-
-// --- NEWSLETTER SUBSCRIPTION ---
-document.getElementById('newsletterForm').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const emailInput = document.getElementById('newsletterEmail');
-    const email = emailInput.value.trim();
-    if (!email) { showToast('❌ Please enter a valid email address.', '#991b1b'); return; }
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) { showToast('❌ Please enter a valid email format.', '#991b1b'); return; }
-    try {
-        const res = await fetch('/api/newsletter/subscribe', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email }) });
-        if (res.ok) { showToast('✅ Successfully subscribed! Welcome to SwiftMart.', '#065f46'); emailInput.value = ''; } 
-        else { showToast('✅ Thanks for subscribing! We\'ll keep you updated.', '#065f46'); emailInput.value = ''; }
-    } catch (error) { console.log('Newsletter email captured:', email); showToast('✅ Thanks for subscribing! We\'ll keep you updated.', '#065f46'); emailInput.value = ''; }
-});
-
-// --- FOOTER MODAL CONTENT & LOGIC (EXPANDED) ---
-const modalContent = {
-    about: `<h2>About SwiftMart</h2><p>SwiftMart is Kenya's trusted destination for top-tier digital services and premium products. Founded with a mission to deliver quality, speed, and excellence to every customer, we bridge the gap between professional services and everyday needs.</p><h3>Our Mission</h3><p>To empower Kenyan consumers and businesses with accessible, affordable, and reliable digital and physical products.</p><h3>Our Vision</h3><p>To become East Africa's most trusted e-commerce platform by 2030.</p><h3>Why Choose Us?</h3><ul><li>Secure M-Pesa and card payments via Paystack</li><li>Fast delivery across Kenya</li><li>24/7 AI-powered customer support</li><li>Quality guaranteed on every product</li></ul>`,
-    contact: `<h2>Contact Us</h2><p>We'd love to hear from you! Reach out to us through any of the channels below.</p><div class="contact-grid"><div class="contact-item"><strong>📍 Location</strong>Nairobi, Kenya</div><div class="contact-item"><strong>📞 Phone</strong><a href="tel:+254754427226">+254 754 427 226</a></div><div class="contact-item"><strong>✉️ Email</strong><a href="mailto:support@swiftmartkenya.co.ke">support@swiftmartkenya.co.ke</a></div><div class="contact-item"><strong>🕒 Hours</strong>Mon - Sat: 8:00 AM - 6:00 PM</div></div><h3>Instant AI Support</h3><p>Click the headset icon at the bottom right to chat with our AI assistant for instant help!</p>`,
-    blog: `<h2>SwiftMart Blog</h2><p> <strong>Coming Soon!</strong></p><p>We're working on exciting articles about tech trends, product reviews, business tips, and exclusive deals. Check back soon for our first post!</p><h3>What's Coming:</h3><ul><li>Weekly product reviews and comparisons</li><li>Tech tips for Kenyan businesses</li><li>Exclusive discount codes for subscribers</li><li>Success stories from our customers</li></ul><p>Subscribe to our newsletter to be notified when we launch!</p>`,
-    returns: `<h2>Returns & Refunds Policy</h2><p>At SwiftMart, your satisfaction is our priority. Here's how our returns process works:</p><h3>Return Window</h3><p>You may request a return within <strong>7 days</strong> of receiving your product. Digital services are non-refundable once delivered.</p><h3>Eligible Items</h3><ul><li>Products must be unused and in original packaging</li><li>Physical items must not show signs of wear</li><li>Defective items qualify for full refund or replacement</li></ul><h3>How to Request a Return</h3><ol><li>Contact us via chat or email with your order number</li><li>Provide photos of the item (if applicable)</li><li>Once approved, return the item to our Nairobi office</li><li>Refunds are processed within 5-7 business days via M-Pesa</li></ol><h3>Non-Refundable Items</h3><ul><li>Digital services (web design, hosting, consultation)</li><li>Data bundles and airtime</li><li>Customized or personalized products</li></ul>`,
-    shipping: `<h2>Shipping Information</h2><p>We deliver across Kenya with speed and reliability.</p><h3>Delivery Options</h3><ul><li><strong>Nairobi Metro:</strong> Same-day or next-day delivery (KES 200-300)</li><li><strong>Major Towns:</strong> 1-3 business days (KES 350-500)</li><li><strong>Remote Areas:</strong> 3-5 business days (KES 500-800)</li></ul><h3>Digital Services</h3><p>Digital services (web design, hosting, social media setup) are delivered electronically within the agreed timeframe — no shipping required!</p><h3>Data Bundles</h3><p>Data bundles are activated instantly upon payment confirmation via M-Pesa. WhatsApp your confirmation code to +254 754 427 226 for immediate activation.</p><h3>Tracking Your Order</h3><p>Once your order ships, you'll receive an SMS with tracking details. You can also check your order status in the "My Orders" section of your account.</p>`,
-    faq: `<h2>Frequently Asked Questions</h2><h3>How do I place an order?</h3><p>Browse our products, click "Add to Cart", then proceed to checkout. You can pay via M-Pesa or card.</p><h3>Is my payment secure?</h3><p>Yes! We use Paystack, a PCI-DSS compliant payment processor. Your card details are never stored on our servers.</p><h3>How do I receive my data bundle?</h3><p>After payment, WhatsApp your M-Pesa confirmation code to +254 754 427 226. Your bundle will be activated within 5 minutes.</p><h3>Do you offer warranties?</h3><p>Yes, all physical products come with a manufacturer warranty. Digital services include a 30-day support window.</p><h3>Can I change my order after placing it?</h3><p>Contact us within 1 hour of placing your order. After that, changes depend on whether the item has shipped.</p><h3>How do I contact support?</h3><p>Use our AI chatbot (headset icon) for instant help, or WhatsApp us at +254 754 427 226. We respond within 2 hours during business hours.</p>`,
-    privacy: `<h2>Privacy Policy</h2><p><em>Last updated: October 2026</em></p><p>SwiftMart ("we", "our", "us") is committed to protecting your privacy. This policy explains how we collect, use, and safeguard your information.</p><h3>Information We Collect</h3><ul><li><strong>Personal Info:</strong> Name, email, phone number (for order processing)</li><li><strong>Payment Info:</strong> Processed securely via Paystack — we never store card details</li><li><strong>Usage Data:</strong> Browser type, pages visited (for improving our service)</li></ul><h3>How We Use Your Info</h3><ul><li>To process and deliver your orders</li><li>To send order confirmations and updates</li><li>To improve our website and services</li><li>To send promotional offers (only if you subscribe)</li></ul><h3>Your Rights</h3><p>You can request to view, update, or delete your personal data at any time by contacting us.</p><h3>Data Security</h3><p>We use industry-standard encryption and secure servers. Your data is never sold to third parties.</p>`,
-    terms: `<h2>Terms & Conditions</h2><p><em>Last updated: October 2026</em></p><p>By using SwiftMart, you agree to the following terms:</p><h3>1. Acceptance of Terms</h3><p>Using our website constitutes acceptance of these terms. If you disagree, please do not use our services.</p><h3>2. Products & Services</h3><p>We strive for accuracy in product descriptions and pricing. However, we reserve the right to correct errors and update prices without prior notice.</p><h3>3. Payments</h3><p>All payments are processed securely via Paystack. Prices are in Kenyan Shillings (KES) and include applicable taxes.</p><h3>4. User Accounts</h3><p>You are responsible for maintaining the confidentiality of your account credentials and all activities under your account.</p><h3>5. Limitation of Liability</h3><p>SwiftMart is not liable for indirect damages arising from the use of our services, to the maximum extent permitted by Kenyan law.</p><h3>6. Governing Law</h3><p>These terms are governed by the laws of the Republic of Kenya. Any disputes will be resolved in Kenyan courts.</p>`
-};
-function openModal(type) {
-    const modal = document.getElementById('footerModal');
-    const body = document.getElementById('modalBody');
-    body.innerHTML = modalContent[type] || '<h2>Page Not Found</h2><p>This content is coming soon.</p>';
-    modal.classList.add('active');
-    document.body.style.overflow = 'hidden';
-}
-function closeModal() {
-    const modal = document.getElementById('footerModal');
-    modal.classList.remove('active');
-    document.body.style.overflow = 'auto';
-}
-function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
-function scrollToProducts() {
-    const productsSection = document.querySelector('.search-filter-container');
-    if (productsSection) { productsSection.scrollIntoView({ behavior: 'smooth' }); }
-}
-document.getElementById('footerModal').addEventListener('click', function(e) { if (e.target === this) closeModal(); });
-document.getElementById('bundleModal').addEventListener('click', function(e) { if (e.target === this) closeBundleModal(); });
-document.addEventListener('keydown', function(e) { if (e.key === 'Escape') { closeModal(); closeBundleModal(); } });
-</script>
-<!-- AI Support Chatbot Button -->
-<button class="support-float" onclick="toggleChat()" aria-label="AI Support Assistant">
-<i class="fas fa-headset"></i>
-<span class="support-badge">1</span>
-</button>
 </body>
 </html>
