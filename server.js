@@ -147,7 +147,7 @@ app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 app.use(cookieParser());
 
-// 4. Reliable Session Configuration
+// 4. Reliable Session Configuration (Added sameSite: 'lax' for Paystack redirects)
 app.use(session({
     secret: process.env.SESSION_SECRET || 'super-secret-key-change-this-later',
     resave: false,
@@ -155,7 +155,8 @@ app.use(session({
     cookie: {
         secure: process.env.NODE_ENV === 'production',
         httpOnly: true,
-        maxAge: 24 * 60 * 60 * 1000
+        maxAge: 24 * 60 * 60 * 1000,
+        sameSite: 'lax'
     }
 }));
 
@@ -423,6 +424,17 @@ app.get('/api/paystack/verify/:reference', async (req, res) => {
     } catch (error) {
         console.error('Paystack Verify Error:', error);
         res.status(500).json({ error: 'Verification failed' });
+    }
+});
+
+// ================= CUSTOMER ORDERS ROUTE (FIX FOR DASHBOARD) =================
+app.get('/api/orders', requireAuth, async (req, res) => {
+    try {
+        const orders = await Order.find({ user: req.session.userId }).sort({ createdAt: -1 });
+        res.json({ orders });
+    } catch (error) {
+        console.error('Get orders error:', error);
+        res.status(500).json({ error: 'Failed to get orders' });
     }
 });
 
