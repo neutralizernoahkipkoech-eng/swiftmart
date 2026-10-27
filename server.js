@@ -400,8 +400,18 @@ app.get('/api/paystack/verify/:reference', async (req, res) => {
             const product = response.data.metadata?.custom_fields?.[0]?.value || 'Unknown Product';
             const phone = response.data.metadata?.custom_fields?.[1]?.value || 'N/A';
             
+            // FIX: Find the user by email if session userId is not available (prevents orphaned orders)
+            let userId = req.session.userId;
+            if (!userId) {
+                const user = await User.findOne({ email: customerEmail });
+                if (user) {
+                    userId = user._id;
+                    req.session.userId = userId; // Restore session
+                }
+            }
+            
             const newOrder = new Order({
-                user: req.session.userId || null,
+                user: userId || null,
                 product: product,
                 amount: amount,
                 phone: phone,
