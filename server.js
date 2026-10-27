@@ -111,7 +111,7 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/mpesa-eco
 // --- MIDDLEWARE ---
 
 // 🚨 CRITICAL FIX FOR RENDER: Trust the proxy for rate limiting and secure cookies
-app.set('trust proxy', 1);
+app.set('trust proxy', true);
 
 // 1. Security Headers (Helmet)
 app.use(helmet({
@@ -129,10 +129,11 @@ app.use(helmet({
     },
 }));
 
-// 2. Rate Limiting
+// 2. Rate Limiting (🚨 CRITICAL FIX: Explicitly trust proxy here to stop the ValidationError)
 const apiLimiter = rateLimit({
     windowMs: 15 * 60 * 1000,
     max: 100,
+    trustProxy: true, // <--- THIS IS THE MAGIC FIX FOR EXPRESS-RATE-LIMIT ON RENDER
     message: { error: 'Too many requests from this IP, please try again later.' }
 });
 app.use('/api/', apiLimiter);
