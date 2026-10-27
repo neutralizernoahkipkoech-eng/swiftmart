@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
-const axios = require('axios'); // Still needed for Google OAuth
+const axios = require('axios');
 const path = require('path');
 const mongoose = require('mongoose');
 const session = require('express-session');
@@ -11,7 +11,6 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 
-// Security & Rate Limiting Packages
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
 
@@ -30,7 +29,6 @@ const Review = require('./models/Review');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// JWT Secret
 const JWT_SECRET = process.env.JWT_SECRET || 'your-super-secret-jwt-key-change-this-in-production';
 
 // --- EMAIL TRANSPORTER SETUP ---
@@ -80,7 +78,6 @@ async function sendOrderEmail(customerEmail, productName, amount, paymentMethod,
                         </tr>
                     </table>
                     
-                    <!-- NEW CROSS-SELL BLOCK -->
                     <div style="margin-top: 30px; padding: 20px; border-top: 2px dashed #e2e8f0; background: #f8fafc; border-radius: 8px;">
                         <p style="margin: 0 0 10px 0; font-size: 1.1rem; color: #2563eb; font-weight: bold;">💡 Growing your business?</p>
                         <p style="margin: 0 0 15px 0; font-size: 0.95rem; color: #475569;">As a valued SwiftMart customer, you are eligible for <strong>15% OFF</strong> our Professional Web Design, SEO, or Social Media Management packages!</p>
@@ -92,7 +89,6 @@ async function sendOrderEmail(customerEmail, productName, amount, paymentMethod,
                             </a>
                         </p>
                     </div>
-                    <!-- END CROSS-SELL BLOCK -->
 
                     <p style="margin-top: 20px;">Best regards,<br><strong>The SwiftMart Team</strong></p>
                 </div>
@@ -113,6 +109,9 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/mpesa-eco
     .catch(err => console.error('❌ MongoDB Connection Error:', err));
 
 // --- MIDDLEWARE ---
+
+// 🚨 CRITICAL FIX FOR RENDER: Trust the proxy for rate limiting and secure cookies
+app.set('trust proxy', 1);
 
 // 1. Security Headers (Helmet)
 app.use(helmet({
@@ -147,7 +146,7 @@ app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 app.use(cookieParser());
 
-// 4. Reliable Session Configuration (Added sameSite: 'lax' for Paystack redirects)
+// 4. Reliable Session Configuration
 app.use(session({
     secret: process.env.SESSION_SECRET || 'super-secret-key-change-this-later',
     resave: false,
@@ -368,7 +367,7 @@ app.get('/api/auth/google/callback', async (req, res) => {
     }
 });
 
-// ================= PAYSTACK PAYMENT ROUTES (M-Pesa, Card, PayPal) =================
+// ================= PAYSTACK PAYMENT ROUTES =================
 app.post('/api/paystack/initialize', async (req, res) => {
     try {
         const { email, amount, productName, phone } = req.body;
@@ -400,13 +399,12 @@ app.get('/api/paystack/verify/:reference', async (req, res) => {
             const product = response.data.metadata?.custom_fields?.[0]?.value || 'Unknown Product';
             const phone = response.data.metadata?.custom_fields?.[1]?.value || 'N/A';
             
-            // FIX: Find the user by email if session userId is not available (prevents orphaned orders)
             let userId = req.session.userId;
             if (!userId) {
                 const user = await User.findOne({ email: customerEmail });
                 if (user) {
                     userId = user._id;
-                    req.session.userId = userId; // Restore session
+                    req.session.userId = userId;
                 }
             }
             
@@ -421,7 +419,6 @@ app.get('/api/paystack/verify/:reference', async (req, res) => {
             });
             await newOrder.save();
 
-            // Log bundle purchase for manual/automated activation
             if (product.toLowerCase().includes('bundle')) {
                 console.log(`🚀 Bundle purchased: ${product} for phone ${phone}`);
             }
@@ -437,7 +434,7 @@ app.get('/api/paystack/verify/:reference', async (req, res) => {
     }
 });
 
-// ================= CUSTOMER ORDERS ROUTE (FIX FOR DASHBOARD) =================
+// ================= CUSTOMER ORDERS ROUTE =================
 app.get('/api/orders', requireAuth, async (req, res) => {
     try {
         const orders = await Order.find({ user: req.session.userId }).sort({ createdAt: -1 });
