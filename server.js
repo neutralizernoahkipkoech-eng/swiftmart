@@ -112,17 +112,30 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/mpesa-eco
 // Trust Render's proxy for secure cookies and sessions
 app.set('trust proxy', 1);
 
-// 1. Security Headers (Helmet)
+// 1. Security Headers (Helmet) - UPDATED to allow Google Analytics
 app.use(helmet({
     crossOriginResourcePolicy: { policy: "cross-origin" },
     contentSecurityPolicy: {
         directives: {
             defaultSrc: ["'self'"],
             imgSrc: ["'self'", "data:", "https:", "http:"],
-            scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'", "https://cdnjs.cloudflare.com"],
+            scriptSrc: [
+                "'self'", 
+                "'unsafe-inline'", 
+                "'unsafe-eval'", 
+                "https://cdnjs.cloudflare.com",
+                "https://www.googletagmanager.com", // <-- ADDED FOR GOOGLE ANALYTICS
+                "https://www.google-analytics.com"   // <-- ADDED FOR GOOGLE ANALYTICS
+            ],
             styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com", "https://cdnjs.cloudflare.com"],
             fontSrc: ["'self'", "https://fonts.gstatic.com", "https://cdnjs.cloudflare.com"],
-            connectSrc: ["'self'", "https://api.paystack.co", "https://accounts.google.com"],
+            connectSrc: [
+                "'self'", 
+                "https://api.paystack.co", 
+                "https://accounts.google.com",
+                "https://www.google-analytics.com",       // <-- ADDED FOR GOOGLE ANALYTICS
+                "https://region1.google-analytics.com"    // <-- ADDED FOR GOOGLE ANALYTICS
+            ],
             scriptSrcAttr: ["'self'", "'unsafe-inline'"], 
         },
     },
