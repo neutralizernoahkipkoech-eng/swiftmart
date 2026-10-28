@@ -487,7 +487,11 @@
                 <div class="orders-list">
                     ${orders.map(order => {
                         const statusInfo = statusMap[order.status] || { text: order.status, class: 'status-pending' };
-                        const shortId = order.checkoutRequestId ? order.checkoutRequestId.slice(-8).toUpperCase() : 'N/A';
+                        
+                        // UPGRADE: Fallback to order._id if checkoutRequestId is missing (for Paystack orders)
+                        const shortId = order.checkoutRequestId 
+                            ? order.checkoutRequestId.slice(-8).toUpperCase() 
+                            : (order._id ? order._id.slice(-8).toUpperCase() : 'UNKNOWN');
                         
                         return `
                         <div class="order-card">
@@ -502,6 +506,10 @@
                                 <div class="detail-item">
                                     <label>Total Amount</label>
                                     <value>KES ${order.amount.toLocaleString()}</value>
+                                </div>
+                                <div class="detail-item">
+                                    <label>Payment Method</label>
+                                    <value>${order.paymentMethod || 'M-Pesa / Card'}</value>
                                 </div>
                                 <div class="detail-item">
                                     <label>Phone Number</label>
