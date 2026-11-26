@@ -416,19 +416,20 @@ nav { background: white; padding: 12px 0; border-bottom: 1px solid var(--border-
 /* Enhanced WhatsApp Float Button */
 .whatsapp-float {
     position: fixed;
-    bottom: 30px;
-    left: 30px;
+    bottom: 20px;
+    left: 20px;
+    right: auto;
+    width: 55px;
+    height: 55px;
     background-color: #25d366;
     color: white;
-    width: 65px;
-    height: 65px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 32px;
     box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
-    z-index: 1000;
+    z-index: 9999;
     text-decoration: none;
     animation: pulse-whatsapp 2s infinite;
     transition: transform 0.3s ease;
@@ -459,6 +460,29 @@ nav { background: white; padding: 12px 0; border-bottom: 1px solid var(--border-
 }
 .whatsapp-float:hover::after {
     opacity: 1;
+}
+
+/* Order on WhatsApp Button */
+.whatsapp-order-btn {
+    width: 100%;
+    background: #25d366;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+    font-size: 1rem;
+    margin-top: 8px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+.whatsapp-order-btn:hover {
+    background: #1ebe57;
 }
 </style>
 </head>
@@ -542,10 +566,10 @@ nav { background: white; padding: 12px 0; border-bottom: 1px solid var(--border-
 <!-- NEW: IMPROVED INSTANT ACTIVATION HIGHLIGHT BANNER (TWO BUTTONS) -->
 <div class="container" style="margin-bottom: 40px;">
     <div style="background: linear-gradient(135deg, #2563eb, #1e40af); color: white; padding: 30px; border-radius: 16px; text-align: center; box-shadow: 0 10px 25px rgba(37, 99, 235, 0.2);">
-        <h2 style="margin-bottom: 10px; font-size: 1.8rem;"> Instant Activation Services</h2>
-        <p style="margin-bottom: 25px; opacity: 0.9; font-size: 1.1rem;">Get your Data Bundles, Web Hosting, and Digital Services delivered to your phone/email in minutes!</p>
+        <h2 style="margin-bottom: 10px; font-size: 1.8rem;"> Digital & Professional Services</h2>
+        <p style="margin-bottom: 25px; opacity: 0.9; font-size: 1.1rem;">Get your Quick Digital Solutions, Web Hosting, and Professional Services delivered to your phone/email in minutes!</p>
         <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
-            <a href="#grid-databundles" style="background: white; color: #2563eb; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: bold; display: inline-block; transition: transform 0.2s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">📱 Shop Data Bundles</a>
+            <a href="#grid-databundles" style="background: white; color: #2563eb; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: bold; display: inline-block; transition: transform 0.2s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">⚡ Shop Digital Solutions</a>
             <a href="#grid-services" style="background: rgba(255,255,255,0.2); color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: bold; display: inline-block; border: 2px solid white; transition: transform 0.2s;" onmouseover="this.style.transform='translateY(-2px)'; this.style.background='white'; this.style.color='#2563eb'" onmouseout="this.style.transform='translateY(0)'; this.style.background='rgba(255,255,255,0.2)'; this.style.color='white'">💼 Professional Services</a>
         </div>
     </div>
@@ -577,7 +601,7 @@ nav { background: white; padding: 12px 0; border-bottom: 1px solid var(--border-
 <div class="filter-box">
 <select id="categoryFilter" onchange="filterProducts()">
 <option value="all">All Categories</option>
-<option value="databundles">Data Bundles & Offers</option>
+<option value="databundles">Quick Digital Solutions</option>
 <option value="services">Professional Services</option>
 <option value="webdev">Web Development & Hosting</option>
 <option value="socialmedia">Social Media Services</option>
@@ -602,19 +626,19 @@ nav { background: white; padding: 12px 0; border-bottom: 1px solid var(--border-
 <div class="grid" id="grid-services">
 <div class="card" data-category="services">
 <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=400&h=300&q=80" alt="Web Design" class="card-image">
-<div class="card-body"><div class="card-name">Professional Web Design</div><div class="card-description">Custom responsive websites with modern design and SEO.</div><div class="card-price">KES 15,000</div><button class="action-btn" onclick="addToCart('Professional Web Design', 15000)">Add to Cart</button></div>
+<div class="card-body"><div class="card-name">Professional Web Design</div><div class="card-description">Custom responsive websites with modern design and SEO.</div><div class="card-price">KES 15,000</div><button class="action-btn" onclick="addToCart('Professional Web Design', 15000)">Add to Cart</button><a href="https://wa.me/254724304733?text=Hi%20SwiftMart,%20I%20want%20to%20order%20Professional%20Web%20Design%20-%20KES%2015000.%20Please%20help%20me." target="_blank" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order on WhatsApp</a></div>
 </div>
 <div class="card" data-category="services">
 <img src="https://images.unsplash.com/photo-1626785774573-4b799315345d?auto=format&fit=crop&w=400&h=300&q=80" alt="Graphic Design" class="card-image">
-<div class="card-body"><div class="card-name">Logo & Graphic Design</div><div class="card-description">Professional branding, logos, and marketing materials.</div><div class="card-price">KES 5,000</div><button class="action-btn" onclick="addToCart('Logo & Graphic Design', 5000)">Add to Cart</button></div>
+<div class="card-body"><div class="card-name">Logo & Graphic Design</div><div class="card-description">Professional branding, logos, and marketing materials.</div><div class="card-price">KES 5,000</div><button class="action-btn" onclick="addToCart('Logo & Graphic Design', 5000)">Add to Cart</button><a href="https://wa.me/254724304733?text=Hi%20SwiftMart,%20I%20want%20to%20order%20Logo%20%26%20Graphic%20Design%20-%20KES%205000.%20Please%20help%20me." target="_blank" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order on WhatsApp</a></div>
 </div>
 <div class="card" data-category="services">
 <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=400&h=300&q=80" alt="Consulting" class="card-image">
-<div class="card-body"><div class="card-name">Business Consultation</div><div class="card-description">1-hour expert consultation on business strategy.</div><div class="card-price">KES 3,000</div><button class="action-btn" onclick="addToCart('Business Consultation', 3000)">Add to Cart</button></div>
+<div class="card-body"><div class="card-name">Business Consultation</div><div class="card-description">1-hour expert consultation on business strategy.</div><div class="card-price">KES 3,000</div><button class="action-btn" onclick="addToCart('Business Consultation', 3000)">Add to Cart</button><a href="https://wa.me/254724304733?text=Hi%20SwiftMart,%20I%20want%20to%20order%20Business%20Consultation%20-%20KES%203000.%20Please%20help%20me." target="_blank" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order on WhatsApp</a></div>
 </div>
 <div class="card" data-category="services">
 <img src="https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?auto=format&fit=crop&w=400&h=300&q=80" alt="SEO" class="card-image">
-<div class="card-body"><div class="card-name">SEO & Digital Marketing</div><div class="card-description">Boost your online presence with SEO and marketing.</div><div class="card-price">KES 8,000</div><button class="action-btn" onclick="addToCart('SEO & Digital Marketing', 8000)">Add to Cart</button></div>
+<div class="card-body"><div class="card-name">SEO & Digital Marketing</div><div class="card-description">Boost your online presence with SEO and marketing.</div><div class="card-price">KES 8,000</div><button class="action-btn" onclick="addToCart('SEO & Digital Marketing', 8000)">Add to Cart</button><a href="https://wa.me/254724304733?text=Hi%20SwiftMart,%20I%20want%20to%20order%20SEO%20%26%20Digital%20Marketing%20-%20KES%208000.%20Please%20help%20me." target="_blank" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order on WhatsApp</a></div>
 </div>
 </div>
 
@@ -623,15 +647,15 @@ nav { background: white; padding: 12px 0; border-bottom: 1px solid var(--border-
 <div class="grid" id="grid-webdev">
 <div class="card" data-category="webdev">
 <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=400&h=300&q=80" alt="E-commerce" class="card-image">
-<div class="card-body"><div class="card-name">E-commerce Store Setup</div><div class="card-description">Complete online store setup with M-Pesa & Paystack integration.</div><div class="card-price">KES 25,000</div><button class="action-btn" onclick="addToCart('E-commerce Store Setup', 25000)">Add to Cart</button></div>
+<div class="card-body"><div class="card-name">E-commerce Store Setup</div><div class="card-description">Complete online store setup with M-Pesa & Paystack integration.</div><div class="card-price">KES 25,000</div><button class="action-btn" onclick="addToCart('E-commerce Store Setup', 25000)">Add to Cart</button><a href="https://wa.me/254724304733?text=Hi%20SwiftMart,%20I%20want%20to%20order%20E-commerce%20Store%20Setup%20-%20KES%2025000.%20Please%20help%20me." target="_blank" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order on WhatsApp</a></div>
 </div>
 <div class="card" data-category="webdev">
 <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=400&h=300&q=80" alt="Maintenance" class="card-image">
-<div class="card-body"><div class="card-name">Website Maintenance & Support</div><div class="card-description">Monthly updates, security patches, and technical support.</div><div class="card-price">KES 3,000 / mo</div><button class="action-btn" onclick="addToCart('Website Maintenance & Support', 3000)">Add to Cart</button></div>
+<div class="card-body"><div class="card-name">Website Maintenance & Support</div><div class="card-description">Monthly updates, security patches, and technical support.</div><div class="card-price">KES 3,000 / mo</div><button class="action-btn" onclick="addToCart('Website Maintenance & Support', 3000)">Add to Cart</button><a href="https://wa.me/254724304733?text=Hi%20SwiftMart,%20I%20want%20to%20order%20Website%20Maintenance%20%26%20Support%20-%20KES%203000.%20Please%20help%20me." target="_blank" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order on WhatsApp</a></div>
 </div>
 <div class="card" data-category="webdev">
 <img src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=400&h=300&q=80" alt="Hosting" class="card-image">
-<div class="card-body"><div class="card-name">Domain & Hosting Setup</div><div class="card-description">Professional domain registration and secure server hosting.</div><div class="card-price">KES 2,500</div><button class="action-btn" onclick="addToCart('Domain & Hosting Setup', 2500)">Add to Cart</button></div>
+<div class="card-body"><div class="card-name">Domain & Hosting Setup</div><div class="card-description">Professional domain registration and secure server hosting.</div><div class="card-price">KES 2,500</div><button class="action-btn" onclick="addToCart('Domain & Hosting Setup', 2500)">Add to Cart</button><a href="https://wa.me/254724304733?text=Hi%20SwiftMart,%20I%20want%20to%20order%20Domain%20%26%20Hosting%20Setup%20-%20KES%202500.%20Please%20help%20me." target="_blank" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order on WhatsApp</a></div>
 </div>
 </div>
 
@@ -640,15 +664,15 @@ nav { background: white; padding: 12px 0; border-bottom: 1px solid var(--border-
 <div class="grid" id="grid-socialmedia">
 <div class="card" data-category="socialmedia">
 <img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=400&h=300&q=80" alt="Social Setup" class="card-image">
-<div class="card-body"><div class="card-name">Social Media Page Setup</div><div class="card-description">Professional setup of Facebook, Instagram & LinkedIn business pages.</div><div class="card-price">KES 6,000</div><button class="action-btn" onclick="addToCart('Social Media Page Setup', 6000)">Add to Cart</button></div>
+<div class="card-body"><div class="card-name">Social Media Page Setup</div><div class="card-description">Professional setup of Facebook, Instagram & LinkedIn business pages.</div><div class="card-price">KES 6,000</div><button class="action-btn" onclick="addToCart('Social Media Page Setup', 6000)">Add to Cart</button><a href="https://wa.me/254724304733?text=Hi%20SwiftMart,%20I%20want%20to%20order%20Social%20Media%20Page%20Setup%20-%20KES%206000.%20Please%20help%20me." target="_blank" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order on WhatsApp</a></div>
 </div>
 <div class="card" data-category="socialmedia">
 <img src="https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?auto=format&fit=crop&w=400&h=300&q=80" alt="Monthly Management" class="card-image">
-<div class="card-body"><div class="card-name">Monthly Social Media Management</div><div class="card-description">8-12 custom posts per month, scheduling, and basic engagement.</div><div class="card-price">KES 12,000 / mo</div><button class="action-btn" onclick="addToCart('Monthly Social Media Management', 12000)">Add to Cart</button></div>
+<div class="card-body"><div class="card-name">Monthly Social Media Management</div><div class="card-description">8-12 custom posts per month, scheduling, and basic engagement.</div><div class="card-price">KES 12,000 / mo</div><button class="action-btn" onclick="addToCart('Monthly Social Media Management', 12000)">Add to Cart</button><a href="https://wa.me/254724304733?text=Hi%20SwiftMart,%20I%20want%20to%20order%20Monthly%20Social%20Media%20Management%20-%20KES%2012000.%20Please%20help%20me." target="_blank" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order on WhatsApp</a></div>
 </div>
 <div class="card" data-category="socialmedia">
 <img src="https://images.unsplash.com/photo-1626785774573-4b799315345d?auto=format&fit=crop&w=400&h=300&q=80" alt="Graphics" class="card-image">
-<div class="card-body"><div class="card-name">Custom Social Media Graphics (10 Posts)</div><div class="card-description">Eye-catching, branded graphics ready for your social channels.</div><div class="card-price">KES 8,000</div><button class="action-btn" onclick="addToCart('Custom Social Media Graphics (10 Posts)', 8000)">Add to Cart</button></div>
+<div class="card-body"><div class="card-name">Custom Social Media Graphics (10 Posts)</div><div class="card-description">Eye-catching, branded graphics ready for your social channels.</div><div class="card-price">KES 8,000</div><button class="action-btn" onclick="addToCart('Custom Social Media Graphics (10 Posts)', 8000)">Add to Cart</button><a href="https://wa.me/254724304733?text=Hi%20SwiftMart,%20I%20want%20to%20order%20Custom%20Social%20Media%20Graphics%20(10%20Posts)%20-%20KES%208000.%20Please%20help%20me." target="_blank" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order on WhatsApp</a></div>
 </div>
 </div>
 
@@ -809,322 +833,142 @@ nav { background: white; padding: 12px 0; border-bottom: 1px solid var(--border-
 <!-- DATA BUNDLES (ENHANCED BINGWA SOKONI STYLE) -->
 <div class="section-header" data-section="databundles">
     <div class="section-divider"></div>
-    <h2>📱 Data Bundles & Offers</h2>
-    <p>Stay connected with our favorable, high-speed data packages - Instant activation!</p>
+    <h2>⚡ Quick Digital Solutions</h2>
+    <p>Fast, high-quality digital services delivered within 24–48 hours. Built by a professional developer.</p>
 </div>
 <div class="grid" id="grid-databundles" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 32px;">
     
-    <!-- KES 10 - Hourly Bundle -->
-    <div class="bundle-card">
-        <div class="bundle-image-container daily">
-            <img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=400&h=300&q=80" alt="Hourly Bundle">
-            <span class="bundle-icon">⏱️</span>
-            <div class="bundle-validity">
-                <i class="fas fa-clock"></i>
-                <span>1 Hour Validity</span>
-            </div>
-        </div>
-        <div class="bundle-body">
-            <h3 class="bundle-name">50MB Hourly Bundle</h3>
-            <p class="bundle-description">Quick browsing and urgent messages</p>
-            <div class="bundle-price-container">
-                <span class="bundle-price">KES 10</span>
-            </div>
-            <div class="bundle-actions">
-                <button class="bundle-btn bundle-add-to-cart" onclick="addToCart('50MB Hourly Bundle', 10)">
-                    <i class="fas fa-shopping-cart"></i> Add to Cart
-                </button>
-                <button class="bundle-btn bundle-quick-buy" onclick="quickBuyBundle('50MB Hourly Bundle', 10)">
-                    <i class="fas fa-bolt"></i> Quick Buy
-                </button>
-            </div>
-            <div class="bundle-features">
-                <div class="bundle-feature"><i class="fas fa-check-circle"></i> Instant Activation</div>
-                <div class="bundle-feature"><i class="fas fa-check-circle"></i> Perfect for Emergencies</div>
-            </div>
-        </div>
-    </div>
-
-    <!-- KES 19 - Social Lite -->
-    <div class="bundle-card">
-        <div class="bundle-image-container" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
-            <img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=400&h=300&q=80" alt="Social Lite">
-            <span class="bundle-icon">💬</span>
-            <div class="bundle-validity">
-                <i class="fas fa-clock"></i>
-                <span>3 Hours Validity</span>
-            </div>
-        </div>
-        <div class="bundle-body">
-            <h3 class="bundle-name">Social Lite Bundle</h3>
-            <p class="bundle-description">WhatsApp and light social media</p>
-            <div class="bundle-price-container">
-                <span class="bundle-price">KES 19</span>
-            </div>
-            <div class="bundle-actions">
-                <button class="bundle-btn bundle-add-to-cart" onclick="addToCart('Social Lite Bundle', 19)">
-                    <i class="fas fa-shopping-cart"></i> Add to Cart
-                </button>
-                <button class="bundle-btn bundle-quick-buy" onclick="quickBuyBundle('Social Lite Bundle', 19)">
-                    <i class="fas fa-bolt"></i> Quick Buy
-                </button>
-            </div>
-            <div class="bundle-features">
-                <div class="bundle-feature"><i class="fas fa-check-circle"></i> WhatsApp Only</div>
-                <div class="bundle-feature"><i class="fas fa-check-circle"></i> 3 Hours Access</div>
-            </div>
-        </div>
-    </div>
-
-    <!-- KES 30 - 500MB Weekly -->
-    <div class="bundle-card">
-        <div class="bundle-image-container weekly">
-            <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=400&h=300&q=80" alt="Weekly Bundle">
-            <span class="bundle-icon">📶</span>
-            <div class="bundle-validity">
-                <i class="fas fa-clock"></i>
-                <span>7 Days Validity</span>
-            </div>
-        </div>
-        <div class="bundle-body">
-            <h3 class="bundle-name">500MB Weekly Bundle</h3>
-            <p class="bundle-description">Perfect for light browsing and WhatsApp</p>
-            <div class="bundle-price-container">
-                <span class="bundle-price">KES 30</span>
-            </div>
-            <div class="bundle-actions">
-                <button class="bundle-btn bundle-add-to-cart" onclick="addToCart('500MB Weekly Bundle', 30)">
-                    <i class="fas fa-shopping-cart"></i> Add to Cart
-                </button>
-                <button class="bundle-btn bundle-quick-buy" onclick="quickBuyBundle('500MB Weekly Bundle', 30)">
-                    <i class="fas fa-bolt"></i> Quick Buy
-                </button>
-            </div>
-            <div class="bundle-features">
-                <div class="bundle-feature"><i class="fas fa-check-circle"></i> Instant Activation</div>
-                <div class="bundle-feature"><i class="fas fa-check-circle"></i> 24/7 Support</div>
-            </div>
-        </div>
-    </div>
-
-    <!-- KES 50 - 1GB Daily -->
-    <div class="bundle-card">
-        <div class="bundle-image-container daily">
-            <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=400&h=300&q=80" alt="Daily Bundle">
-            <span class="bundle-icon">⚡</span>
-            <div class="bundle-validity">
-                <i class="fas fa-clock"></i>
-                <span>24 Hours Validity</span>
-            </div>
-        </div>
-        <div class="bundle-body">
-            <h3 class="bundle-name">1GB Daily Bundle</h3>
-            <p class="bundle-description">Perfect for quick browsing and social media</p>
-            <div class="bundle-price-container">
-                <span class="bundle-price">KES 50</span>
-            </div>
-            <div class="bundle-actions">
-                <button class="bundle-btn bundle-add-to-cart" onclick="addToCart('1GB Daily Bundle', 50)">
-                    <i class="fas fa-shopping-cart"></i> Add to Cart
-                </button>
-                <button class="bundle-btn bundle-quick-buy" onclick="quickBuyBundle('1GB Daily Bundle', 50)">
-                    <i class="fas fa-bolt"></i> Quick Buy
-                </button>
-            </div>
-            <div class="bundle-features">
-                <div class="bundle-feature"><i class="fas fa-check-circle"></i> Instant Activation</div>
-                <div class="bundle-feature"><i class="fas fa-check-circle"></i> High Speed 4G</div>
-            </div>
-        </div>
-    </div>
-
-    <!-- KES 100 - Midnight Bundle -->
-    <div class="bundle-card">
-        <div class="bundle-image-container" style="background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);">
-            <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=400&h=300&q=80" alt="Midnight Bundle">
-            <span class="bundle-icon">🌙</span>
-            <div class="bundle-validity">
-                <i class="fas fa-moon"></i>
-                <span>12AM - 5AM Daily</span>
-            </div>
-        </div>
-        <div class="bundle-body">
-            <h3 class="bundle-name">5GB Midnight Bundle</h3>
-            <p class="bundle-description">Download and stream during night hours</p>
-            <div class="bundle-price-container">
-                <span class="bundle-price">KES 100</span>
-            </div>
-            <div class="bundle-actions">
-                <button class="bundle-btn bundle-add-to-cart" onclick="addToCart('5GB Midnight Bundle', 100)">
-                    <i class="fas fa-shopping-cart"></i> Add to Cart
-                </button>
-                <button class="bundle-btn bundle-quick-buy" onclick="quickBuyBundle('5GB Midnight Bundle', 100)">
-                    <i class="fas fa-bolt"></i> Quick Buy
-                </button>
-            </div>
-            <div class="bundle-features">
-                <div class="bundle-feature"><i class="fas fa-check-circle"></i> Valid for 30 Days</div>
-                <div class="bundle-feature"><i class="fas fa-check-circle"></i> Night Owl Special</div>
-            </div>
-        </div>
-    </div>
-
-    <!-- KES 150 - Unlimited Weekend -->
-    <div class="bundle-card">
+    <!-- Professional CV/Resume Revamp -->
+    <div class="bundle-card" data-category="databundles">
         <span class="bundle-badge popular">Popular</span>
-        <div class="bundle-image-container special">
-            <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=400&h=300&q=80" alt="Weekend Bundle">
-            <span class="bundle-icon"></span>
-            <div class="bundle-validity">
-                <i class="fas fa-calendar-weekend"></i>
-                <span>Fri 11PM - Sun 11:59PM</span>
-            </div>
-        </div>
-        <div class="bundle-body">
-            <h3 class="bundle-name">Unlimited Weekend</h3>
-            <p class="bundle-description">Non-stop entertainment all weekend!</p>
-            <div class="bundle-price-container">
-                <span class="bundle-price">KES 150</span>
-            </div>
-            <div class="bundle-actions">
-                <button class="bundle-btn bundle-add-to-cart" onclick="addToCart('Unlimited Weekend Bundle', 150)">
-                    <i class="fas fa-shopping-cart"></i> Add to Cart
-                </button>
-                <button class="bundle-btn bundle-quick-buy" onclick="quickBuyBundle('Unlimited Weekend Bundle', 150)">
-                    <i class="fas fa-bolt"></i> Quick Buy
-                </button>
-            </div>
-            <div class="bundle-features">
-                <div class="bundle-feature"><i class="fas fa-check-circle"></i> Unlimited Data</div>
-                <div class="bundle-feature"><i class="fas fa-check-circle"></i> All Networks</div>
-            </div>
-        </div>
-    </div>
-
-    <!-- KES 200 - Social Media Bundle -->
-    <div class="bundle-card">
-        <div class="bundle-image-container" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
-            <img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=400&h=300&q=80" alt="Social Media Bundle">
-            <span class="bundle-icon">📱</span>
+        <div class="bundle-image-container">
+            <img src="https://images.unsplash.com/photo-1586281380349-632531db7ed4?auto=format&fit=crop&w=400&h=300&q=80" alt="Professional CV/Resume Revamp">
+            <span class="bundle-icon">📄</span>
             <div class="bundle-validity">
                 <i class="fas fa-clock"></i>
-                <span>30 Days Validity</span>
+                <span>24-Hour Delivery</span>
             </div>
         </div>
         <div class="bundle-body">
-            <h3 class="bundle-name">Social Media Bundle</h3>
-            <p class="bundle-description">Unlimited WhatsApp, Facebook & Instagram</p>
-            <div class="bundle-price-container">
-                <span class="bundle-price">KES 200</span>
-            </div>
-            <div class="bundle-actions">
-                <button class="bundle-btn bundle-add-to-cart" onclick="addToCart('Social Media Bundle', 200)">
-                    <i class="fas fa-shopping-cart"></i> Add to Cart
-                </button>
-                <button class="bundle-btn bundle-quick-buy" onclick="quickBuyBundle('Social Media Bundle', 200)">
-                    <i class="fas fa-bolt"></i> Quick Buy
-                </button>
-            </div>
-            <div class="bundle-features">
-                <div class="bundle-feature"><i class="fas fa-check-circle"></i> Unlimited Social Apps</div>
-                <div class="bundle-feature"><i class="fas fa-check-circle"></i> No Data Deduction</div>
-            </div>
-        </div>
-    </div>
-
-    <!-- KES 250 - 2GB Monthly -->
-    <div class="bundle-card">
-        <div class="bundle-image-container monthly">
-            <img src="https://images.unsplash.com/photo-1522869635100-9f4c5e86aa37?auto=format&fit=crop&w=400&h=300&q=80" alt="Monthly Bundle">
-            <span class="bundle-icon">📅</span>
-            <div class="bundle-validity">
-                <i class="fas fa-clock"></i>
-                <span>30 Days Validity</span>
-            </div>
-        </div>
-        <div class="bundle-body">
-            <h3 class="bundle-name">2GB Monthly Bundle</h3>
-            <p class="bundle-description">Great for casual browsing and emails</p>
-            <div class="bundle-price-container">
-                <span class="bundle-price">KES 250</span>
-            </div>
-            <div class="bundle-actions">
-                <button class="bundle-btn bundle-add-to-cart" onclick="addToCart('2GB Monthly Bundle', 250)">
-                    <i class="fas fa-shopping-cart"></i> Add to Cart
-                </button>
-                <button class="bundle-btn bundle-quick-buy" onclick="quickBuyBundle('2GB Monthly Bundle', 250)">
-                    <i class="fas fa-bolt"></i> Quick Buy
-                </button>
-            </div>
-            <div class="bundle-features">
-                <div class="bundle-feature"><i class="fas fa-check-circle"></i> Monthly Validity</div>
-                <div class="bundle-feature"><i class="fas fa-check-circle"></i> Email Friendly</div>
-            </div>
-        </div>
-    </div>
-
-    <!-- KES 500 - 5GB Monthly (BEST VALUE) -->
-    <div class="bundle-card">
-        <span class="bundle-badge best-value">Best Value</span>
-        <div class="bundle-image-container monthly">
-            <img src="https://images.unsplash.com/photo-1522869635100-9f4c5e86aa37?auto=format&fit=crop&w=400&h=300&q=80" alt="Monthly Bundle">
-            <span class="bundle-icon"></span>
-            <div class="bundle-validity">
-                <i class="fas fa-clock"></i>
-                <span>30 Days Validity</span>
-            </div>
-        </div>
-        <div class="bundle-body">
-            <h3 class="bundle-name">5GB Monthly Bundle</h3>
-            <p class="bundle-description">Great for streaming and remote work</p>
-            <div class="bundle-price-container">
-                <span class="bundle-price">KES 500</span>
-                <!-- NEW: Urgency Badge with Discount -->
-                <span style="text-decoration: line-through; color: #94a3b8; font-size: 0.9rem; margin-left: 8px;">KES 650</span>
-            </div>
-            <div class="bundle-actions">
-                <button class="bundle-btn bundle-add-to-cart" onclick="addToCart('5GB Monthly Bundle', 500)">
-                    <i class="fas fa-shopping-cart"></i> Add to Cart
-                </button>
-                <button class="bundle-btn bundle-quick-buy" onclick="quickBuyBundle('5GB Monthly Bundle', 500)">
-                    <i class="fas fa-bolt"></i> Quick Buy
-                </button>
-            </div>
-            <div class="bundle-features">
-                <div class="bundle-feature"><i class="fas fa-check-circle"></i> Best Value for Money</div>
-                <div class="bundle-feature"><i class="fas fa-check-circle"></i> HD Streaming Ready</div>
-                <div class="bundle-feature"><i class="fas fa-check-circle"></i> Unlimited Night Data</div>
-            </div>
-        </div>
-    </div>
-
-    <!-- KES 1000 - 10GB Monthly -->
-    <div class="bundle-card">
-        <div class="bundle-image-container monthly">
-            <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=400&h=300&q=80" alt="10GB Bundle">
-            <span class="bundle-icon">💎</span>
-            <div class="bundle-validity">
-                <i class="fas fa-clock"></i>
-                <span>30 Days Validity</span>
-            </div>
-        </div>
-        <div class="bundle-body">
-            <h3 class="bundle-name">10GB Monthly Bundle</h3>
-            <p class="bundle-description">Heavy usage, downloads, and HD streaming</p>
+            <h3 class="bundle-name">Professional CV/Resume Revamp</h3>
+            <p class="bundle-description">ATS-friendly, recruiter-ready CV rewritten and redesigned.</p>
             <div class="bundle-price-container">
                 <span class="bundle-price">KES 1,000</span>
             </div>
             <div class="bundle-actions">
-                <button class="bundle-btn bundle-add-to-cart" onclick="addToCart('10GB Monthly Bundle', 1000)">
+                <button class="bundle-btn bundle-add-to-cart" onclick="addToCart('Professional CV/Resume Revamp', 1000)">
                     <i class="fas fa-shopping-cart"></i> Add to Cart
                 </button>
-                <button class="bundle-btn bundle-quick-buy" onclick="quickBuyBundle('10GB Monthly Bundle', 1000)">
-                    <i class="fas fa-bolt"></i> Quick Buy
-                </button>
+                <a href="https://wa.me/254724304733?text=Hi%20SwiftMart,%20I'm%20interested%20in%20the%20Professional%20CV/Resume%20Revamp" target="_blank" style="width: 100%; background: #25d366; color: white; border: none; padding: 12px; border-radius: 8px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 10px; text-decoration: none; font-size: 0.95rem; box-sizing: border-box;"><i class="fab fa-whatsapp" style="font-size: 1.1rem;"></i> Chat to Order</a>
             </div>
             <div class="bundle-features">
-                <div class="bundle-feature"><i class="fas fa-check-circle"></i> 4K Streaming Ready</div>
-                <div class="bundle-feature"><i class="fas fa-check-circle"></i> Large Downloads</div>
+                <div class="bundle-feature"><i class="fas fa-check-circle"></i> Modern professional design</div>
+                <div class="bundle-feature"><i class="fas fa-check-circle"></i> ATS-optimized keywords</div>
+                <div class="bundle-feature"><i class="fas fa-check-circle"></i> Unlimited minor revisions</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- WhatsApp Business Catalog Setup -->
+    <div class="bundle-card" data-category="databundles">
+        <span class="bundle-badge best-value">Best Value</span>
+        <div class="bundle-image-container">
+            <img src="https://images.unsplash.com/photo-1611746872915-64382b5c76da?auto=format&fit=crop&w=400&h=300&q=80" alt="WhatsApp Business Catalog Setup">
+            <span class="bundle-icon">💬</span>
+            <div class="bundle-validity">
+                <i class="fas fa-clock"></i>
+                <span>48-Hour Delivery</span>
+            </div>
+        </div>
+        <div class="bundle-body">
+            <h3 class="bundle-name">WhatsApp Business Catalog Setup</h3>
+            <p class="bundle-description">Turn your WhatsApp into a selling machine with a full product catalog.</p>
+            <div class="bundle-price-container">
+                <span class="bundle-price">KES 1,500</span>
+            </div>
+            <div class="bundle-actions">
+                <button class="bundle-btn bundle-add-to-cart" onclick="addToCart('WhatsApp Business Catalog Setup', 1500)">
+                    <i class="fas fa-shopping-cart"></i> Add to Cart
+                </button>
+                <a href="https://wa.me/254724304733?text=Hi%20SwiftMart,%20I'm%20interested%20in%20the%20WhatsApp%20Business%20Catalog%20Setup" target="_blank" style="width: 100%; background: #25d366; color: white; border: none; padding: 12px; border-radius: 8px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 10px; text-decoration: none; font-size: 0.95rem; box-sizing: border-box;"><i class="fab fa-whatsapp" style="font-size: 1.1rem;"></i> Chat to Order</a>
+            </div>
+            <div class="bundle-features">
+                <div class="bundle-feature"><i class="fas fa-check-circle"></i> Auto-reply & greeting setup</div>
+                <div class="bundle-feature"><i class="fas fa-check-circle"></i> Product catalog with images</div>
+                <div class="bundle-feature"><i class="fas fa-check-circle"></i> Business profile optimization</div>
+            </div>
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<!-- Social Media Profile & Banner Pack -->
+    <div class="bundle-card" data-category="databundles">
+        <div class="bundle-image-container">
+            <img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=400&h=300&q=80" alt="Social Media Profile & Banner Pack">
+            <span class="bundle-icon">🎨</span>
+            <div class="bundle-validity">
+                <i class="fas fa-clock"></i>
+                <span>48-Hour Delivery</span>
+            </div>
+        </div>
+        <div class="bundle-body">
+            <h3 class="bundle-name">Social Media Profile & Banner Pack</h3>
+            <p class="bundle-description">Branded profile pictures and cover banners for all your platforms.</p>
+            <div class="bundle-price-container">
+                <span class="bundle-price">KES 800</span>
+            </div>
+            <div class="bundle-actions">
+                <button class="bundle-btn bundle-add-to-cart" onclick="addToCart('Social Media Profile & Banner Pack', 800)">
+                    <i class="fas fa-shopping-cart"></i> Add to Cart
+                </button>
+                <a href="https://wa.me/254724304733?text=Hi%20SwiftMart,%20I'm%20interested%20in%20the%20Social%20Media%20Profile%20%26%20Banner%20Pack" target="_blank" style="width: 100%; background: #25d366; color: white; border: none; padding: 12px; border-radius: 8px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 10px; text-decoration: none; font-size: 0.95rem; box-sizing: border-box;"><i class="fab fa-whatsapp" style="font-size: 1.1rem;"></i> Chat to Order</a>
+            </div>
+            <div class="bundle-features">
+                <div class="bundle-feature"><i class="fas fa-check-circle"></i> Facebook, Instagram, LinkedIn, Twitter</div>
+                <div class="bundle-feature"><i class="fas fa-check-circle"></i> Consistent brand colors</div>
+                <div class="bundle-feature"><i class="fas fa-check-circle"></i> High-res, platform-sized files</div>
+            </div>
+        </div>
+    </div>
+    <!-- Website Bug Fix / Speed Optimization -->
+    <div class="bundle-card" data-category="databundles">
+        <div class="bundle-image-container">
+            <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=400&h=300&q=80" alt="Website Bug Fix / Speed Optimization">
+            <span class="bundle-icon">🛠️</span>
+            <div class="bundle-validity">
+                <i class="fas fa-clock"></i>
+                <span>24–72 Hours</span>
+            </div>
+        </div>
+        <div class="bundle-body">
+            <h3 class="bundle-name">Website Bug Fix / Speed Optimization</h3>
+            <p class="bundle-description">Fix broken features and make your site load fast on mobile.</p>
+            <div class="bundle-price-container">
+                <span class="bundle-price">KES 2,500</span>
+            </div>
+            <div class="bundle-actions">
+                <button class="bundle-btn bundle-add-to-cart" onclick="addToCart('Website Bug Fix / Speed Optimization', 2500)">
+                    <i class="fas fa-shopping-cart"></i> Add to Cart
+                </button>
+                <a href="https://wa.me/254724304733?text=Hi%20SwiftMart,%20I'm%20interested%20in%20the%20Website%20Bug%20Fix%20/%20Speed%20Optimization" target="_blank" style="width: 100%; background: #25d366; color: white; border: none; padding: 12px; border-radius: 8px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 10px; text-decoration: none; font-size: 0.95rem; box-sizing: border-box;"><i class="fab fa-whatsapp" style="font-size: 1.1rem;"></i> Chat to Order</a>
+            </div>
+            <div class="bundle-features">
+                <div class="bundle-feature"><i class="fas fa-check-circle"></i> Code & database debugging</div>
+                <div class="bundle-feature"><i class="fas fa-check-circle"></i> Image & script optimization</div>
+                <div class="bundle-feature"><i class="fas fa-check-circle"></i> Performance report included</div>
             </div>
         </div>
     </div>
@@ -1204,7 +1048,7 @@ nav { background: white; padding: 12px 0; border-bottom: 1px solid var(--border-
 <section style="background: linear-gradient(135deg, #1e40af 0%, #2563eb 100%); padding: 60px 20px; text-align: center; color: white;">
     <div class="container" style="max-width: 600px;">
         <h2 style="font-size: 1.8rem; margin-bottom: 12px;">Get 10% OFF Your First Order! 💸</h2>
-        <p style="margin-bottom: 24px; opacity: 0.9;">Join 500+ happy customers. Subscribe to our newsletter for exclusive discounts, new bundle alerts, and tech tips.</p>
+        <p style="margin-bottom: 24px; opacity: 0.9;">Join 500+ happy customers. Subscribe to our newsletter for exclusive discounts, new service alerts, and tech tips.</p>
         <form id="leadCaptureForm" style="display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;">
             <input type="email" placeholder="Enter your email address" required 
                    style="flex: 1; min-width: 250px; padding: 14px; border-radius: 8px; border: none; font-size: 1rem;">
@@ -1272,7 +1116,7 @@ nav { background: white; padding: 12px 0; border-bottom: 1px solid var(--border-
 <h4>Contact Us</h4>
 <ul class="contact-info">
 <li><i class="fas fa-map-marker-alt"></i><span>Nairobi, Kenya</span></li>
-<li><i class="fab fa-whatsapp"></i><span><a href="https://wa.me/254754427226?text=Hello%20SwiftMart,%20I%20have%20a%20question%20about%20an%20order." target="_blank" style="color: #25d366; font-weight: bold;">Chat on WhatsApp 💬</a></span></li>
+<li><i class="fab fa-whatsapp"></i><span><a href="https://wa.me/254724304733?text=Hello%20SwiftMart,%20I%20have%20a%20question%20about%20an%20order." target="_blank" style="color: #25d366; font-weight: bold;">Chat on WhatsApp 💬</a></span></li>
 <li><i class="fas fa-envelope"></i><span><a href="mailto:support@swiftmartkenya.co.ke">support@swiftmartkenya.co.ke</a></span></li>
 </ul>
 </div>
@@ -1343,7 +1187,7 @@ nav { background: white; padding: 12px 0; border-bottom: 1px solid var(--border-
 </div>
 
 <!-- WhatsApp Floating Button -->
-<a href="https://wa.me/254754427226?text=Hi%20SwiftMart,%20I'm%20interested%20in%20your%20services/products!" 
+<a href="https://wa.me/254724304733?text=Hi%20SwiftMart,%20I%20need%20help%20with%20your%20services." 
    class="whatsapp-float" 
    target="_blank" 
    aria-label="Chat on WhatsApp">
